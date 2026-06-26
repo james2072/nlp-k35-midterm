@@ -6,51 +6,111 @@
       "resources": [
         {
           "lang": "han",
-          "format": "pdf",
-          "path": "data/raw/pdfs/an-nam-chi-luoc-han.pdf",
+          "format": "text",
+          "path": "data/raw/texts/an_nam_chi_luoc_han.txt",
           "pages": null
         },
         {
           "lang": "viet",
-          "format": "text",
-          "path": "data/raw/texts/an-nam-chi-luoc-viet.txt",
+          "format": "pdf",
+          "path": "data/raw/pdfs/an_nam_chi_luoc_viet.pdf",
           "pages": null
         }
       ]
     },
     {
-      "id": "dai-viet-su-ky",
-      "name": "Đại Việt Sử Ký Toàn Thư",
+      "id": "an-nam-chi-nguyen",
+      "name": "An Nam Chí Nguyên",
+      "resources": [
+        {
+          "lang": "han",
+          "format": "pdf",
+          "path": "data/raw/pdfs/an_nam_chi_nguyen_han.pdf",
+          "pages": null
+        },
+        {
+          "lang": "viet",
+          "format": "pdf",
+          "path": "data/raw/pdfs/an_nam_chi_nguyen_viet.pdf",
+          "pages": null
+        }
+      ]
+    },
+    {
+      "id": "cong-du-tiep-ky",
+      "name": "Công Dư Tiệp Ký",
       "resources": [
         {
           "lang": "han",
           "format": "images",
-          "path": "data/raw/images/dai-viet-su-ky/",
+          "path": "data/raw/images/cong_du_tiep_ky_han/",
           "pages": null
         },
         {
           "lang": "viet",
           "format": "pdf",
-          "path": "data/raw/pdfs/dai-viet-su-ky-viet.pdf",
+          "path": "data/raw/pdfs/cong_du_tiep_ky_1_viet.pdf",
+          "pages": null
+        },
+        {
+          "lang": "viet",
+          "format": "pdf",
+          "path": "data/raw/pdfs/cong_du_tiep_ky_2_viet.pdf",
+          "pages": null
+        },
+        {
+          "lang": "viet",
+          "format": "pdf",
+          "path": "data/raw/pdfs/cong_du_tiep_ky_3_viet.pdf",
           "pages": null
         }
       ]
     },
     {
-      "id": "viet-su-luoc",
-      "name": "Việt Sử Lược",
+      "id": "dai-nam-quoc-su-dien-ca",
+      "name": "Đại Nam quốc sử diễn ca",
       "resources": [
         {
           "lang": "han",
-          "format": "pdf",
-          "path": "data/raw/pdfs/viet-su-luoc.pdf",
-          "pages": "1-80"
+          "format": "images",
+          "path": "data/raw/images/dai_nam_quoc_su_dien_ca_han/",
+          "pages": null
         },
         {
           "lang": "viet",
           "format": "pdf",
-          "path": "data/raw/pdfs/viet-su-luoc.pdf",
-          "pages": "81-150"
+          "path": "data/raw/pdfs/dai_nam_quoc_su_dien_ca_q1_viet.pdf",
+          "pages": null
+        },
+        {
+          "lang": "viet",
+          "format": "pdf",
+          "path": "data/raw/pdfs/dai_nam_quoc_su_dien_ca_q2_viet.pdf",
+          "pages": null
+        }
+      ]
+    },
+    {
+      "id": "dai-viet-lich-trieu-dang-khoa-luc",
+      "name": "Đại Việt Lịch Triều Đăng Khoa Lục",
+      "resources": [
+        {
+          "lang": "han",
+          "format": "text",
+          "path": "data/raw/texts/dai_viet_lich_trieu_dang_khoa_luc_full_han.txt",
+          "pages": null
+        },
+        {
+          "lang": "viet",
+          "format": "pdf",
+          "path": "data/raw/pdfs/dai_viet_lich_trieu_dang_khoa_luc_1_viet.pdf",
+          "pages": null
+        },
+        {
+          "lang": "viet",
+          "format": "pdf",
+          "path": "data/raw/pdfs/dai_viet_lich_trieu_dang_khoa_luc_2_viet.pdf",
+          "pages": null
         }
       ]
     }

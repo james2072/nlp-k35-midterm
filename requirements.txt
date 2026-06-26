@@ -15,3 +15,4 @@ Pillow
 #   Linux:   sudo apt install tesseract-ocr tesseract-ocr-vie
 #   macOS:   brew install tesseract && brew install tesseract-lang
 
+requests
