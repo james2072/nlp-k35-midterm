@@ -11,28 +11,30 @@ def generate_id(fff: int, ccc: int, ppp: int, ss: int) -> str:
 
     Format: HVB_fff.ccc.ppp.ss
     """
-    # TODO: format each component with zero-padding (fff=3, ccc=3, ppp=3, ss=2)
-    # TODO: return formatted ID string
-    pass
+    return f"HVB_{fff:03d}.{ccc:03d}.{ppp:03d}.{ss:02d}"
 
 
 def read_json(path: str) -> dict:
-    # TODO: open path, parse JSON, return dict
-    pass
+    with open(path, "r", encoding="utf-8") as f:
+        return json.load(f)
 
 
 def write_json(data: dict, path: str) -> None:
-    # TODO: create parent directories if needed
-    # TODO: write data as pretty-printed JSON with utf-8 encoding
-    pass
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(data, f, ensure_ascii=False, indent=2)
 
 
 def read_lines(path: str) -> list[str]:
-    # TODO: open path with utf-8 encoding, return non-empty stripped lines
-    pass
+    if not os.path.exists(path):
+        return []
+    with open(path, "r", encoding="utf-8") as f:
+        return [line.strip() for line in f if line.strip()]
 
 
 def write_lines(lines: list[str], path: str) -> None:
-    # TODO: create parent directories if needed
-    # TODO: write each line followed by newline, utf-8 encoding
-    pass
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, "w", encoding="utf-8") as f:
+        for line in lines:
+            f.write(line + "\n")
+

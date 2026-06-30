@@ -5,6 +5,8 @@ Sentence segmentation:
 """
 
 
+import re
+
 def segment(lines: list[str], lang: str) -> list[str]:
     """
     Tokenize a list of raw text lines into sentences.
@@ -16,24 +18,50 @@ def segment(lines: list[str], lang: str) -> list[str]:
     Returns:
         List of sentence strings.
     """
-    # TODO: join lines into a single text block
-    # TODO: if lang == "han"  → use HanLP to split into sentences
-    # TODO: if lang == "viet" → use underthesea.sent_tokenize
-    # TODO: strip empty sentences
-    # TODO: return list of sentence strings
-    pass
+    if not lines:
+        return []
+        
+    text = " ".join(lines)
+    
+    if lang == "han":
+        sentences = _segment_han(text)
+    elif lang == "viet":
+        sentences = _segment_viet(text)
+    else:
+        raise ValueError(f"Unsupported language: {lang}")
+        
+    return [s.strip() for s in sentences if s.strip()]
 
 
 def _segment_han(text: str) -> list[str]:
-    # TODO: import hanlp
-    # TODO: load HanLP pipeline (lazy-load / cache model)
-    # TODO: run sentence segmentation on text
-    # TODO: return list of sentences
-    pass
+    # Rule-based Chinese sentence splitter
+    # Chinese sentence terminators: 。 ！ ？ ； \n
+    # We use a regex that splits and keeps the punctuation.
+    try:
+        # Try importing hanlp and using its split_sentence if available
+        import hanlp
+        # Some versions have hanlp.utils.rules.split_sentence
+        # If not, or if model load fails, we fall back to rule-based.
+        try:
+            return hanlp.utils.rules.split_sentence(text)
+        except AttributeError:
+            pass
+    except ImportError:
+        pass
+        
+    # Regex fallback
+    pattern = re.compile(r'([^。！？；\n]+[。！？；\n]*)')
+    sentences = pattern.findall(text)
+    return sentences
 
 
 def _segment_viet(text: str) -> list[str]:
-    # TODO: from underthesea import sent_tokenize
-    # TODO: run sent_tokenize(text)
-    # TODO: return list of sentences
-    pass
+    try:
+        from underthesea import sent_tokenize
+        return sent_tokenize(text)
+    except ImportError:
+        # Regex fallback: split by . ! ? \n
+        pattern = re.compile(r'([^.!?\n]+[.!?\n]*)')
+        sentences = pattern.findall(text)
+        return sentences
+
