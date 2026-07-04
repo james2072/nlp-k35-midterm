@@ -4,14 +4,17 @@ paddlepaddle
 pytesseract
 underthesea
 sentence-transformers
-google-generativeai   # optional: chỉ cần nếu dùng method auto_translate ở sentence_alignment
-python-dotenv         # optional: chỉ cần nếu dùng method auto_translate ở sentence_alignment
+google-generativeai
+python-dotenv
 pyyaml
 tqdm
 Pillow
-# hanlp  # install separately: pip install hanlp  (~500MB model)
-# Tesseract engine (cài riêng ngoài pip):
-#   Windows: https://github.com/UB-Mannheim/tesseract/wiki  (tích chọn "Vietnamese")
-#   Linux:   sudo apt install tesseract-ocr tesseract-ocr-vie
-#   macOS:   brew install tesseract && brew install tesseract-lang
+pdf2image
+paddleocr
+vietocr
+opencv-python
+realesrgan
+torch
+requests
+pdfplumber
 

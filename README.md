@@ -40,3 +40,17 @@ src/
   utils.py
 configs/pipeline.yaml
 ```
+
+## Cấu trúc thư mục Data
+```text
+data/
+├── config.json          # Khai báo metadata, đường dẫn file và định dạng
+├── raw/                 # (Backup) File gốc chưa phân loại
+├── sino/                # Dữ liệu đầu vào phía Hán / Nôm
+│   ├── an-nam-chi-luoc/
+│   └── ...
+├── vie/                 # Dữ liệu đầu vào phía Tiếng Việt
+│   ├── an-nam-chi-luoc/
+│   └── ...
+├── ocr_output/          # Output OCR thô ([matacpham]_sino_raw.txt / vie_raw.txt)
+└── corpus/              # Output dóng hàng ([matacpham]_parallel.tsv / .xlsx)
