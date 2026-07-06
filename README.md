@@ -40,12 +40,14 @@ src/
   utils.py
 configs/pipeline.yaml
 ```
-
+## Data
+```link
+https://drive.google.com/drive/folders/1szTHxYqiYGSeg5eutJKjRkRfEayf40Hl?usp=sharing
+```
 ## Cấu trúc thư mục Data
 ```text
 data/
 ├── config.json          # Khai báo metadata, đường dẫn file và định dạng
-├── raw/                 # (Backup) File gốc chưa phân loại
 ├── sino/                # Dữ liệu đầu vào phía Hán / Nôm
 │   ├── an-nam-chi-luoc/
 │   └── ...
@@ -54,3 +56,4 @@ data/
 │   └── ...
 ├── ocr_output/          # Output OCR thô ([matacpham]_sino_raw.txt / vie_raw.txt)
 └── corpus/              # Output dóng hàng ([matacpham]_parallel.tsv / .xlsx)
+

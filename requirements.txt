@@ -1,6 +1,6 @@
 pymupdf
-paddleocr
-paddlepaddle
+paddlepaddle==2.6.2
+paddleocr==2.8.1
 pytesseract
 underthesea
 sentence-transformers
@@ -17,4 +17,4 @@ realesrgan
 torch
 requests
 pdfplumber
-
+PyMuPDF
