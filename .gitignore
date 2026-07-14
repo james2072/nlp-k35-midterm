@@ -1,21 +1,71 @@
-# Environment
-.env
-
-# Python
+# === Byte-compiled / optimized / DLL files ===
 __pycache__/
 *.py[cod]
-*.egg-info/
-dist/
+*$py.class
+
+# === C extensions ===
+*.so
+
+# === Distribution / packaging ===
+bin/
 build/
-.venv/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# === Jupyter Notebooks ===
+.ipynb_checkpoints
+
+# === Virtual Environments ===
+.env
+.venv
+env/
 venv/
+ENV/
+env.bak/
+venv.bak/
 
-# HanLP model cache
-~/.hanlp/
+# === Secrets, credentials, and local configurations ===
+.secrets
+*.local
+.env.*
+!.env.example
+config.xml
+secrets.yaml
+*.bk
 
-# Jupyter
-.ipynb_checkpoints/
+# === Testing and Coverage ===
+.cache
+.pytest_cache/
+.htmlcov/
+htmlcov/
+.tox/
+.nosenv/
+.coverage
+.coverage.*
+nosetests.xml
+coverage.xml
+*.cover
+*.log
 
-# OS
+# === IDEs and Text Editors ===
+# JetBrains (PyCharm)
+.idea/
+# Visual Studio Code
+.vscode/
+# System files
 .DS_Store
 Thumbs.db

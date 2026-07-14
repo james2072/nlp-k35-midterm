@@ -27,7 +27,6 @@ def load_and_process_input(file_path, file_type, work_id):
     if not abs_path or not os.path.exists(abs_path):
         print(f"Không tìm thấy file: {file_path}")
         return [], "unknown"
-
     print(f"  -> Đang đọc: {os.path.basename(abs_path)}")
 
     if file_type == "text":
@@ -40,18 +39,14 @@ def load_and_process_input(file_path, file_type, work_id):
             doc = fitz.open(abs_path)
             if file_type == "pdf_text":
                 text_pages = []
-                has_text = False
                 for page in doc:
-                    text = page.get_text("text")
-                    if text.strip(): has_text = True
-                    text_pages.append(text)
-                if has_text:
-                    doc.close()
-                    return text_pages, "text"
+                    text_pages.append(page.get_text("text"))
+                doc.close()
+                return text_pages, "text"
             
             images = []
             for page in doc:
-                mat = fitz.Matrix(200/72, 200/72) # Render 200 DPI
+                mat = fitz.Matrix(250/72, 250/72) # Render 250 DPI (Cân bằng giữa nét và nhẹ)
                 pix = page.get_pixmap(matrix=mat)
                 img = np.frombuffer(pix.samples, dtype=np.uint8).reshape(pix.h, pix.w, pix.n)
                 if pix.n == 4: img = cv2.cvtColor(img, cv2.COLOR_RGBA2BGR)
@@ -64,38 +59,29 @@ def load_and_process_input(file_path, file_type, work_id):
             if img is not None: return [img], "image"
     return [], "unknown"
 
-def enhance_han_nom_image(img):
+def enhance_image(img):
     """
-    Pipeline làm nét chữ Hán/Nôm cổ trên giấy dó (Không dùng AI/PyTorch)
-    1. Upscale Lanczos giữ nguyên nét sổ
-    2. Unsharp Masking làm đậm nét mực tàu
-    3. Adaptive Threshold khử vết ố vàng, ánh sáng không đều
-    4. Morphology khử đốm bẩn
+    Pipeline an toàn cho cả Sách Khắc Gỗ (HVB_003) và Sách Viết Tay (HVB_004)
     """
-    # 1. Upscale x2 bằng Lanczos (Giữ cạnh sắc nét, không bị mờ như AI)
     h, w = img.shape[:2]
     img_up = cv2.resize(img, (w*2, h*2), interpolation=cv2.INTER_LANCZOS4)
-    
-    # 2. Chuyển sang ảnh xám
     gray = cv2.cvtColor(img_up, cv2.COLOR_BGR2GRAY)
     
-    # 3. Unsharp Masking (Làm nổi bật cạnh nét mực)
-    blurred = cv2.GaussianBlur(gray, (0,0), 3)
-    sharp = cv2.addWeighted(gray, 1.5, blurred, -0.5, 0)
+    # 1. CLAHE: Tăng tương phản cục bộ (Giữ nguyên nét khắc gỗ, không làm dính chữ)
+    clahe = cv2.createCLAHE(clipLimit=2.5, tileGridSize=(8,8))
+    enhanced = clahe.apply(gray)
     
-    # 4. Adaptive Threshold (Tách chữ đen trên nền giấy cổ ố vàng)
-    binary = cv2.adaptiveThreshold(sharp, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 35, 10)
+    # 2. Median Blur: Khử các đốm ố vàng, vết bẩn li ti (Salt & Pepper noise) mà không làm mờ nét chữ
+    denoised = cv2.medianBlur(enhanced, 3)
     
-    # 5. Morphological Operations (Khử noise đốm bẩn, nối các nét đứt)
-    kernel = np.ones((2,2), np.uint8)
-    clean = cv2.morphologyEx(binary, cv2.MORPH_CLOSE, kernel)
+    # 3. Adaptive Threshold: Nhị phân hóa an toàn
+    binary = cv2.adaptiveThreshold(denoised, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 31, 10)
     
-    # 6. Resize về max 3500px để PaddleOCR không bị tràn RAM
+    # Resize về max 3500px để tránh tràn RAM
     max_side = 3500
-    h_new, w_new = clean.shape[:2]
+    h_new, w_new = binary.shape[:2]
     if max(h_new, w_new) > max_side:
         scale = max_side / max(h_new, w_new)
-        clean = cv2.resize(clean, (int(w_new*scale), int(h_new*scale)), interpolation=cv2.INTER_AREA)
+        binary = cv2.resize(binary, (int(w_new*scale), int(h_new*scale)), interpolation=cv2.INTER_AREA)
         
-    # PaddleOCR yêu cầu ảnh 3 kênh màu BGR
-    return cv2.cvtColor(clean, cv2.COLOR_GRAY2BGR)
+    return cv2.cvtColor(binary, cv2.COLOR_GRAY2BGR)
