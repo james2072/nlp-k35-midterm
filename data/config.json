@@ -5,8 +5,8 @@
       "slug": "an-nam-chi-luoc",
       "han": "安南志略",
       "viet": "An Nam Chí Lược",
-      "sino_file": "data/sino/an-nam-chi-luoc/HVB_001_txtText_Trung_An Nam Chí Lược.txt",
-      "vie_file": "data/vie/an-nam-chi-luoc/HVB_001_PDFText_Viet_An Nam Chí Lược.pdf",
+      "sino_file": "data/raw/sino/an-nam-chi-luoc/HVB_001_txtText_Trung_An Nam Chí Lược.txt",
+      "vie_file": "data/raw/vie/an-nam-chi-luoc/HVB_001_PDFText_Viet_An Nam Chí Lược.pdf",
       "sino_type": "text",
       "vie_type": "pdf_text"
     },
@@ -15,8 +15,8 @@
       "slug": "an-nam-chi-nguyen",
       "han": "安南志原",
       "viet": "An Nam Chí Nguyên",
-      "sino_file": "data/sino/an-nam-chi-nguyen/HVB_002_PDFScan_Trung_An Nam Chí Nguyên 安南志原.pdf",
-      "vie_file": "data/vie/an-nam-chi-nguyen/HVB_002_PDFScan_Viet_An Nam Chí Nguyên.pdf",
+      "sino_file": "data/raw/sino/an-nam-chi-nguyen/HVB_002_PDFScan_Trung_An Nam Chí Nguyên 安南志原.pdf",
+      "vie_file": "data/raw/vie/an-nam-chi-nguyen/HVB_002_PDFScan_Viet_An Nam Chí Nguyên.pdf",
       "sino_type": "pdf_scan",
       "vie_type": "pdf_scan"
     },
@@ -25,8 +25,8 @@
       "slug": "cong-du-tiep-ky",
       "han": "公餘捷記",
       "viet": "Công Dư Tiệp Ký",
-      "sino_file": "data/sino/cong-du-tiep-ky/HVB_003_PDFScan_Trung_Công Dư Tiệp Ký.pdf",
-      "vie_file": "data/vie/cong-du-tiep-ky/HVB_003_PDFScan_Viet_Công Dư Tiệp Ký 1+2+3.pdf",
+      "sino_file": "data/raw/sino/cong-du-tiep-ky/HVB_003_PDFScan_Trung_Công Dư Tiệp Ký.pdf",
+      "vie_file": "data/raw/vie/cong-du-tiep-ky/HVB_003_PDFScan_Viet_Công Dư Tiệp Ký 1+2+3.pdf",
       "sino_type": "pdf_scan",
       "vie_type": "pdf_scan"
     },
@@ -35,8 +35,8 @@
       "slug": "dai-nam-quoc-su-dien-ca",
       "han": "大南國史演歌",
       "viet": "Đại Nam Quốc Sử Diễn Ca",
-      "sino_file": "data/sino/dai-nam-quoc-su-dien-ca/HVB_004_PDFScan_Trung_Đại Nam quốc sử diễn ca Q1.pdf",
-      "vie_file": "data/vie/dai-nam-quoc-su-dien-ca/HVB_004_PDFText_Viet_Đại Nam quốc sử diễn ca Q1+2.pdf",
+      "sino_file": "data/raw/sino/dai-nam-quoc-su-dien-ca/HVB_004_PDFScan_Trung_Đại Nam quốc sử diễn ca Q1.pdf",
+      "vie_file": "data/raw/vie/dai-nam-quoc-su-dien-ca/HVB_004_PDFText_Viet_Đại Nam quốc sử diễn ca Q1+2.pdf",
       "sino_type": "pdf_scan",
       "vie_type": "pdf_text"
     },
@@ -45,8 +45,8 @@
       "slug": "dai-viet-lich-trieu-dang-khoa-luc",
       "han": "鼎鍥大越歷朝登科錄",
       "viet": "Đại Việt Lịch Triều Đăng Khoa Lục",
-      "sino_file": "data/sino/dai-viet-lich-trieu-dang-khoa-luc/HVB_005_txtText_Trung_Đỉnh Khiết Đại Việt Lịch Triều Đăng Khoa Lục - 鼎鍥大越歷朝登科錄_full.txt",
-      "vie_file": "data/vie/dai-viet-lich-trieu-dang-khoa-luc/HVB_005_PDFScan_Viet_Đại Việt Lịch Triều Đăng Khoa Lục 1+2.pdf",
+      "sino_file": "data/raw/sino/dai-viet-lich-trieu-dang-khoa-luc/HVB_005_txtText_Trung_Đỉnh Khiết Đại Việt Lịch Triều Đăng Khoa Lục - 鼎鍥大越歷朝登科錄_full.txt",
+      "vie_file": "data/raw/vie/dai-viet-lich-trieu-dang-khoa-luc/HVB_005_PDFScan_Viet_Đại Việt Lịch Triều Đăng Khoa Lục 1+2.pdf",
       "sino_type": "text",
       "vie_type": "pdf_scan"
     }
