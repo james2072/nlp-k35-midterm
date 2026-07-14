@@ -35,7 +35,8 @@ SIMILARITY_THRESHOLD = 0.45  # cosine similarity tối thiểu
 CONFIDENCE_THRESHOLD = 0.65  # -> gửi LLM verify
 
 # Paths
-PROJECT_ROOT = Path(__file__).parent.parent
+PROJECT_ROOT = Path(os.getcwd())
+
 DATA_DIR = PROJECT_ROOT / "data"
 OCR_OUTPUT_DIR = DATA_DIR / "ocr_output"
 CORPUS_DIR = DATA_DIR / "corpus"
