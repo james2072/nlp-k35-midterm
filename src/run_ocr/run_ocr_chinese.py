@@ -13,7 +13,7 @@ logging.getLogger("ppocr").setLevel(logging.ERROR)
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
-from ocr_utils import load_and_process_input, enhance_image
+from ocr_utils import load_and_process_input, enhance_image, init_paddleocr, normalize_ocr_result
 from llm_corrector import correct_text_with_llm
 
 OUT_DIR     = os.path.join(os.path.dirname(__file__), "..", "..", "data", "ocr_output")
@@ -22,10 +22,11 @@ CONFIG_PATH = os.path.join(os.path.dirname(__file__), "..", "..", "data", "confi
 
 def sort_vertical_layout(result) -> str:
     """Sắp xếp bbox theo thứ tự đọc cột dọc Hán: phải → trái, trên → dưới."""
-    if not result or not result[0]:
+    lines = normalize_ocr_result(result)
+    if not lines:
         return ""
     items = []
-    for line in result[0]:
+    for line in lines:
         box  = line[0]
         text = line[1][0]
         cx   = sum(p[0] for p in box) / 4.0
@@ -38,24 +39,25 @@ def sort_vertical_layout(result) -> str:
     columns: list[list] = []
     for item in items:
         for col in columns:
-            if abs(item["cx"] - sum(i["cx"] for i in col) / len(col)) < item["w"] * 1.0:
+            if abs(item["cx"] - col[0]["cx"]) < col[0]["w"] * 0.7:
                 col.append(item)
                 break
         else:
             columns.append([item])
 
-    return "\n".join(
+    raw_text = "\n".join(
         "".join(i["text"] for i in sorted(col, key=lambda x: x["cy"]))
         for col in columns
     )
+    return clean_han_text(raw_text)
 
 
 def clean_han_text(raw_text: str) -> str:
-    """Lọc ký tự rác OCR, giữ lại chữ Hán/Nôm."""
+    """Lọc ký tự rác OCR, giữ lại chữ Hán/Nôm cổ."""
     clean_lines = []
     for line in raw_text.split("\n"):
         line = line.strip()
-        if not line:
+        if not line or len(line) == 1 and not line.isalnum():
             continue
         if re.match(r"^[\d\s\W_]+$", line):
             continue
@@ -67,11 +69,7 @@ def clean_han_text(raw_text: str) -> str:
 
 def _ocr_scan_pages(pages: list, work_title: str) -> list[str]:
     """Chạy OCR + LLM correction cho danh sách ảnh (pdf_scan)."""
-    from paddleocr import PaddleOCR
-    ocr = PaddleOCR(
-        use_angle_cls=True, lang="ch", show_log=False,
-        det_db_box_thresh=0.3, det_db_thresh=0.2, drop_score=0.1,
-    )
+    ocr = init_paddleocr(lang="ch", use_angle_cls=True)
     print("  PaddleOCR (Hán) đã khởi tạo.")
 
     result_pages = []
@@ -80,7 +78,7 @@ def _ocr_scan_pages(pages: list, work_title: str) -> list[str]:
         print(f"  → OCR trang {idx + 1}/{len(pages)}...", end=" ", flush=True)
         try:
             enhanced  = enhance_image(img)
-            ocr_result = ocr.ocr(enhanced, cls=True)
+            ocr_result = ocr.ocr(enhanced)
             page_text  = sort_vertical_layout(ocr_result)
             page_text  = correct_text_with_llm(page_text, work_title, language="sino")
             result_pages.append(page_text)
@@ -119,7 +117,7 @@ def run_han_ocr():
                 print("  → Không load được ảnh, bỏ qua.")
                 continue
             result_pages = _ocr_scan_pages(pages, work_title)
-            full_text    = clean_han_text("\n".join(result_pages))
+            full_text    = "\n".join(result_pages)
 
         with open(out_path, "w", encoding="utf-8") as f:
             f.write(full_text)

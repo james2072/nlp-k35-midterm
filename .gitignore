@@ -71,3 +71,7 @@ coverage.xml
 Thumbs.db
 
 data/raw
+
+scratch
+
+.venv

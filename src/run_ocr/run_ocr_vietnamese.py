@@ -13,7 +13,7 @@ logging.getLogger("ppocr").setLevel(logging.ERROR)
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
-from ocr_utils import load_and_process_input, enhance_image
+from ocr_utils import load_and_process_input, enhance_image, init_paddleocr, normalize_ocr_result
 from llm_corrector import correct_text_with_llm
 
 OUT_DIR     = os.path.join(os.path.dirname(__file__), "..", "..", "data", "ocr_output")
@@ -29,10 +29,11 @@ _KEEP_VIET = re.compile(
 
 def smart_sort_layout(result) -> str:
     """Tự phát hiện layout dọc (Nôm cổ) hoặc ngang (Quốc ngữ) rồi sắp xếp bbox."""
-    if not result or not result[0]:
+    lines = normalize_ocr_result(result)
+    if not lines:
         return ""
     items = []
-    for line in result[0]:
+    for line in lines:
         box  = line[0]
         text = line[1][0]
         cx   = sum(p[0] for p in box) / 4.0
@@ -48,53 +49,46 @@ def smart_sort_layout(result) -> str:
         items.sort(key=lambda x: x["cx"], reverse=True)
         columns: list[list] = []
         for item in items:
+            placed = False
             for col in columns:
-                if abs(item["cx"] - sum(i["cx"] for i in col) / len(col)) < item["w"] * 1.5:
-                    col.append(item)
-                    break
-            else:
-                columns.append([item])
-        return "\n".join(
-            "".join(i["text"] for i in sorted(col, key=lambda x: x["cy"]))
-            for col in columns
-        )
-    else:                               # layout ngang
-        items.sort(key=lambda x: (x["cy"], x["cx"]))
-        lines, current, last_cy = [], [], -1000
+                if abs(item["cx"] - col[0]["cx"]) < col[0]["w"] * 0.7:
+                    col.append(item); placed = True; break
+            if not placed: columns.append([item])
+        for col in columns: col.sort(key=lambda x: x["cy"])
+        ordered = [item for col in columns for item in col]
+    else:                              # layout ngang
+        items.sort(key=lambda x: x["cy"])
+        rows: list[list] = []
         for item in items:
-            if abs(item["cy"] - last_cy) < item["h"] * 0.5:
-                current.append(item)
-            else:
-                if current:
-                    lines.append(" ".join(i["text"] for i in sorted(current, key=lambda x: x["cx"])))
-                current, last_cy = [item], item["cy"]
-        if current:
-            lines.append(" ".join(i["text"] for i in sorted(current, key=lambda x: x["cx"])))
-        return "\n".join(lines)
+            placed = False
+            for row in rows:
+                if abs(item["cy"] - row[0]["cy"]) < row[0]["h"] * 0.6:
+                    row.append(item); placed = True; break
+            if not placed: rows.append([item])
+        for row in rows: row.sort(key=lambda x: x["cx"])
+        ordered = [item for row in rows for item in row]
+
+    raw_text = "\n".join(i["text"] for i in ordered)
+    return _clean_viet_text(raw_text)
 
 
-def clean_viet_text(raw_text: str) -> str:
-    """Lọc ký tự rác OCR, giữ lại chữ Việt và Hán/Nôm."""
+def _clean_viet_text(text: str) -> str:
+    """Xóa các ký tự rác, giữ chữ Việt/Latin đầy đủ dấu + Hán + khoảng trắng."""
+    lines = text.split("\n")
     clean_lines = []
-    for line in raw_text.split("\n"):
+    for line in lines:
         line = line.strip()
-        if not line:
+        if not line or len(line) == 1 and not line.isalnum():
             continue
-        if re.match(r"^[\d\s\W_]+$", line):
-            continue
-        clean_line = re.sub(r"\s+", " ", _KEEP_VIET.sub("", line)).strip()
-        if len(clean_line) >= 4:        # bỏ fragment quá ngắn
+        clean_line = _KEEP_VIET.sub("", line)
+        if clean_line:
             clean_lines.append(clean_line)
     return "\n".join(clean_lines)
 
 
 def _ocr_scan_pages(pages: list, work_title: str) -> list[str]:
     """Chạy OCR + LLM correction cho danh sách ảnh (pdf_scan)."""
-    from paddleocr import PaddleOCR
-    ocr = PaddleOCR(
-        use_angle_cls=True, lang="en", show_log=False,
-        det_db_box_thresh=0.3, det_db_thresh=0.2, drop_score=0.1,
-    )
+    ocr = init_paddleocr(lang="vi", use_angle_cls=True)
     print("  PaddleOCR (Việt/Latin) đã khởi tạo.")
 
     result_pages = []
@@ -103,7 +97,7 @@ def _ocr_scan_pages(pages: list, work_title: str) -> list[str]:
         print(f"  → OCR trang {idx + 1}/{len(pages)}...", end=" ", flush=True)
         try:
             enhanced   = enhance_image(img)
-            ocr_result = ocr.ocr(enhanced, cls=True)
+            ocr_result = ocr.ocr(enhanced)
             page_text  = smart_sort_layout(ocr_result)
             page_text  = correct_text_with_llm(page_text, work_title, language="vie")
             result_pages.append(page_text)
