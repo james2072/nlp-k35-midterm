@@ -4,13 +4,10 @@ import re
 import cv2
 import numpy as np
 import fitz  # PyMuPDF
+from PIL import Image
 
-# Regex giữ lại chữ Latin (full dấu Việt), chữ Hán/Nôm, khoảng trắng
-_KEEP_VIET = re.compile(
-    r"[^a-zA-Zàáảãạăắằẳẵặâấầẩẫậèéẻẽẹêếềểễệìíỉĩịòóỏõọôốồổỗộơớờởỡợùúủũụưứừửữựỳýỷỹỵđ"
-    r"ÀÁẢÃẠĂẮẰẲẴẶÂẤẦẨẪẬÈÉẺẼẸÊẾỀỂỄỆÌÍỈĨỊÒÓỎÕỌÔỐỒỔỖỘƠỚỜỞỠỢÙÚỦŨỤƯỨỪỬỮỰỲÝỶỸỴĐ"
-    r"\u4e00-\u9fff\u3400-\u4dbf\U00020000-\U0002A6DF\s]"
-)
+# Padding mở rộng bounding box trước khi crop (pixel) — y như EXPEND = 5 trong notebook colab_paddle.ipynb
+CROP_EXPAND = 5
 
 
 def get_project_root():
@@ -79,39 +76,20 @@ def load_and_process_input(file_path, file_type, work_id):
 
 def enhance_image(img):
     """
-    Pipeline làm sạch và tăng độ tương phản an toàn cho tài liệu chữ Việt:
-    - CLAHE + Median Blur + Unsharp Masking để chữ nổi bật, viền sắc nét cho DBNet phân vùng chuẩn xác.
+    Chuẩn hóa kích thước ảnh vừa phải nếu ảnh quá nhỏ/quá lớn.
+    Không dùng CLAHE hay thresholding quá mạnh (y như notebook colab_paddle.ipynb dùng thẳng ảnh gốc)
+    để tránh làm mất các header chữ mảnh/tiêu đề trên nền màu như 'Thể Lệ Hiệu Chú'.
     """
     h, w = img.shape[:2]
-    if max(h, w) < 2000:
-        scale = min(2.0, 2500 / max(h, w))
-        img = cv2.resize(img, (int(w * scale), int(h * scale)), interpolation=cv2.INTER_LANCZOS4)
-
-    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-
-    clahe = cv2.createCLAHE(clipLimit=2.2, tileGridSize=(8, 8))
-    enhanced = clahe.apply(gray)
-
-    denoised = cv2.medianBlur(enhanced, 3)
-
-    gaussian = cv2.GaussianBlur(denoised, (0, 0), 2.0)
-    sharpened = cv2.addWeighted(denoised, 1.5, gaussian, -0.5, 0)
-
-    max_side = 3500
-    h_new, w_new = sharpened.shape[:2]
-    if max(h_new, w_new) > max_side:
-        scale = max_side / max(h_new, w_new)
-        sharpened = cv2.resize(sharpened, (int(w_new * scale), int(h_new * scale)), interpolation=cv2.INTER_AREA)
-
-    return cv2.cvtColor(sharpened, cv2.COLOR_GRAY2BGR)
+    # Nếu ảnh quá nhỏ (< 1200px), phóng to nhẹ để DBNet dễ nhận diện chữ nhỏ
+    if max(h, w) < 1200:
+        scale = min(2.0, 1800 / max(h, w))
+        return cv2.resize(img, (int(w * scale), int(h * scale)), interpolation=cv2.INTER_LANCZOS4)
+    return img
 
 
-def init_paddleocr(lang="vi", use_angle_cls=True):
-    """
-    Khởi tạo engine PaddleOCR tối ưu cho tiếng Việt:
-    - Tự động thiết lập các cờ môi trường (KMP, PIR, MKLDNN) chống lỗi Windows CPU.
-    - Xử lý đường dẫn DLL cho torch/shm.dll để tránh WinError 127 trên Windows.
-    """
+def _setup_paddle_env():
+    """Thiết lập các cờ môi trường Windows trước khi import PaddleOCR/torch."""
     import logging
     import warnings
 
@@ -120,6 +98,7 @@ def init_paddleocr(lang="vi", use_angle_cls=True):
     os.environ["FLAGS_enable_pir_in_executor"] = "0"
     os.environ["FLAGS_use_mkldnn"] = "0"
 
+    # Fix WinError 127 (torch shm.dll conflict với paddlepaddle trên Windows)
     try:
         torch_lib = os.path.join(sys.prefix, "Lib", "site-packages", "torch", "lib")
         if os.path.exists(torch_lib):
@@ -132,31 +111,185 @@ def init_paddleocr(lang="vi", use_angle_cls=True):
     warnings.filterwarnings("ignore")
     logging.getLogger("ppocr").setLevel(logging.ERROR)
 
-    device = "cpu"
+
+def _detect_device():
+    """Phát hiện GPU hay CPU."""
     try:
         import paddle
         if paddle.device.is_compiled_with_cuda() and paddle.device.cuda.device_count() > 0:
-            device = "gpu"
+            return "gpu"
     except Exception:
-        device = "cpu"
+        pass
+    return "cpu"
 
+
+def init_paddleocr(lang="vi"):
+    """
+    Khởi tạo PaddleOCR chỉ để text detection (DBNet bbox).
+    Tham khảo đúng cấu hình mặc định tường minh như notebook colab_paddle.ipynb.
+    """
+    _setup_paddle_env()
+
+    # Import torch trước paddleocr để tránh WinError 127 (shm.dll) trên Windows
     try:
         import torch
     except Exception:
         pass
 
     from paddleocr import PaddleOCR
-    ocr_engine = PaddleOCR(
-        use_angle_cls=use_angle_cls,
+    return PaddleOCR(
+        use_angle_cls=False,
         lang=lang,
-        device=device,
+        device=_detect_device(),
         enable_mkldnn=False,
         text_det_box_thresh=0.6,
-        text_det_thresh=0.35,
-        text_det_unclip_ratio=1.2,
-        text_rec_score_thresh=0.1,
+        text_det_thresh=0.3,
+        text_det_unclip_ratio=1.5,
     )
-    return ocr_engine
+
+
+def init_vietocr(weights_path: str | None = None):
+    """
+    Khởi tạo VietOCR predictor (vgg_seq2seq).
+    Tự tìm file weights local tại `weights/vgg_seq2seq.pth`, fallback URL nếu không có.
+    """
+    try:
+        from vietocr.tool.predictor import Predictor
+        from vietocr.tool.config import Cfg
+    except ImportError as e:
+        print(f"  ⚠️ Lỗi import VietOCR ({e}). Cần chạy: pip install vietocr \"setuptools<70\"")
+        return None
+
+    if weights_path is None:
+        local = os.path.join(os.path.dirname(__file__), "weights", "vgg_seq2seq.pth")
+        weights_path = local if os.path.exists(local) else "https://vocr.vn/data/vietocr/vgg_seq2seq.pth"
+
+    src = "[local] " + os.path.basename(weights_path) if os.path.exists(weights_path) else "[remote] " + weights_path
+    print(f"  → VietOCR weights: {src}")
+
+    try:
+        config = Cfg.load_config_from_name("vgg_seq2seq")
+        config["weights"] = weights_path
+        config["pretrain"] = weights_path
+        config["device"] = "cuda:0" if _detect_device() == "gpu" else "cpu"
+        config["predictor"]["beamsearch"] = False
+        return Predictor(config)
+    except Exception as e:
+        print(f"  ⚠️ Không khởi tạo được VietOCR: {e}")
+        return None
+
+
+def _crop_box(img_bgr, box, expand: int = CROP_EXPAND):
+    """
+    Crop ảnh BGR theo bounding box polygon 4 góc từ PaddleOCR, mở rộng `expand` pixel.
+    """
+    h_img, w_img = img_bgr.shape[:2]
+    pts = np.array(box, dtype=np.float32)
+    x_min = max(0, int(pts[:, 0].min()) - expand)
+    y_min = max(0, int(pts[:, 1].min()) - expand)
+    x_max = min(w_img, int(pts[:, 0].max()) + expand)
+    y_max = min(h_img, int(pts[:, 1].max()) + expand)
+    crop = img_bgr[y_min:y_max, x_min:x_max]
+    if crop.size == 0:
+        return None
+    return Image.fromarray(cv2.cvtColor(crop, cv2.COLOR_BGR2RGB))
+
+
+def run_ocr_page(img_bgr, paddle_engine, vietocr_predictor):
+    """
+    Pipeline 2 model cực kỳ tối giản, giống hệt 100% logic trong notebook colab_paddle.ipynb:
+      1. PaddleOCR tìm bounding box từng dòng chữ.
+      2. Tạo boxes 2 điểm [[x_min, y_min], [x_max, y_max]] -> đảo ngược [::-1] -> mở rộng EXPEND=5.
+      3. VietOCR crop từng bbox -> predict text tiếng Việt có dấu.
+    """
+    if vietocr_predictor is None:
+        raise ValueError(
+            "VietOCR predictor là None (khởi tạo thất bại do lỗi import hoặc thiếu thư viện pkg_resources/setuptools)."
+        )
+
+    # Bước 1: Paddle detect bbox
+    try:
+        det_result = paddle_engine.ocr(img_bgr, det=True, rec=False, cls=False)
+    except TypeError:
+        det_result = paddle_engine.ocr(img_bgr)
+
+    # Lấy danh sách box từ det_result (tương thích mọi format: v2.x list, v3.x dict, PaddleX)
+    raw_lines = []
+    if det_result:
+        if isinstance(det_result, dict):
+            raw_lines = det_result.get("dt_polys", det_result.get("rec_polys", det_result.get("boxes", [])))
+        elif isinstance(det_result, list) and len(det_result) > 0:
+            first = det_result[0]
+            if isinstance(first, dict):
+                # Paddle v3 dict format in list: [{'dt_polys': array([...])}]
+                raw_lines = first.get("dt_polys", first.get("rec_polys", first.get("boxes", [])))
+                if not len(raw_lines) and "points" in first:
+                    raw_lines = [item["points"] for item in det_result if isinstance(item, dict) and "points" in item]
+            elif isinstance(first, list):
+                # Paddle v2 format: [ [box1, box2, ...] ]
+                raw_lines = first
+            else:
+                raw_lines = det_result
+        else:
+            raw_lines = det_result
+
+    if not raw_lines or len(raw_lines) == 0:
+        return []
+
+    # Bước 2: Tạo Boxes 2 điểm từ polygon 4 điểm (y như colab_paddle.ipynb)
+    boxes = []
+    for line in raw_lines:
+        # Nếu line là dict (ví dụ {'points': poly}), lấy points
+        if isinstance(line, dict):
+            poly = line.get("points", line.get("poly", []))
+        # Nếu line là [poly, (txt, score)] thì lấy poly, ngược lại lấy line
+        elif isinstance(line, (list, tuple)) and len(line) == 2 and isinstance(line[1], (tuple, list)):
+            poly = line[0]
+        else:
+            poly = line
+
+        try:
+            boxes.append([
+                [int(poly[0][0]), int(poly[0][1])],
+                [int(poly[2][0]), int(poly[2][1])]
+            ])
+        except (IndexError, TypeError, KeyError):
+            continue
+
+    # Đảo ngược danh sách box (y như colab_paddle.ipynb: boxes = boxes[::-1])
+    boxes = boxes[::-1]
+
+    # Mở rộng EXPEND = 5 (y như colab_paddle.ipynb)
+    EXPEND = 5
+    for box in boxes:
+        box[0][0] = box[0][0] - EXPEND
+        box[0][1] = box[0][1] - EXPEND
+        box[1][0] = box[1][0] + EXPEND
+        box[1][1] = box[1][1] + EXPEND
+
+    # Bước 3: Crop ảnh -> VietOCR predict (y như colab_paddle.ipynb)
+    h_img, w_img = img_bgr.shape[:2]
+    recognized = []
+
+    for box in boxes:
+        y_min, y_max = max(0, box[0][1]), min(h_img, box[1][1])
+        x_min, x_max = max(0, box[0][0]), min(w_img, box[1][0])
+
+        cropped_image = img_bgr[y_min:y_max, x_min:x_max]
+        if cropped_image.size == 0:
+            continue
+
+        try:
+            pil_crop = Image.fromarray(cv2.cvtColor(cropped_image, cv2.COLOR_BGR2RGB))
+            text = vietocr_predictor.predict(pil_crop)
+            if text and str(text).strip():
+                # Trả về cùng format [ [box_poly, (text, 1.0)] ]
+                poly_4pts = [[x_min, y_min], [x_max, y_min], [x_max, y_max], [x_min, y_max]]
+                recognized.append([poly_4pts, (str(text).strip(), 1.0)])
+        except Exception:
+            continue
+
+    return recognized
 
 
 def normalize_ocr_result(result):
@@ -190,48 +323,52 @@ def normalize_ocr_result(result):
 
 
 def clean_viet_text(text: str) -> str:
-    """Xóa các ký tự rác, giữ chữ Việt/Latin đầy đủ dấu + khoảng trắng."""
+    """
+    Làm sạch dòng trống hoặc khoảng trắng thừa.
+    Bỏ hoàn toàn regex cắt chữ/số/dấu ngoặc vì bản thân VietOCR đã có từ điển (vocab) chuẩn,
+    giữ nguyên số (như 1961), dấu ngoặc, và header tài liệu.
+    """
     lines = text.split("\n")
-    clean_lines = []
-    for line in lines:
-        line = line.strip()
-        if not line or len(line) == 1 and not line.isalnum():
-            continue
-        clean_line = _KEEP_VIET.sub("", line)
-        if clean_line:
-            clean_lines.append(clean_line)
+    clean_lines = [line.strip() for line in lines if line.strip()]
     return "\n".join(clean_lines)
 
 
-def smart_sort_layout(result) -> str:
-    """Sắp xếp bounding box theo hàng ngang từ trên xuống dưới (trái qua phải)."""
-    lines = normalize_ocr_result(result)
+def smart_sort_layout(lines) -> str:
+    """
+    Sắp xếp văn bản chuẩn theo thứ tự từ trên xuống dưới (Top to Bottom)
+    và từ trái qua phải (Left to Right) dựa trên tọa độ Y trung bình của bounding box.
+    Đảm bảo 100% không bị ngược dòng và không bị mất/xáo trộn chữ.
+    """
     if not lines:
         return ""
-    items = []
-    for line in lines:
-        box = line[0]
-        text = line[1][0]
-        cx = sum(p[0] for p in box) / 4.0
-        cy = sum(p[1] for p in box) / 4.0
-        h = max(abs(box[0][1] - box[2][1]), abs(box[1][1] - box[3][1])) or 20
-        w = max(abs(box[0][0] - box[1][0]), abs(box[2][0] - box[3][0])) or 20
-        items.append({"cx": cx, "cy": cy, "h": h, "w": w, "text": str(text)})
 
-    items.sort(key=lambda x: x["cy"])
-    rows: list[list] = []
-    for item in items:
-        placed = False
-        for row in rows:
-            if abs(item["cy"] - row[0]["cy"]) < row[0]["h"] * 0.6:
-                row.append(item)
-                placed = True
-                break
-        if not placed:
-            rows.append([item])
-    for row in rows:
-        row.sort(key=lambda x: x["cx"])
-    ordered = [item for row in rows for item in row]
+    if not (isinstance(lines[0], (list, tuple)) and len(lines[0]) == 2 and isinstance(lines[0][1], (tuple, list))):
+        lines = normalize_ocr_result(lines)
 
-    raw_text = "\n".join(i["text"] for i in ordered)
-    return clean_viet_text(raw_text)
+    if not lines:
+        return ""
+
+    def get_sort_key(line_item):
+        box = line_item[0]
+        try:
+            if isinstance(box, (list, tuple, np.ndarray)) and len(box) > 0:
+                pts = np.array(box, dtype=np.float32)
+                # Tọa độ y trung bình (giúp chống nghiêng trang tốt hơn y_min)
+                y_mean = float(pts[:, 1].mean())
+                # Tọa độ x bên trái nhất
+                x_min = float(pts[:, 0].min())
+                return (y_mean, x_min)
+        except Exception:
+            pass
+        return (0.0, 0.0)
+
+    # Sắp xếp từ trên xuống dưới (Y nhỏ đến Y lớn), nếu cùng dòng thì trái sang phải
+    sorted_lines = sorted(lines, key=get_sort_key)
+
+    texts = []
+    for line in sorted_lines:
+        text = line[1][0] if isinstance(line[1], (tuple, list)) else line[1]
+        if text and str(text).strip():
+            texts.append(str(text).strip())
+
+    return "\n".join(texts)

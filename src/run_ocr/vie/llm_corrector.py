@@ -16,8 +16,8 @@ LLM_CHUNK_LINES = int(os.getenv("LLM_CHUNK_LINES", 100))
 LLM_OVERLAP_LINES = int(os.getenv("LLM_OVERLAP_LINES", 20))
 
 SYSTEM_PROMPT = (
-    "Bạn là biên tập viên văn bản cổ sử Việt Nam (Quốc ngữ / Hán Nôm). "
-    "NHIỆM VỤ: Sửa lỗi OCR, điền chữ mờ, sửa chính tả tiếng Việt cổ có dấu. "
+    "Bạn là biên tập viên văn bản tiếng Việt (Quốc ngữ). "
+    "NHIỆM VỤ: Sửa lỗi OCR, điền chữ mờ, sửa chính tả tiếng Việt có dấu. "
     "QUY TẮC CHUẨN HÓA CHO SENTENCE ALIGNMENT: "
     "1. Xóa bỏ chỉ số cước chú gắn sau từ (ví dụ: 'phần¹', 'Hoa Bằng²' -> 'phần', 'Hoa Bằng'). Nếu dòng chỉ chứa số trang (ví dụ '9', '12'), rác không chữ, hay cước chú chân trang (ví dụ: '¹ Xem...', 'Tr. 57-75'), hãy để dòng đó TRỐNG (blank line) để loại bỏ mà không làm lệch chỉ số dòng gối đầu. "
     "2. QUY TẮC BẮT BUỘC: Giữ nguyên chính xác số lượng dòng (1-to-1). KHÔNG gộp dòng chính văn, KHÔNG tách dòng, KHÔNG giải thích. Chỉ trả về text mộc đã sửa."
@@ -29,10 +29,9 @@ STOP_TOKENS = ["User:", "Giải thích:", "Phân tích:", "Note:", "Chú thích:
 def filter_for_alignment(text: str) -> str:
     """
     Lọc sạch văn bản tiếng Việt sau OCR/LLM để phục vụ tối ưu cho Sentence Alignment:
-    - Loại bỏ các dòng trống hoặc chỉ chứa khoảng trắng/chấm câu.
-    - Loại bỏ dòng chỉ chứa số trang/chữ số mồ côi (ví dụ: '9', '- 12 -', 'Trang 45').
-    - Loại bỏ cước chú chân trang, citation sách báo hiện đại không thuộc chính văn lịch sử (ví dụ: '¹ Xem...', 'Tr. 57-75').
     - Xóa chỉ số cước chú gắn liền trong câu (ví dụ: 'phần¹' -> 'phần', 'sách[1]' -> 'sách').
+    - Chuẩn hóa khoảng trắng thừa.
+    - TUYỆT ĐỐI KHÔNG XÓA DÒNG (kể cả tiêu đề, số dòng hay cước chú) để giữ nguyên 100% nội dung chính văn.
     """
     if not text or not text.strip():
         return ""
@@ -40,15 +39,9 @@ def filter_for_alignment(text: str) -> str:
     lines = text.split("\n")
     clean_lines = []
 
-    # Regex nhận diện cước chú / citation điển hình ở chân trang sách lịch sử tiếng Việt
-    footnote_regex = re.compile(
-        r"^[\(\[\{]?([0-9¹²³⁴⁵⁶⁷⁸⁹\*]+|[\*†‡]+)[\)\]\}]?\s*(Xem|Chú|Chú thích|Chú dẫn|Sđd|Tr\.|Trang|Theo|Bản|Nguyên|Tập san|Tạp chí|Nxb|Nhà xuất bản|Tham khảo)",
-        re.IGNORECASE
-    )
-
     # Regex xóa chỉ số cước chú nhỏ gắn sau từ (superscript hoặc ngoặc vuông/tròn [1], (1) dính sát đuôi chữ)
     inline_citation_regex = re.compile(
-        r"[¹²³⁴⁵⁶⁷⁸⁹⁰†‡]+|(?<=[a-zA-Z\u00c0-\u024f\u1e00-\u1eff\u4e00-\u9fff])[\(\[\{]\d+[\)\]\}]"
+        r"[¹²³⁴⁵⁶⁷⁸⁹⁰†‡]+|(?<=[a-zA-Z\u00c0-\u024f\u1e00-\u1eff])[\(\[\{]\d+[\)\]\}]"
     )
 
     for line in lines:
@@ -56,15 +49,7 @@ def filter_for_alignment(text: str) -> str:
         if not line_str:
             continue
 
-        # 1. Bỏ qua dòng chỉ chứa số hoặc ký tự đặc biệt/dấu câu (số trang mồ côi, gạch ngang trang...)
-        if re.match(r"^[\d\s\W_]+$", line_str) or not any(c.isalpha() or '\u4e00' <= c <= '\u9fff' for c in line_str):
-            continue
-
-        # 2. Bỏ qua cước chú/citation hiện đại
-        if footnote_regex.match(line_str):
-            continue
-
-        # 3. Xóa chỉ số cước chú gắn liền trong câu
+        # Xóa chỉ số cước chú gắn liền trong câu
         line_str = inline_citation_regex.sub("", line_str)
         line_str = re.sub(r"\s+", " ", line_str).strip()
 
@@ -120,14 +105,16 @@ def _build_user_prompt(work_title: str, chunk: str, context: str) -> str:
 
 def correct_text_with_llm(full_text: str, work_title: str, language: str = "vie") -> str:
     """
-    Chia text thành chunks có overlap, gửi cho LLM sửa lỗi OCR,
-    rồi ghép lại và lọc tạp chất phục vụ Sentence Alignment.
+    Chia text thành chunks (có context tham khảo từ đoạn trước), gửi cho LLM sửa lỗi OCR,
+    rồi ghép lại giữ nguyên 100% số dòng và nội dung.
     """
     if not full_text.strip():
         return full_text
 
     lines = full_text.split("\n")
-    stride = max(1, LLM_CHUNK_LINES - LLM_OVERLAP_LINES)
+    # Bước nhảy đúng bằng kích thước chunk để các chunk không bị trùng lặp,
+    # tránh phải cắt gối đầu (overlap slicing) làm mất/sai lệch dòng.
+    stride = max(1, LLM_CHUNK_LINES)
 
     chunks = [
         (
@@ -152,11 +139,7 @@ def correct_text_with_llm(full_text: str, work_title: str, language: str = "vie"
             print("OK")
 
         corrected_lines = corrected.split("\n")
-        if idx == 0:
-            result_lines.extend(corrected_lines)
-        else:
-            trim_idx = min(LLM_OVERLAP_LINES, max(0, len(corrected_lines) - 1))
-            result_lines.extend(corrected_lines[trim_idx:])
+        result_lines.extend(corrected_lines)
 
     merged_text = "\n".join(result_lines)
     return filter_for_alignment(merged_text)
