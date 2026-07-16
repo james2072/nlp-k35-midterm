@@ -1,13 +1,27 @@
-# `src/run_ocr` — OCR Pipeline
+# `src/run_ocr` — OCR Pipeline cho Tiếng Việt
 
-Module OCR chữ Hán/Nôm và Tiếng Việt từ PDF scan / ảnh / text, có bước hậu xử lý bằng LLM.
+Module OCR dành riêng cho Tiếng Việt từ PDF scan / ảnh / text, có bước hậu xử lý sửa lỗi bằng LLM (hoặc chạy mộc).
+Các thành phần đã được đơn giản hóa và tập trung gọn gàng tại thư mục con `vie/`.
 
 ---
 
-## Luồng xử lý
+## Cấu trúc thư mục
 
 ```
-data/raw/sino/{slug}/   hoặc   data/raw/vie/{slug}/
+src/run_ocr/
+├── vie/
+│    ├── run.py            # Entry point chính chạy toàn bộ pipeline OCR + LLM cho tiếng Việt
+│    ├── ocr_utils.py      # Bộ tiện ích OCR tiếng Việt (PaddleOCR lang='vi', smart_sort_layout, enhance_image)
+│    └── llm_corrector.py  # Bộ sửa lỗi OCR qua LLM (OpenAI-compatible / Gemini) chuyên biệt cho tiếng Việt
+└── weights/               # Thư mục chứa model weights của PaddleOCR
+```
+
+---
+
+## Luồng xử lý (`src/run_ocr/vie/run.py`)
+
+```
+data/raw/vie/{slug}/
          │
          ▼
    load_and_process_input()          [ocr_utils.py]
@@ -15,113 +29,62 @@ data/raw/sino/{slug}/   hoặc   data/raw/vie/{slug}/
          │
          ▼  (nếu là ảnh/scan)
    enhance_image()                   [ocr_utils.py]
-   ┌─────────────────────────────┐
-   │ 1. Upscale 2× (LANCZOS4)    │
-   │ 2. Grayscale                │
-   │ 3. CLAHE (tương phản cục bộ)│
-   │ 4. Median Blur (khử noise)  │
-   │ 5. Adaptive Threshold       │
-   │ 6. Downscale → max 3500px   │
-   └─────────────────────────────┘
+   ┌──────────────────────────────────────────────┐
+   │ 1. Upscale tối đa 2× (LANCZOS4)              │
+   │ 2. Grayscale                                 │
+   │ 3. CLAHE (tăng tương phản cục bộ)           │
+   │ 4. Median Blur (khử nhiễu đốm li ti)         │
+   │ 5. Unsharp Masking (làm sắc nét viền chữ)    │
+   │ 6. Downscale về tối đa 3500px                │
+   └──────────────────────────────────────────────┘
          │
          ▼
-   PaddleOCR (lang="ch" / "en")
-   → raw bboxes + text
+   PaddleOCR (lang="vi")             [ocr_utils.py]
+   → phát hiện bounding box + nhận diện text tiếng Việt
          │
          ▼
-   sort_layout()
-   ┌──────────────────────────────────────────┐
-   │ Hán  → cột dọc, phải → trái             │
-   │        (sort_vertical_layout)            │
-   │ Việt → tự phát hiện dọc/ngang            │
-   │        (smart_sort_layout)               │
-   └──────────────────────────────────────────┘
+   smart_sort_layout()               [ocr_utils.py]
+   (tự động sắp xếp dòng chữ từ trên xuống dưới, trái sang phải)
          │
          ▼
    correct_text_with_llm()           [llm_corrector.py]
    ┌───────────────────────────────────────────────────┐
    │ Chia text thành chunks (100 dòng, overlap 20)    │
-   │ Mỗi chunk → LLM local (OpenAI-compatible API)    │
-   │ Ghép kết quả (trim overlap để không nhân đôi)    │
-   │ Retry 3 lần nếu lỗi, fallback giữ text gốc      │
+   │ Mỗi chunk → LLM API (OpenAI-compatible)          │
+   │ Ghép kết quả (trim overlap an toàn 1-to-1)       │
+   │ filter_for_alignment() loại bỏ cước chú/số trang │
    └───────────────────────────────────────────────────┘
          │
          ▼
-   clean_text()
-   (xóa ký tự rác, chuẩn hóa khoảng trắng)
-         │
-         ▼
-   data/ocr_output/{work_id}_sino_raw.txt
    data/ocr_output/{work_id}_vie_raw.txt
 ```
 
 ---
 
-## Các file
+## Cách chạy pipeline Tiếng Việt
 
-| File | Vai trò |
-|------|---------|
-| `ocr_utils.py` | Load file (PDF/ảnh/text), enhance ảnh trước OCR |
-| `run_ocr_chinese.py` | Pipeline Hán: PaddleOCR `lang=ch`, sort cột dọc |
-| `run_ocr_vietnamese.py` | Pipeline Việt: PaddleOCR `lang=en`, smart layout |
-| `llm_corrector.py` | Sửa lỗi OCR qua LLM local (chunked + overlap) |
-
----
-
-## Cách chạy
+Chạy lệnh duy nhất từ thư mục gốc của project:
 
 ```bash
-# Chạy OCR toàn bộ 5 tác phẩm
-python src/run_ocr/run_ocr_chinese.py     # → *_sino_raw.txt
-python src/run_ocr/run_ocr_vietnamese.py  # → *_vie_raw.txt
+python src/run_ocr/vie/run.py
 ```
 
 ---
 
 ## Config (`data/config.json`)
 
-Mỗi tác phẩm có các trường:
+Từng tác phẩm được cấu hình qua file `data/config.json`:
 
 | Trường | Ý nghĩa |
 |--------|---------|
-| `id` | Định danh (HVB_001 … HVB_005) |
-| `sino_file` | Đường dẫn file Hán (từ project root) |
-| `vie_file` | Đường dẫn file Việt (từ project root) |
-| `sino_type` | `text` / `pdf_text` / `pdf_scan` |
-| `vie_type` | `text` / `pdf_text` / `pdf_scan` |
+| `id` | Định danh tác phẩm (HVB_001 … HVB_005) |
+| `vie_file` | Đường dẫn file Tiếng Việt (từ project root) |
+| `vie_type` | Loại dữ liệu (`text` / `pdf_text` / `pdf_scan`) |
 
 **Loại file và cách xử lý:**
 
 | Type | Xử lý |
 |------|-------|
-| `text` | Đọc `.txt` trực tiếp, **không OCR** |
-| `pdf_text` | Trích text layer PDF (PyMuPDF), **không OCR** |
-| `pdf_scan` | Render PDF → ảnh → enhance → **OCR** |
-
----
-
-## LLM Chunking
-
-```
-Ví dụ: 250 dòng, CHUNK=100, OVERLAP=20, STRIDE=80
-
-Chunk 0: dòng   0–99   (context: "")
-Chunk 1: dòng  80–179  (context: dòng 60–79)
-Chunk 2: dòng 160–249  (context: dòng 140–159)
-
-Khi ghép: chunk 1 trim 20 dòng đầu → không bị nhân đôi
-```
-
----
-
-## Ước tính token (toàn bộ 5 tác phẩm)
-
-| Nhóm | LLM Calls | Tokens |
-|------|---:|---:|
-| Sino | ~308 | ~624K |
-| Vie | ~1,628 | ~1,274K |
-| **Tổng** | **~1,936** | **~1.9M** |
-
-> Thời gian ước tính với Qwen3-4B local: **13–35 giờ** tùy phần cứng.
-
-**Tối ưu:** File `text` / `pdf_text` đã có text layer sạch — có thể dùng `--no-llm` để bỏ qua LLM correction.
+| `text` | Đọc `.txt` trực tiếp, **không chạy OCR** |
+| `pdf_text` | Trích text layer từ PDF (PyMuPDF), **không chạy OCR** |
+| `pdf_scan` | Render PDF → ảnh → tiền xử lý (`enhance_image`) → **PaddleOCR (`lang="vi"`)** + **LLM Corrector** |

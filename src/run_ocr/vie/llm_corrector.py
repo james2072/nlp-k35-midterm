@@ -6,38 +6,29 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-LLM_API_URL    = os.getenv("LLM_API_URL",    "http://localhost:1234/v1/chat/completions")
-LLM_API_KEY    = os.getenv("LLM_API_KEY",    "lm-studio")
-LLM_MODEL_NAME = os.getenv("LLM_MODEL_NAME", "qwen/qwen3-4b-2507")
-LLM_TIMEOUT    = int(os.getenv("LLM_TIMEOUT",    300))
-LLM_MAX_RETRIES= int(os.getenv("LLM_MAX_RETRIES", 3))
-LLM_MAX_TOKENS = int(os.getenv("LLM_MAX_TOKENS", 4096))
-LLM_CHUNK_LINES= int(os.getenv("LLM_CHUNK_LINES", 100))
-LLM_OVERLAP_LINES=int(os.getenv("LLM_OVERLAP_LINES", 20))
+LLM_API_URL     = os.getenv("LLM_API_URL",    "http://localhost:1234/v1/chat/completions")
+LLM_API_KEY     = os.getenv("LLM_API_KEY",    "lm-studio")
+LLM_MODEL_NAME  = os.getenv("LLM_MODEL_NAME", "qwen/qwen3-4b-2507")
+LLM_TIMEOUT     = int(os.getenv("LLM_TIMEOUT",    300))
+LLM_MAX_RETRIES = int(os.getenv("LLM_MAX_RETRIES", 3))
+LLM_MAX_TOKENS  = int(os.getenv("LLM_MAX_TOKENS", 4096))
+LLM_CHUNK_LINES = int(os.getenv("LLM_CHUNK_LINES", 100))
+LLM_OVERLAP_LINES = int(os.getenv("LLM_OVERLAP_LINES", 20))
 
-SYSTEM_PROMPTS = {
-    "sino": (
-        "Bạn là chuyên gia Hán Nôm cổ sử Việt Nam. "
-        "NHIỆM VỤ: Sửa lỗi OCR, điền chữ mờ dựa trên văn ngôn, điều chỉnh thành câu có nghĩa. "
-        "QUY TẮC CHUẨN HÓA CHO SENTENCE ALIGNMENT: "
-        "1. Xóa bỏ các chữ số/ký hiệu cước chú gắn sau từ (ví dụ: 'chữ¹' -> 'chữ'). Nếu dòng là số trang mồ côi, tiêu đề lặp lại hay cước chú hiện đại, hãy để dòng đó TRỐNG (blank line) để loại bỏ mà không làm lệch chỉ số dòng gối đầu. "
-        "2. QUY TẮC BẮT BUỘC: Giữ nguyên chính xác số lượng dòng (1-to-1). KHÔNG gộp dòng chính văn, KHÔNG tách dòng, KHÔNG giải thích, KHÔNG markdown. Chỉ trả về text mộc đã sửa."
-    ),
-    "vie": (
-        "Bạn là biên tập viên văn bản cổ sử Việt Nam (Quốc ngữ / Hán Nôm). "
-        "NHIỆM VỤ: Sửa lỗi OCR, điền chữ mờ, sửa chính tả tiếng Việt cổ có dấu. "
-        "QUY TẮC CHUẨN HÓA CHO SENTENCE ALIGNMENT: "
-        "1. Xóa bỏ chỉ số cước chú gắn sau từ (ví dụ: 'phần¹', 'Hoa Bằng²' -> 'phần', 'Hoa Bằng'). Nếu dòng chỉ chứa số trang (ví dụ '9', '12'), rác không chữ, hay cước chú chân trang (ví dụ: '¹ Xem...', 'Tr. 57-75'), hãy để dòng đó TRỐNG (blank line) để loại bỏ mà không làm lệch chỉ số dòng gối đầu. "
-        "2. QUY TẮC BẮT BUỘC: Giữ nguyên chính xác số lượng dòng (1-to-1). KHÔNG gộp dòng chính văn, KHÔNG tách dòng, KHÔNG giải thích. Chỉ trả về text mộc đã sửa."
-    ),
-}
+SYSTEM_PROMPT = (
+    "Bạn là biên tập viên văn bản cổ sử Việt Nam (Quốc ngữ / Hán Nôm). "
+    "NHIỆM VỤ: Sửa lỗi OCR, điền chữ mờ, sửa chính tả tiếng Việt cổ có dấu. "
+    "QUY TẮC CHUẨN HÓA CHO SENTENCE ALIGNMENT: "
+    "1. Xóa bỏ chỉ số cước chú gắn sau từ (ví dụ: 'phần¹', 'Hoa Bằng²' -> 'phần', 'Hoa Bằng'). Nếu dòng chỉ chứa số trang (ví dụ '9', '12'), rác không chữ, hay cước chú chân trang (ví dụ: '¹ Xem...', 'Tr. 57-75'), hãy để dòng đó TRỐNG (blank line) để loại bỏ mà không làm lệch chỉ số dòng gối đầu. "
+    "2. QUY TẮC BẮT BUỘC: Giữ nguyên chính xác số lượng dòng (1-to-1). KHÔNG gộp dòng chính văn, KHÔNG tách dòng, KHÔNG giải thích. Chỉ trả về text mộc đã sửa."
+)
 
 STOP_TOKENS = ["User:", "Giải thích:", "Phân tích:", "Note:", "Chú thích:"]
 
 
-def filter_for_alignment(text: str, language: str = "vie") -> str:
+def filter_for_alignment(text: str) -> str:
     """
-    Lọc sạch văn bản sau OCR/LLM để phục vụ tối ưu cho Sentence Alignment:
+    Lọc sạch văn bản tiếng Việt sau OCR/LLM để phục vụ tối ưu cho Sentence Alignment:
     - Loại bỏ các dòng trống hoặc chỉ chứa khoảng trắng/chấm câu.
     - Loại bỏ dòng chỉ chứa số trang/chữ số mồ côi (ví dụ: '9', '- 12 -', 'Trang 45').
     - Loại bỏ cước chú chân trang, citation sách báo hiện đại không thuộc chính văn lịch sử (ví dụ: '¹ Xem...', 'Tr. 57-75').
@@ -55,12 +46,7 @@ def filter_for_alignment(text: str, language: str = "vie") -> str:
         re.IGNORECASE
     )
 
-    # Regex nhận diện dòng chỉ chứa số trang Hán tự hoặc tiêu đề trang (quyển/trang mồ côi như '一', '第 二 頁', '卷 一')
-    sino_page_number_regex = re.compile(
-        r"^([第]?\s*[一二三四五六七八九十百千零〇・]+\s*[頁葉卷篇上下]?|[一二三四五六七八九十百千零〇・\s]+)$"
-    )
-
-    # Regex xóa chỉ số cước chú nhỏ gắn sau từ (superscript ¹²³⁴⁵⁶⁷⁸⁹⁰†‡* hoặc ngoặc vuông/tròn [1], (1) dính sát sau chữ)
+    # Regex xóa chỉ số cước chú nhỏ gắn sau từ (superscript hoặc ngoặc vuông/tròn [1], (1) dính sát đuôi chữ)
     inline_citation_regex = re.compile(
         r"[¹²³⁴⁵⁶⁷⁸⁹⁰†‡]+|(?<=[a-zA-Z\u00c0-\u024f\u1e00-\u1eff\u4e00-\u9fff])[\(\[\{]\d+[\)\]\}]"
     )
@@ -74,15 +60,11 @@ def filter_for_alignment(text: str, language: str = "vie") -> str:
         if re.match(r"^[\d\s\W_]+$", line_str) or not any(c.isalpha() or '\u4e00' <= c <= '\u9fff' for c in line_str):
             continue
 
-        # 2. Bỏ qua cước chú/citation hiện đại (khi xử lý tiếng Việt)
-        if language == "vie" and footnote_regex.match(line_str):
+        # 2. Bỏ qua cước chú/citation hiện đại
+        if footnote_regex.match(line_str):
             continue
 
-        # 2b. Bỏ qua số trang Hán tự / số Hán mồ côi ở đầu/cuối trang (khi xử lý tiếng Hán)
-        if language == "sino" and sino_page_number_regex.match(line_str):
-            continue
-
-        # 3. Xóa chỉ số cước chú gắn liền trong câu (như 'phần¹' -> 'phần', 'sách[2]' -> 'sách')
+        # 3. Xóa chỉ số cước chú gắn liền trong câu
         line_str = inline_citation_regex.sub("", line_str)
         line_str = re.sub(r"\s+", " ", line_str).strip()
 
@@ -114,7 +96,6 @@ def call_llm_api(system_prompt: str, user_prompt: str) -> str | None:
             resp = requests.post(LLM_API_URL, headers=headers, json=payload, timeout=LLM_TIMEOUT)
             if resp.status_code == 200:
                 content = resp.json()["choices"][0]["message"]["content"].strip()
-                # Strip markdown code fences nếu LLM trả về
                 content = re.sub(r"^```[a-zA-Z]*\r?\n?(.*?)\r?\n?```$", r"\1", content, flags=re.DOTALL).strip()
                 return content
             print(f"  API {resp.status_code}: {resp.text[:150]} (retry {attempt + 1}/{LLM_MAX_RETRIES})")
@@ -137,19 +118,17 @@ def _build_user_prompt(work_title: str, chunk: str, context: str) -> str:
     )
 
 
-def correct_text_with_llm(full_text: str, work_title: str, language: str = "sino") -> str:
+def correct_text_with_llm(full_text: str, work_title: str, language: str = "vie") -> str:
     """
-    Chia text thành chunks có overlap, gửi từng chunk cho LLM sửa lỗi OCR,
-    rồi ghép lại (trim phần overlap để không bị nhân đôi dòng).
+    Chia text thành chunks có overlap, gửi cho LLM sửa lỗi OCR,
+    rồi ghép lại và lọc tạp chất phục vụ Sentence Alignment.
     """
     if not full_text.strip():
         return full_text
 
     lines = full_text.split("\n")
     stride = max(1, LLM_CHUNK_LINES - LLM_OVERLAP_LINES)
-    system_prompt = SYSTEM_PROMPTS.get(language, SYSTEM_PROMPTS["vie"])
 
-    # Tạo danh sách (chunk_text, context_text) — thống nhất cả trường hợp ngắn và dài
     chunks = [
         (
             "\n".join(lines[i : i + LLM_CHUNK_LINES]),
@@ -164,7 +143,7 @@ def correct_text_with_llm(full_text: str, work_title: str, language: str = "sino
             continue
 
         print(f"  LLM chunk {idx + 1}/{len(chunks)}...", end=" ", flush=True)
-        corrected = call_llm_api(system_prompt, _build_user_prompt(work_title, chunk, context))
+        corrected = call_llm_api(SYSTEM_PROMPT, _build_user_prompt(work_title, chunk, context))
 
         if corrected is None:
             print("FAILED (giữ gốc)")
@@ -173,8 +152,6 @@ def correct_text_with_llm(full_text: str, work_title: str, language: str = "sino
             print("OK")
 
         corrected_lines = corrected.split("\n")
-        # Chunk đầu tiên: lấy toàn bộ
-        # Chunk tiếp theo: trim gối đầu an toàn (chỉ cắt tối đa đến dòng áp chót nếu số dòng ngắn hơn LLM_OVERLAP_LINES)
         if idx == 0:
             result_lines.extend(corrected_lines)
         else:
@@ -182,5 +159,4 @@ def correct_text_with_llm(full_text: str, work_title: str, language: str = "sino
             result_lines.extend(corrected_lines[trim_idx:])
 
     merged_text = "\n".join(result_lines)
-    # Lọc sạch lần cuối để loại bỏ số trang mồ côi, rác và cước chú phục vụ Sentence Alignment
-    return filter_for_alignment(merged_text, language=language)
+    return filter_for_alignment(merged_text)
