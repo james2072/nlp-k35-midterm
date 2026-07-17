@@ -32,7 +32,7 @@ def _init_engines():
     paddle = init_paddleocr(lang="vi")
     print("OK")
 
-    print("  ⏳ Khởi tạo VietOCR (vgg_seq2seq recognition)...", end=" ", flush=True)
+    print("  ⏳ Khởi tạo VietOCR (vgg_transformer recognition)...", end=" ", flush=True)
     vietocr = init_vietocr()
     print("OK")
 

@@ -316,7 +316,7 @@ def _crop_box_from_poly(img_bgr, pts, expand: int = CROP_EXPAND):
     h_img, w_img = img_bgr.shape[:2]
     h_box = float(pts[:, 1].max() - pts[:, 1].min())
     expand_x = expand
-    expand_y = min(4, max(2, int(h_box * 0.12)))
+    expand_y = max(4, min(8, int(h_box * 0.16)))
 
     x_min = max(0,       int(pts[:, 0].min()) - expand_x)
     y_min = max(0,       int(pts[:, 1].min()) - expand_y)

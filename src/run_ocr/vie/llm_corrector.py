@@ -17,13 +17,14 @@ LLM_OVERLAP_LINES = int(os.getenv("LLM_OVERLAP_LINES", 20))
 
 SYSTEM_PROMPT = (
     "Bạn là chuyên gia ngôn ngữ và biên tập viên văn bản tiếng Việt (Quốc ngữ). "
-    "NHIỆM VỤ: Sửa lỗi chính tả, lỗi nhận diện OCR, điền chữ mờ, khôi phục văn bản tiếng Việt chuẩn xác, tường minh và mạch lạc "
-    "để phục vụ cho việc đối chiếu câu (Sentence Alignment) với nguyên văn Hán ngữ sau này.\n"
-    "QUY TẮC BẮT BUỘC:\n"
-    "1. Sửa hoàn chỉnh các từ bị lỗi OCR (ví dụ: 'thi đạo cân chỉ chchính' -> 'thể lệ hiệu chú chính'), nối liền các câu bị ngắt xuống dòng sai ngữ pháp để mạch văn trôi chảy, tự nhiên.\n"
-    "2. Loại bỏ hoàn toàn các dòng rác không có nghĩa, số trang đơn lẻ (như '10', '0361903100135'), ký hiệu nhiễu viền hoặc cước chú chân trang không thuộc phần bản văn chính.\n"
-    "3. Xóa bỏ chỉ số cước chú gắn sát đuôi từ (ví dụ: 'phần¹' -> 'phần', 'sách[1]' -> 'sách').\n"
-    "4. Trả về văn bản tiếng Việt đã được biên tập sạch sẽ, mỗi câu/đoạn mạch lạc trên một hàng. KHÔNG kèm lời chào, giải thích hay bình luận."
+    "NHIỆM VỤ: Sửa lỗi chính tả, lỗi nhận diện OCR, khôi phục dấu thanh bị mờ để văn bản tiếng Việt chuẩn xác, tường minh "
+    "phục vụ cho việc đối chiếu câu song ngữ (Sentence Alignment) với nguyên văn Hán ngữ sau này.\n"
+    "QUY TẮC BẮT BUỘC (NGHIÊM NGẶT):\n"
+    "1. TUYỆT ĐỐI KHÔNG TÓM TẮT (NO SUMMARIZATION), KHÔNG tự ý viết lại hay diễn giải/biến tấu lời văn. Phải giữ nguyên 100% ý nghĩa, từ ngữ và trật tự câu của tác giả.\n"
+    "2. Chỉ sửa chữa những từ bị lỗi OCR rõ ràng (ví dụ: mất dấu, sai chính tả do quét mờ) và nối các câu bị ngắt xuống dòng sai ngữ pháp thành câu/đoạn hoàn chỉnh trôi chảy.\n"
+    "3. Loại bỏ hoàn toàn các dòng rác không có nghĩa, số trang đơn lẻ (như '10', '0361903100135'), cước chú viền trang không thuộc phần bản văn chính, và xóa chỉ số cước chú gắn sát đuôi từ (ví dụ: 'phần¹' -> 'phần', 'sách[1]' -> 'sách').\n"
+    "4. Nếu một đoạn văn bị nhận diện OCR quá nát/mất chữ đến mức không thể khôi phục chính xác từng từ, hãy sửa tối thiểu và giữ nguyên cấu trúc gốc, TUYỆT ĐỐI KHÔNG bịa đặt hay tóm lược lại cả đoạn thành 1 câu mới.\n"
+    "5. Trả về văn bản tiếng Việt đã được biên tập sạch sẽ. KHÔNG kèm lời chào, giải thích hay bình luận."
 )
 
 STOP_TOKENS = ["User:", "Giải thích:", "Phân tích:", "Note:", "Chú thích:"]
@@ -116,7 +117,7 @@ def _build_user_prompt(work_title: str, chunk_lines: list[str], context: str) ->
     return (
         f'Tác phẩm: "{work_title}"\n'
         f"Bối cảnh đoạn trước (chỉ để tham khảo mạch văn, KHÔNG sửa lại đoạn này):\n{ctx_text}\n\n"
-        f"VĂN BẢN OCR CẦN BIÊN TẬP VÀ SỬA LỖI (hãy chỉnh sửa cho tường minh, mạch lạc, xóa rác số trang):\n{raw_text}\n"
+        f"VĂN BẢN OCR CẦN BIÊN TẬP (Chú ý: Sửa chính tả/lỗi dấu và nối câu mạch lạc, TUYỆT ĐỐI KHÔNG TÓM TẮT hay tự ý viết lại lời văn của tác giả):\n{raw_text}\n"
     )
 
 
