@@ -12,12 +12,10 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 from ocr_utils import (
     load_and_process_input,
-    enhance_image,
     init_paddleocr,
     init_vietocr,
     run_ocr_page,
     smart_sort_layout,
-    clean_viet_text,
 )
 from llm_corrector import correct_text_with_llm
 
@@ -53,8 +51,7 @@ def _ocr_scan_pages(pages: list, work_title: str) -> list[str]:
         t0 = time.time()
         print(f"  → OCR trang {idx + 1}/{len(pages)}...", end=" ", flush=True)
         try:
-            enhanced  = enhance_image(img)
-            ocr_lines = run_ocr_page(enhanced, paddle_engine, vietocr_predictor)
+            ocr_lines = run_ocr_page(img, paddle_engine, vietocr_predictor)
             page_text = smart_sort_layout(ocr_lines)
             page_text = correct_text_with_llm(page_text, work_title, language="vie")
             result_pages.append(page_text)
@@ -96,7 +93,7 @@ def run_viet_ocr():
                 print("  → Không load được ảnh, bỏ qua.")
                 continue
             result_pages = _ocr_scan_pages(pages, work_title)
-            full_text    = clean_viet_text("\n".join(result_pages))
+            full_text    = "\n".join([page.strip() for page in result_pages if page.strip()])
 
         with open(out_path, "w", encoding="utf-8") as f:
             f.write(full_text)

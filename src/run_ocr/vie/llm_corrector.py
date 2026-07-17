@@ -16,51 +16,65 @@ LLM_CHUNK_LINES = int(os.getenv("LLM_CHUNK_LINES", 100))
 LLM_OVERLAP_LINES = int(os.getenv("LLM_OVERLAP_LINES", 20))
 
 SYSTEM_PROMPT = (
-    "Bạn là biên tập viên văn bản tiếng Việt (Quốc ngữ). "
-    "NHIỆM VỤ: Sửa lỗi OCR, điền chữ mờ, sửa chính tả tiếng Việt có dấu. "
-    "QUY TẮC CHUẨN HÓA CHO SENTENCE ALIGNMENT: "
-    "1. Xóa bỏ chỉ số cước chú gắn sau từ (ví dụ: 'phần¹', 'Hoa Bằng²' -> 'phần', 'Hoa Bằng'). Nếu dòng chỉ chứa số trang (ví dụ '9', '12'), rác không chữ, hay cước chú chân trang (ví dụ: '¹ Xem...', 'Tr. 57-75'), hãy để dòng đó TRỐNG (blank line) để loại bỏ mà không làm lệch chỉ số dòng gối đầu. "
-    "2. QUY TẮC BẮT BUỘC: Giữ nguyên chính xác số lượng dòng (1-to-1). KHÔNG gộp dòng chính văn, KHÔNG tách dòng, KHÔNG giải thích. Chỉ trả về text mộc đã sửa."
+    "Bạn là chuyên gia ngôn ngữ và biên tập viên văn bản tiếng Việt (Quốc ngữ). "
+    "NHIỆM VỤ: Sửa lỗi chính tả, lỗi nhận diện OCR, điền chữ mờ, khôi phục văn bản tiếng Việt chuẩn xác, tường minh và mạch lạc "
+    "để phục vụ cho việc đối chiếu câu (Sentence Alignment) với nguyên văn Hán ngữ sau này.\n"
+    "QUY TẮC BẮT BUỘC:\n"
+    "1. Sửa hoàn chỉnh các từ bị lỗi OCR (ví dụ: 'thi đạo cân chỉ chchính' -> 'thể lệ hiệu chú chính'), nối liền các câu bị ngắt xuống dòng sai ngữ pháp để mạch văn trôi chảy, tự nhiên.\n"
+    "2. Loại bỏ hoàn toàn các dòng rác không có nghĩa, số trang đơn lẻ (như '10', '0361903100135'), ký hiệu nhiễu viền hoặc cước chú chân trang không thuộc phần bản văn chính.\n"
+    "3. Xóa bỏ chỉ số cước chú gắn sát đuôi từ (ví dụ: 'phần¹' -> 'phần', 'sách[1]' -> 'sách').\n"
+    "4. Trả về văn bản tiếng Việt đã được biên tập sạch sẽ, mỗi câu/đoạn mạch lạc trên một hàng. KHÔNG kèm lời chào, giải thích hay bình luận."
 )
 
 STOP_TOKENS = ["User:", "Giải thích:", "Phân tích:", "Note:", "Chú thích:"]
+
 
 
 def filter_for_alignment(text: str) -> str:
     """
     Lọc sạch văn bản tiếng Việt sau OCR/LLM để phục vụ tối ưu cho Sentence Alignment:
     - Xóa chỉ số cước chú gắn liền trong câu (ví dụ: 'phần¹' -> 'phần', 'sách[1]' -> 'sách').
-    - Chuẩn hóa khoảng trắng thừa.
-    - TUYỆT ĐỐI KHÔNG XÓA DÒNG (kể cả tiêu đề, số dòng hay cước chú) để giữ nguyên 100% nội dung chính văn.
+    - Chuẩn hóa khoảng trắng thừa trong mỗi dòng.
+    - Loại bỏ các dòng trống hoặc dòng nhiễu rác.
     """
-    if not text or not text.strip():
+    if not text:
         return ""
 
     lines = text.split("\n")
-    clean_lines = []
-
-    # Regex xóa chỉ số cước chú nhỏ gắn sau từ (superscript hoặc ngoặc vuông/tròn [1], (1) dính sát đuôi chữ)
     inline_citation_regex = re.compile(
         r"[¹²³⁴⁵⁶⁷⁸⁹⁰†‡]+|(?<=[a-zA-Z\u00c0-\u024f\u1e00-\u1eff])[\(\[\{]\d+[\)\]\}]"
     )
 
+    clean_lines = []
     for line in lines:
         line_str = line.strip()
         if not line_str:
             continue
-
-        # Xóa chỉ số cước chú gắn liền trong câu
         line_str = inline_citation_regex.sub("", line_str)
         line_str = re.sub(r"\s+", " ", line_str).strip()
-
-        if line_str:
+        if line_str and not _is_noise_line(line_str):
             clean_lines.append(line_str)
 
     return "\n".join(clean_lines)
 
 
+def _is_noise_line(s: str) -> bool:
+    """Kiểm tra nhanh xem dòng s có rõ ràng là rác số trang / ký tự lạc không."""
+    if not s or len(s) <= 1:
+        return True
+    if re.fullmatch(r'[\d\s/.,\-–\u2014:]+', s):
+        return True
+    words = s.split()
+    if len(words) >= 6:
+        from collections import Counter
+        most_common_count = Counter(words).most_common(1)[0][1]
+        if most_common_count / len(words) >= 0.5:
+            return True
+    return False
+
+
 def call_llm_api(system_prompt: str, user_prompt: str) -> str | None:
-    """Gọi OpenAI-compatible API, retry tối đa LLM_MAX_RETRIES lần."""
+    """Gọi OpenAI-compatible API, retry tối đa LLM_MAX_RETRIES lần (cho lỗi mạng/timeout/API)."""
     headers = {
         "Authorization": f"Bearer {LLM_API_KEY}",
         "Content-Type": "application/json",
@@ -89,56 +103,74 @@ def call_llm_api(system_prompt: str, user_prompt: str) -> str | None:
         except Exception as e:
             print(f"  Lỗi: {e} (retry {attempt + 1}/{LLM_MAX_RETRIES})")
 
-        time.sleep(2 ** attempt)
+        if attempt < LLM_MAX_RETRIES - 1:
+            time.sleep(2 ** attempt)
 
     return None
 
 
-def _build_user_prompt(work_title: str, chunk: str, context: str) -> str:
+def _build_user_prompt(work_title: str, chunk_lines: list[str], context: str) -> str:
+    """Build prompt đưa văn bản OCR cần biên tập cho LLM."""
     ctx_text = context if context else "(Đây là phần đầu tác phẩm)"
+    raw_text = "\n".join(chunk_lines)
     return (
         f'Tác phẩm: "{work_title}"\n'
-        f"Bối cảnh (đoạn trước - chỉ để tham khảo, KHÔNG sửa):\n{ctx_text}\n\n"
-        f"Đoạn cần sửa (sửa lỗi OCR, điền dấu, điền chữ thiếu, giữ nguyên số dòng):\n{chunk}\n"
+        f"Bối cảnh đoạn trước (chỉ để tham khảo mạch văn, KHÔNG sửa lại đoạn này):\n{ctx_text}\n\n"
+        f"VĂN BẢN OCR CẦN BIÊN TẬP VÀ SỬA LỖI (hãy chỉnh sửa cho tường minh, mạch lạc, xóa rác số trang):\n{raw_text}\n"
     )
+
+
+def _correct_chunk(work_title: str, chunk_lines: list[str], context: str, chunk_no: int, total_chunks: int) -> list[str]:
+    """
+    Gọi LLM sửa 1 chunk văn bản. Không bắt buộc giữ nguyên số dòng,
+    tập trung vào chất lượng, độ mạch lạc và ngữ pháp chuẩn xác.
+    """
+    print(f"  LLM chunk {chunk_no}/{total_chunks}...", end=" ", flush=True)
+
+    for attempt in range(LLM_MAX_RETRIES):
+        corrected = call_llm_api(SYSTEM_PROMPT, _build_user_prompt(work_title, chunk_lines, context))
+
+        if corrected is not None:
+            raw_lines = [l.strip() for l in corrected.strip().split("\n")]
+            # Thử tự động gỡ bỏ số thứ tự '1. ', '2. ' nếu mô hình vô tình trả về theo thói quen cũ
+            cleaned = [re.sub(r'^\s*[\(\[]?\d+[\)\]\.:]\s*', '', l).strip() for l in raw_lines]
+            final_lines = [l for l in cleaned if l and not _is_noise_line(l)]
+            print("OK")
+            return final_lines
+
+        print(f"[API failed, retry {attempt + 1}/{LLM_MAX_RETRIES}]", end=" ", flush=True)
+
+    print("FAILED (giữ gốc)")
+    return [l.strip() for l in chunk_lines if l.strip() and not _is_noise_line(l.strip())]
 
 
 def correct_text_with_llm(full_text: str, work_title: str, language: str = "vie") -> str:
     """
-    Chia text thành chunks (có context tham khảo từ đoạn trước), gửi cho LLM sửa lỗi OCR,
-    rồi ghép lại giữ nguyên 100% số dòng và nội dung.
+    Chia text thành chunks (có context tham khảo từ đoạn trước), gửi cho LLM sửa lỗi OCR
+    và khôi phục văn bản tiếng Việt tường minh, mạch lạc để phục vụ Sentence Alignment.
     """
     if not full_text.strip():
         return full_text
 
-    lines = full_text.split("\n")
-    # Bước nhảy đúng bằng kích thước chunk để các chunk không bị trùng lặp,
-    # tránh phải cắt gối đầu (overlap slicing) làm mất/sai lệch dòng.
+    lines = [l.strip() for l in full_text.split("\n") if l.strip()]
     stride = max(1, LLM_CHUNK_LINES)
 
     chunks = [
         (
-            "\n".join(lines[i : i + LLM_CHUNK_LINES]),
+            lines[i : i + LLM_CHUNK_LINES],
             "\n".join(lines[max(0, i - LLM_OVERLAP_LINES) : i]) if i > 0 else "",
         )
         for i in range(0, len(lines), stride)
     ]
 
     result_lines: list[str] = []
-    for idx, (chunk, context) in enumerate(chunks):
-        if not chunk.strip():
+    for idx, (chunk_lines, context) in enumerate(chunks):
+        if not chunk_lines:
             continue
 
-        print(f"  LLM chunk {idx + 1}/{len(chunks)}...", end=" ", flush=True)
-        corrected = call_llm_api(SYSTEM_PROMPT, _build_user_prompt(work_title, chunk, context))
-
-        if corrected is None:
-            print("FAILED (giữ gốc)")
-            corrected = chunk
-        else:
-            print("OK")
-
-        corrected_lines = corrected.split("\n")
+        corrected_lines = _correct_chunk(
+            work_title, chunk_lines, context, idx + 1, len(chunks)
+        )
         result_lines.extend(corrected_lines)
 
     merged_text = "\n".join(result_lines)
