@@ -35,8 +35,9 @@ def filter_for_alignment(text: str) -> str:
     """
     Lọc sạch văn bản tiếng Việt sau OCR/LLM để phục vụ tối ưu cho Sentence Alignment:
     - Xóa chỉ số cước chú gắn liền trong câu (ví dụ: 'phần¹' -> 'phần', 'sách[1]' -> 'sách').
+    - Loại bỏ ký tự rác/nhiễu OCR (như | \ ~ ^ @ # $ % & * + = < > { } _ • ► ▪ § do quét giấy cũ/ố vàng/viền).
     - Chuẩn hóa khoảng trắng thừa trong mỗi dòng.
-    - Loại bỏ các dòng trống hoặc dòng nhiễu rác.
+    - Loại bỏ các dòng trống hoặc dòng rác không có nghĩa tiếng Việt.
     """
     if not text:
         return ""
@@ -45,6 +46,12 @@ def filter_for_alignment(text: str) -> str:
     inline_citation_regex = re.compile(
         r"[¹²³⁴⁵⁶⁷⁸⁹⁰†‡]+|(?<=[a-zA-Z\u00c0-\u024f\u1e00-\u1eff])[\(\[\{]\d+[\)\]\}]"
     )
+    # Whitelist CHỈ GIỮ LẠI chữ cái Tiếng Việt Quốc Ngữ/Latin, số, dấu câu chuẩn ngữ pháp và khoảng trắng.
+    # LOẠI BỎ HOÀN TOÀN Chữ Hán (CJK - \u3400-\u9FFF), chữ nước ngoài khác, và mọi symbol/rác OCR.
+    strict_vietnamese_regex = re.compile(
+        r"[^a-zA-Z0-9\u00c0-\u024f\u1e00-\u1eff\u0300-\u036f\s\.,:;?!\-–—\(\)\[\]\"'“”‘’/]",
+        flags=re.UNICODE
+    )
 
     clean_lines = []
     for line in lines:
@@ -52,6 +59,9 @@ def filter_for_alignment(text: str) -> str:
         if not line_str:
             continue
         line_str = inline_citation_regex.sub("", line_str)
+        line_str = strict_vietnamese_regex.sub(" ", line_str)
+        # Xóa các ngoặc rỗng sót lại sau khi loại bỏ Chữ Hán bên trong (ví dụ: "( )" hay "[ ]")
+        line_str = re.sub(r"[\(\[\{]\s*[\)\]\}]", "", line_str)
         line_str = re.sub(r"\s+", " ", line_str).strip()
         if line_str and not _is_noise_line(line_str):
             clean_lines.append(line_str)
@@ -60,10 +70,14 @@ def filter_for_alignment(text: str) -> str:
 
 
 def _is_noise_line(s: str) -> bool:
-    """Kiểm tra nhanh xem dòng s có rõ ràng là rác số trang / ký tự lạc không."""
+    """Kiểm tra nhanh xem dòng s có rõ ràng là rác số trang / ký tự lạc / nhiễu OCR không."""
     if not s or len(s) <= 1:
         return True
     if re.fullmatch(r'[\d\s/.,\-–\u2014:]+', s):
+        return True
+    # Kiểm tra số lượng chữ cái thực sự trong dòng (chữ tiếng Việt / Latin)
+    letters = re.findall(r'[a-zA-Z\u00c0-\u024f\u1e00-\u1eff]', s)
+    if len(letters) < 2:
         return True
     words = s.split()
     if len(words) >= 6:

@@ -5,6 +5,7 @@ import cv2
 import numpy as np
 import fitz  # PyMuPDF
 from PIL import Image
+import unicodedata
 
 # Padding mở rộng bounding box trước khi crop (pixel) — 300 DPI + expand 8 theo khuyến nghị
 CROP_EXPAND = 8
@@ -42,7 +43,8 @@ def load_and_process_input(file_path, file_type, work_id):
 
     if file_type == "text":
         with open(abs_path, 'r', encoding='utf-8') as f:
-            return [f.read()], "text"
+            raw_text = f.read()
+            return [unicodedata.normalize("NFC", raw_text)], "text"
 
     elif file_type in ["pdf_text", "pdf_scan", "image"]:
         ext = os.path.splitext(abs_path)[1].lower()
@@ -51,7 +53,8 @@ def load_and_process_input(file_path, file_type, work_id):
             if file_type == "pdf_text":
                 text_pages = []
                 for page in doc:
-                    text_pages.append(page.get_text("text"))
+                    raw_page = page.get_text("text")
+                    text_pages.append(unicodedata.normalize("NFC", raw_page))
                 doc.close()
                 return text_pages, "text"
 
@@ -123,9 +126,9 @@ def init_paddleocr(lang="vi"):
         lang=lang,
         device=_detect_device(),
         enable_mkldnn=False,
-        text_det_box_thresh=0.6,
-        text_det_thresh=0.4,
-        text_det_unclip_ratio=1.2,
+        text_det_box_thresh=0.48,
+        text_det_thresh=0.35,
+        text_det_unclip_ratio=1.6,
     )
 
 
@@ -156,7 +159,7 @@ def init_vietocr(weights_path: str | None = None, model_name: str = "vgg_transfo
             config["weights"] = weights_path
             config["pretrain"] = weights_path
         config["device"] = "cuda:0" if _detect_device() == "gpu" else "cpu"
-        if "predictor" in config and "beamsearch" in config["predictor"]:
+        if "predictor" in config:
             config["predictor"]["beamsearch"] = False
         print(f"  → Khởi tạo VietOCR ({model_name}): {weights_path or 'remote default'}")
         return Predictor(config)
@@ -216,7 +219,7 @@ def _is_duplicate_or_contained(box1, box2, iou_thresh=0.9):
     return iou > iou_thresh or contained > iou_thresh
 
 
-def _normalize_polygons(raw_lines, min_w: float = 12.0, min_h: float = 8.0, max_h_ratio: float = 3.0, iou_thresh: float = 0.9):
+def _normalize_polygons(raw_lines, min_w: float = 16.0, min_h: float = 12.0, max_h_ratio: float = 3.0, iou_thresh: float = 0.9):
     """
     Chuẩn hoá raw_lines về list polygon 4 điểm (float32 numpy array).
     Lọc bỏ:
@@ -350,10 +353,9 @@ def run_ocr_page(img_bgr, paddle_engine, vietocr_predictor):
     if vietocr_predictor is None:
         raise ValueError("VietOCR predictor là None (khởi tạo thất bại).")
 
-    try:
-        det_result = paddle_engine.ocr(img_bgr, det=True, rec=False, cls=False)
-    except TypeError:
-        det_result = paddle_engine.ocr(img_bgr)
+    det_result = paddle_engine.predict(
+        img_bgr
+    )
 
     raw_lines = _extract_raw_polygons(det_result)
     if not raw_lines:
@@ -365,13 +367,54 @@ def run_ocr_page(img_bgr, paddle_engine, vietocr_predictor):
 
     polygons_sorted = _sort_polygons_reading_order(polygons)
 
-    recognized = []
+    valid_crops = []
     for pts in polygons_sorted:
         cropped, poly_4pts = _crop_box_from_poly(img_bgr, pts, expand=CROP_EXPAND)
-        if cropped is None:
-            continue
-        try:
+        if cropped is not None:
             pil_crop = Image.fromarray(cv2.cvtColor(cropped, cv2.COLOR_BGR2RGB))
+            valid_crops.append((pil_crop, poly_4pts))
+
+    recognized = []
+    if not valid_crops:
+        return recognized
+
+    strict_box_regex = re.compile(
+        r"[^a-zA-Z0-9\u00c0-\u024f\u1e00-\u1eff\u0300-\u036f\s\.,:;?!\-–—\(\)\[\]\"'“”‘’/]",
+        flags=re.UNICODE
+    )
+
+    def _clean_box_text(t: str) -> str:
+        t_clean = strict_box_regex.sub(" ", t)
+        t_clean = re.sub(r"[\(\[\{]\s*[\)\]\}]", "", t_clean)
+        return re.sub(r"\s+", " ", t_clean).strip()
+
+    # Hỗ trợ chạy theo Batch (32 box/lần) nếu Predictor có hỗ trợ predict_batch -> Tăng tốc 10-20x
+    if hasattr(vietocr_predictor, "predict_batch"):
+        batch_size = 32
+        for i in range(0, len(valid_crops), batch_size):
+            batch_slice = valid_crops[i : i + batch_size]
+            pil_list = [item[0] for item in batch_slice]
+            poly_list = [item[1] for item in batch_slice]
+            try:
+                batch_res = vietocr_predictor.predict_batch(pil_list, return_prob=True)
+                for poly_4pts, res in zip(poly_list, batch_res):
+                    if isinstance(res, (tuple, list)) and len(res) == 2:
+                        text, prob = res[0], float(res[1])
+                    else:
+                        text, prob = res, 1.0
+                    if not text or not str(text).strip() or prob < 0.5:
+                        continue
+                    text_str = _clean_box_text(str(text))
+                    if not re.search(r'[a-zA-Z\u00c0-\u024f\u1e00-\u1eff]', text_str):
+                        continue
+                    recognized.append([poly_4pts, (text_str, prob)])
+                continue
+            except Exception:
+                pass # Fallback xuống vòng lặp đơn bên dưới nếu predict_batch lỗi
+
+    # Vòng lặp predict từng box (fallback hoặc khi không có predict_batch)
+    for pil_crop, poly_4pts in valid_crops:
+        try:
             try:
                 res = vietocr_predictor.predict(pil_crop, return_prob=True)
                 if isinstance(res, (tuple, list)) and len(res) == 2:
@@ -381,10 +424,13 @@ def run_ocr_page(img_bgr, paddle_engine, vietocr_predictor):
             except TypeError:
                 text, prob = vietocr_predictor.predict(pil_crop), 1.0
 
-            if not text or not str(text).strip():
+            if not text or not str(text).strip() or prob < 0.5:
+                continue
+            text_str = _clean_box_text(str(text))
+            if not re.search(r'[a-zA-Z\u00c0-\u024f\u1e00-\u1eff]', text_str):
                 continue
 
-            recognized.append([poly_4pts, (str(text).strip(), prob)])
+            recognized.append([poly_4pts, (text_str, prob)])
         except Exception as e:
             print(f"  ⚠️ Lỗi predict VietOCR: {e}")
             continue

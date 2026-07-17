@@ -1,11 +1,15 @@
 # Pipeline configuration
 
 ocr:
-  han_engine: paddleocr       # paddleocr | text_layer
-  viet_engine: pytesseract    # pytesseract | text_layer
-  paddle_lang: ch
-  tesseract_lang: vie
-  dpi: 200                    # PDF render resolution
+  han_engine: paddleocr         # paddleocr | text_layer
+  viet_engine: vietocr          # vietocr | text_layer (Thực tế dùng PaddleOCR detect + VietOCR recognize)
+  paddle_lang: vi
+  dpi: 300                      # PDF render resolution (300/72 DPI)
+  det_box_thresh: 0.48
+  det_thresh: 0.35
+  det_unclip_ratio: 1.6
+  vietocr_model: vgg_transformer
+  beamsearch: false
   mixed_page_split: top_bottom  # top_bottom | left_right (crop strategy for mixed_page)
 
 alignment:

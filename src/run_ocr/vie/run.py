@@ -17,7 +17,7 @@ from ocr_utils import (
     run_ocr_page,
     smart_sort_layout,
 )
-from llm_corrector import correct_text_with_llm
+from llm_corrector import correct_text_with_llm, filter_for_alignment
 
 OUT_DIR     = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "..", "data", "ocr_output"))
 CONFIG_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "..", "data", "config.json"))
@@ -39,10 +39,10 @@ def _init_engines():
     return paddle, vietocr
 
 
-def _ocr_scan_pages(pages: list, work_title: str) -> list[str]:
+def _ocr_scan_pages(pages: list, work_title: str, out_path: str | None = None) -> list[str]:
     """
     Chạy pipeline 2 model (PaddleOCR detect + VietOCR recognize) cho danh sách ảnh.
-    Sau đó gửi từng trang qua LLM corrector để sửa lỗi OCR còn sót.
+    Sau đó gửi từng trang qua LLM corrector và tự động append ngay ra file (nếu có).
     """
     paddle_engine, vietocr_predictor = _init_engines()
 
@@ -55,6 +55,9 @@ def _ocr_scan_pages(pages: list, work_title: str) -> list[str]:
             page_text = smart_sort_layout(ocr_lines)
             page_text = correct_text_with_llm(page_text, work_title, language="vie")
             result_pages.append(page_text)
+            if out_path:
+                with open(out_path, "a", encoding="utf-8") as f:
+                    f.write(page_text.strip() + "\n\n")
             print(f"OK ({time.time() - t0:.1f}s)")
         except Exception as e:
             print(f"LỖI: {e}")
@@ -82,22 +85,22 @@ def run_viet_ocr():
         print(f"{'='*55}")
 
         if file_type in ("text", "pdf_text"):
-            # Đã có text layer sẵn — đọc thẳng, không cần OCR
+            # Đã có text layer sẵn — đọc thẳng + lọc rác cước chú/viền trang, không cần OCR
             pages, _ = load_and_process_input(file_path, file_type, work_id)
             full_text = "\n".join(pages)
-            print(f"  → Bỏ qua OCR (text có sẵn), {len(full_text):,} ký tự")
+            full_text = filter_for_alignment(full_text)
+            with open(out_path, "a", encoding="utf-8") as f:
+                f.write(full_text.strip() + "\n\n")
+            print(f"  → Bỏ qua OCR (text có sẵn), đã chuẩn hóa & append vào file: {len(full_text):,} ký tự")
         else:
-            # pdf_scan — chạy pipeline Paddle (detect) + VietOCR (recognize) + LLM Corrector
+            # pdf_scan — chạy pipeline Paddle (detect) + VietOCR (recognize) + LLM Corrector và append từng trang
             pages, data_type = load_and_process_input(file_path, file_type, work_id)
             if data_type != "image" or not pages:
                 print("  → Không load được ảnh, bỏ qua.")
                 continue
-            result_pages = _ocr_scan_pages(pages, work_title)
+            result_pages = _ocr_scan_pages(pages, work_title, out_path=out_path)
             full_text    = "\n".join([page.strip() for page in result_pages if page.strip()])
-
-        with open(out_path, "w", encoding="utf-8") as f:
-            f.write(full_text)
-        print(f"  ✓ Đã lưu: {out_path}  ({len(full_text):,} ký tự)")
+            print(f"  ✓ Đã append hoàn tất vào: {out_path} ({len(full_text):,} ký tự)")
 
 
 if __name__ == "__main__":
