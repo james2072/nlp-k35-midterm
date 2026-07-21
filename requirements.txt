@@ -1,13 +1,5 @@
 # --- Core PDF & Image Processing ---
 pymupdf
-opencv-python
-
-# --- OCR Engines ---
-paddlepaddle==3.1.0
-paddleocr==3.7.0
-vietocr
-torchvision
-setuptools<70
 
 # --- NLP & Sentence Alignment ---
 sentence-transformers
