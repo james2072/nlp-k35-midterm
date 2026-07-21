@@ -1,9 +1,473 @@
-pair_id	han_sentence	viet_sentence
-HVB_003_0000	特鄭売記 熱後失史文人生森美六皇子天童子会無加最長室伊野對式年省会人野不二 教是以別是多野田東宮周年生富	洪德 間 第 舉進士 辰 則 先生 峻擢 危 科驰名 臺諫 景統初詔 求遺逸辰 則 先生 首 應 莪 旗 蜚 名 史館
-HVB_003_0001	之下人變種是夜之雲菊漫自然在 運親別線下迷中之	致 暮 夜 遽 羅 於 寇 難 夢 易 纏 柱 下 之魂
-HVB_003_0002	范江記	德 猶存 殷 相 疏 四 留 不盡 宋 參 銘
-HVB_003_0003	菜 為尊師至今 部	狀 頭 宰相相斗斗 南 峻 國 老 帝 師 天下 尊
-HVB_003_0004	群祠文販換続文泰杏 列	薊 狀 頭 宰相 譽重 南邦 甲 宣撫 詞 宗 名 聞 朔漠
-HVB_003_0005	高書記	thơ rằng 上 庠 瑟 書生
-HVB_003_0006	陳抽記	THẦN QUÁI 張 精 基 塵 中 識 尊 顏 老仙
-HVB_003_0007	同入明氏电家之文以下日三名	禮 妃 生 聰慧 一 鏡 照 三 王 LỄ PHI SINH THÔNG TUỆ NHẤT KÍNH CHIẾU TAM VƯƠNG
+﻿pair_id	han_sentence	viet_sentence
+HVB_003_0500	我昨日有約惠然肯來今卻忘之必被吾兄見責後清因回家途	kia tôi có hẹn Ông vào chơi, chẳng ngờ ngày nay quên
+HVB_003_0501	經像洲郎詣公訪舊公屬家人整燕肥豬二隻又資盛二盞同坐款	đi qua Tiên-Châu có ghé vào thăm Ông Hò, Ông bảo gia nhân giết hai con heo luộc chín, và 4 mâm xoi để
+HVB_003_0502	待清契盡豬款各一角公契盡豬一隻又款一盤又契清新餘各一角只	về phần Ông Thanh chỉ ăn hết có 1 góc, còn Ông Hò thì ăn hết cả 3 mâm xôi và một con heo,
+HVB_003_0503	需其半以與狹人相吃溝大驚曰古稱慕澤先生以食為各但又于	một nĩa cho người theo hầu, khiến cho Ông Thanh hết sức kinh ngạc nói rằng : Đời trước khen Mộ-Trạch Tiên-
+HVB_003_0504	十八十二之數若與兄同時適避三舍矣公大笑其後官歷左侍郎奉	Bác đến 3 dặm vậy, Ông Hò dắc ý cả cười. Rồi sau Ông Hò làm đến chức Hữu-thị-Lang, phung
+HVB_003_0505	往北使時同縣安照社署人頗有口辨使之從行至燕京北人聞公善	mạng sang sứ Bắc quốc, lúc ấy có người lái buôn ở
+HVB_003_0506	食因作一具十八層召公赴宴架梯而食公每吃了一層輒取鉢擲下至	mâm cỡ, chồng chất lên 18 từng rồi triệu Ông vào dự yến ! khi ăn phải treo lên thang, ăn hết từng trên thì
+HVB_003_0507	最後層見一人頭在焉傷人皆掩目不敎正視公大聲喚從者來曰書我	quảng bát đã xuống đất rồi mới ăn đến từng dưới. Chẳng ngờ khi ăn đến từng dưới cùng thấy có một cái
+HVB_003_0508	生不知滋味今皇帝賜我食北人頭最為佳品汝將取醋來我吃了蓋	lính theo hầu : Ta đây là kẻ Thư sinh chưa nếm những món ăn là bao giờ, ngày nay Hoàng - Đế cho ăn số
+HVB_003_0509	這頭乃魚人頭與人無異世所罕見故他以此怵公今見其不懾頗有侵	trong y như số người thực, mà đời ít khi được thấy, cho nên họ mới dùng nó để thử thách Ông, nay thấy
+HVB_003_0510	渡之語即挈取頭去尋托以他爭篤其兩目使人撓之自曼所而往三	bịt mắt Ông lại, cho người công đi an trí một nơi,
+HVB_003_0511	日復就這賣因問公何賣否公已默記其心郎答云乃前日賜晏賣也	Vì Ông đã đề tâm từ trước, nên giả nhồi ngay rằng : Chính đây là chỗ ăn yến hôm
+HVB_003_0512	北人謂公莊前知遂敬之時國上連月不雨仍命諸國陪臣修文橋	Trong thời gian ấy Bắc quốc đương bị hạn hàn
+HVB_003_0513	雨公料知天象未雨因奏曰臣小國乞後讓大國先之已而祈之皆不應	còn lâu mới mưa nên tàu rằng : Nước Thần bé nhất xin cho làm lễ đảo sau, để nhường nước lớn đảo
+HVB_003_0514	皇帝郎命公對曰有從人學得武公遺法嚴乎風喚雨可遣皇帝郎召	trước. Quả nhiên Sư Thần các nước đảo mãi cũng đều vô hiệu, bấy giờ vua Tàu mới triệu đến Ông.
+HVB_003_0515	之其人奏曰臣有一法須得吉日方可用乃潛觀櫪木根俗曰已見白父鷄	Ông tàu rằng : Hạ thần có viên tùy tùng vốn học được phép hô phong hoán vỡ của Không-Minh ngày
+HVB_003_0516	頸草俗曰鷄鵠有黠自知兩期將至即請設壇場禱之已而果得兩皇需大稱	mưa đến nơi, bấy giờ anh mới tàu xin lập đàn câu đảo, quả nhiên mưa xuống âm âm, vua Tàu khen ngợi
+HVB_003_0517	賞封為兩國之師封公為兩國尚書公善辭命應對名聞兩朝皇帝	phong làm Lưỡng quốc Quốc - Sư . Còn Ông thì được phong làm Lưỡng quốc Thượng-thư
+HVB_003_0518	欲晉之使教太子公難之不敬遠奏請造一新堂并備鞭模教具皇子	vua Tàu muốn giữ lại để dạy các Hoàng - tử ; ý Ông không muốn nhưng không giám trái lệnh, nên mới tàu
+HVB_003_0519	出有過輒痛加筆箋矣曰先學禮後文學太後酷愛其子奏請擇導	rất đau và bảo cho biết, trước phải học lễ rồi sau mới học văn ! Hoàng-hậu vốn yêu dấu con, không thể nhận
+HVB_003_0520	官公以是免歸國後任至尚書春江侯陸少保佀郡公致仕耳	được trở về nước nhà, làm đến Thượng - thư phong Xuân-Giang-Hầu và trước Thiếu-Bảo-Lữ-Quận-Công
+HVB_003_0521	"傳公卒後國王頒以嗣棺差人會葬今村內猶有遺塚在焉其後人自	.."	Theo như tục truyền thì lúc Ông mất Vua ta có ban cho một cỗ áo quan bằng đồng, và vua bên Tàu cũng
+HVB_003_0522	北歸國王命築室于本社寺及平置庵于其側號國師寺至今香火	danh là chùa Quốc-sur , ngày nay nhang khói
+HVB_003_0523	猶存焉在曰營接這跡內有一二事頗淡訛傳但得子公族人之言且參	vẫn còn. Xét sự tích này bên trong cũng có vài việc hầu như ngoa truyền, nhưng đó là những câu của người
+HVB_003_0524	諸村邑高年所道來無異故畧記之以俟大德君子焉	đây để đợi các vị quan tử sau này chấp chính. CHƯ TÀO HỘI NGHI, PHÙ-KHÊ THIÊN
+HVB_003_0525	范鎮杜注記	LÀNG PHÙ-KHÊ QUÁCH-CHÚ.
+HVB_003_0526	海陽之嘉福藍橋社范鎮阪林社杜汪里開相鄰舊傳杜汪邑中	Người làng Phù-Khê thuộc huyện
+HVB_003_0527	有女精者往往興大祟作變幻百出祈禱願有驗焉注少時臨窗閱書	ở lân cận có một người chuyên nghề ăn trộm, bỗng có một lần mò sang bên làng Ông định kiếm một mẻ.
+HVB_003_0528	夜間常見一手自窺前伸八汪知其為妖就質諸同縣老法師法師	thiếp đi. Đến lúc gà gáy anh mới sực tỉnh xốc áo toan di, chợt nghe ở trước mặt có tiếng xôn xao.
+HVB_003_0529	夜間常見一手自應節伸入汪知其箋效就質詣何舉才之師注師	thế, đáp: Vừa rời lên châu Thượng-Đế, hội nghị với các Nam - Tào, định rằng trong đêm hôm nay sẽ cho
+HVB_003_0530	手果不肐縮大將曉窻下哀訴曰公當大貴我眉戲耳何忍至此極也	xưng chút nào, giám xin Hoàng-Đế định lại. Hoàng-Đế nghe tàu bên cầm cuốn sở coi qua một
+HVB_003_0531	汪曰以我之果做狀元否曰狀元已有范生公當次之汪曰汝有甚灵物即共	Hàn - Tín gởi thơ cho Yên-Vương trong có câu rằng : Bạch lộc bảo tuyên, thì sự tích ấy ra
+HVB_003_0532	我觀我便敵汝俄聞嘔吐聲忽見一物似玉在紋手中精光奪目汪有	sao. Quân thần không ai đáp được, chỉ có một mình Ông đặt gởi tàu rằng: Diện tích ấy biên rỡ trong Hán-
+HVB_003_0533	取吝之師解其繫線自是天邑中不聞怪而泣嘆曰精通舟詞章一出人以	thư. Vương sai về lấy gia thư của Ông vào xem quả nhien có thực, Vương khen là người học rộng nhớ
+HVB_003_0534	賞陳吐王稱之在場屋間甚有聲譽鑲常不逮光靈員員意崇年號丙辰科	khiên trách, nhưng rồi chỉ sau ít lâu thì được bổ chức Đốc-đông tại tỉnh Thanh - Hóa, tức là ưu thưởng cho
+HVB_003_0535	會試時年共二十四歲同年同榜至庭試日汪見全題皆素慣	Triệu vua Lê - Thánh - Tông vào khoảng niên hiệu Vĩnh-Thọ ( 1658-62 tức là thời Lê-Thần-Tông thì
+HVB_003_0536	今番首選醫我無驗時鎮在籠中彷彿見傍有兩人一稱韓琦一稱東	phải), văn học nho phong dương lúc thịnh hành, riêng các sĩ tử của lang Mộ-Trạch Hải-Dương , khoa thì
+HVB_003_0537	方朔附耳讀之滔滔不竭鎮寫之不發聞靜謂琦曰須使任致病以減	trao cho Phúc - khảo kiểm lại, xem những quyền nào văn lý đặc sắc, toàn thiên không có vết tích mới phê
+HVB_003_0538	其力俄見杜汪抱腹申吟不能下筆迨鑲過一段泣病方愈故習燕雖	Các quan Phúc-khảo theo lệnh chọn lọc rất kỹ được có 10 quyền đệ lên Ông xem lại, rồi thái đi 4 quyền
+HVB_003_0539	多而日力不足既而臚唱鎮中獄元酒中榜眼顯喜語人曰吾今壓倒	còn lấy được 6 quyền, thế rồi đến khi họp phách chỉ có một người đứng vào ưu hàng là Võ-Đăng-Hiền ở làng
+HVB_003_0540	"杜注矣。	—"	Luận-Ngữ
+HVB_003_0541	"汪深愬之。	—"	Kiến Văn Tiêu Lục — Tây-Hồ Chí
+HVB_003_0542	"榮歸日驅繾綣而行。	—"	Hồng-Vũ Cấm Thư ÁN-HÀNH TRONG KHUỒN-KHÒ
+HVB_003_0543	與鬩並驅爭先。	Hội - viên IN LẦN THỨ NHẤT
+HVB_003_0544	不背公讓至獲	CÔNG-DƯ TIỆP-KÝ TIẾT NGHĨA
+HVB_003_0545	澤杜蓮溪中橋人曰素聞杜范二公大各今見同日榮歸請詠橋詩一首頒	Thượng thư giao cố nhân, Lê Đại-Học-Sĩ chi tôn Nam-Quốc GỬI THƯ KHUYẾN CÓ NHÂN, LÊ ĐẠI-HỌC-SĨ
+HVB_003_0546	汪相異曰橋屋十有餘間限過七間成詩詩用一句一禽先成者讓先行	Bồn só Thất-Trầm chữ nghĩa động tôi quỉ thần; rồi sau Văn-Hiên Vinh-Sử cũng có
+HVB_003_0547	不得筆道直顯如約立就詩國語八句馬上讀之人皆藥服泣曰這	Dịch Gươm dân Tương bằng một thư sinh. Câu nước trong thơ đã hiền minh ?
+HVB_003_0548	詩已平日素成非臨時所張得吾何讓焉又齊道而行至明倫社有伊	Tự lệ huyền hò tráng chỉ hàm ? Kiên kiên phi cung thành hiệp nhất.
+HVB_003_0549	社人屋字是新富途請曰鄙人再構新家幸逢兩貴台經過乞惠之	Thế rồi cách ít lâu sau nhà Minh sai Thượng-Thư Hoàng-Phúc sang làm Đô-hộ An-Nam, Phúc liên mở
+HVB_003_0550	佳句燕歌屋生輝鎮應曰年年增富貴日日壽榮花古人有此句今	cảnh, buột miệng đọc một câu rằng: . Tác triều phong vũ gia gia đồi hoại cựu viên
+HVB_003_0551	日賀新家洹吟沱曰賛羙之辭此等句盡之矣豈復以加而頒矣	vì thế Thúc-Hiên cũng ứng khẩu đối rằng: . Kim nhật càn khôn
+HVB_003_0552	口輒成自非神吟鬼助轟然若是自是始讓顱先行後潛至監來	cháu rằng: Sau này nếu có sang Sư mà lâu không trở về, thì cứ dục khoét vào chân con ngựa ấy, tự nhiên Sư giả
+HVB_003_0553	杜著鎮祖墓見有二土堆俗曰兩袖童附耳泣致指之曰從來勝我數番	có một hôm vào yết miếu vua Đinh, ông thấy pho tượng Dương-Hậu cùng đặt ngòi chung với hai ông chồng, (tức
+HVB_003_0554	以有那神童附耳之功即用腳跟擊手土堆自是顫從耳病廢商治弗效有	lệnh giam cầm sứ thần, rồi viên Tông-Đốc sai lấy vở trai bịt kín hai mắt của ông, bên ngoài dùng son phủ lại, và
+HVB_003_0555	人以汪轡車土堆之事語鎮者鎮即訢于朝署朝論汪謝鎮祖墓鎮	Kỷ-Vị thì đỗ Tấn-Sĩ, được bờ Tri-huyện Quảng-Đông, dàn dàn thăng chức Yến-Kinh Chủ-sự, nhân mới nghĩ đến thấy
+HVB_003_0556	病尋愈其後試東閣以文武並用詩題用五言三江為韻取十五韻鐵	(Phụ-chú : Tô-Vũ tự tên là Tứ-Khanh, làm quan Trung-Lang tướng đời Hán-Vô-Đế, phung mệnh sang sứ
+HVB_003_0557	復中第一泊第二始興徵時與江對飲酒至半酣相戲為酒賛酒先	CHÍ KHÍ Đại Hưng-Hàu bằng huynh tử chi ĐẠI HUNG-HÀU VÌ CÓ THỂ LỰC CỦA ANH
+HVB_003_0558	唱曰有潰用潰無潰用火所用咸宜無施不可頤續吟曰酒潰則歡火潰	Ông bèn soạn ra truyện Nhạc-Xương phân kinh dùng toàn quốc âm, ngụ ý chê bài họ Mạc xa
+HVB_003_0559	則絕有遠此言天地日月識者以是言其立志之珠其後莫七我朝中興	qua cửa Nam nhìn lên thấy có chữ đề bên trên, và là danh hiệu của một thần từ nước Nam, nên bắt dừng xe không
+HVB_003_0560	汪首出仕至戶部尚書封福神鎮辭歸不仕仕終承政使司	Giữa lúc ấy có quan Thượng-Thư là Võ-Duy-Đoán hiện sung chức Bàn-Tiếp để dón sứ-giả, thấy sứ
+HVB_003_0561	探花廓佳記	bui trần ?
+HVB_003_0562	未生時有接近人以慣偷盜為業一日就公邑內	xóm làng giềng ai cũng biết cả. Sao chị lại dám cướp sống
+HVB_003_0563	行盜會人未定時潛八廟祠後假卧不覺薰睡至鷄鳴方醒披衣徵	Bật-Sô Tăng kiếp hậu vi vọng quốc Hoàng-Đế
+HVB_003_0564	起忽聞前回喧鬧有人自廟外而入在廟內有人迎問曰今番何事遲歸	Bồng một hôm, Sư đang ngủ trưa ở chốn trai phòng, trong lúc mơ mộng thấy Đức Di-Đà hiện trước tòa sen, gọi
+HVB_003_0565	聞有聲曰答適朝士帝與諸曹會談夜命一探花即降伊社有員捧	Về phần nhà Sư sau khi tỉnh dậy, nhớ đến những lời trong mộng, bèn triều các Đạo - Tràng đến bảo rằng :
+HVB_003_0566	薄奏曰長按伊家福德薄恐不稱此帝命取薄觀之良久判曰雖然知此	Ta từ lúc xuất gia nương nhờ của Phật, tưởng rằng tẩy hết trần duyên, tu tròn quả phúc để lên Tòa Sen, đó là hậu
+HVB_003_0567	但業已許之不必換改如他德果薄來時更有定奪焉以此故遂歸耳時人	công phu khở hành, lại phải dời lấy các chức vị gian nan
+HVB_003_0568	在廟後竊聞具得其詳當夜不以行為意因徧往邑中探聽何宋生子見公	sớm cậu vào khất thực nhà ông Đô-nho, ông thấy cậu học trò nhỏ, bèn đọc một câu ngạn ngữ để điều cậu rằng:
+HVB_003_0569	生於是夜災早即公家具導前事一通預以為賀生而頴異人稱袖童及長	Âm vị khai nhi dương đã lộ , nguyên câu chữ nôm là Cánh cửa Hồng-môn còn khép nếp, Ngọn
+HVB_003_0570	以文舉子各正和年號、癸亥文科中進士第一甲三名公在朝適內閣談政事餘昭	(1600-1619), cậu đồ Tiến-Sĩ vào khoa Giáp-Thin, cách mấy năm sau phượng mang sang sứ Bắc quốc, vua nhà Minh triều
+HVB_003_0571	祖康王問侍臣曰韓信遺燕書曰有曰白鹿抱泉事跡何在卿等能知之乎	ông tình về môn xem tướng, nhân lúc nhân hạ mới hỏi ông rằng : Khanh thử coi tướng các con của trẫm, xem ai
+HVB_003_0572	群臣皆莫能對公跪對曰跡詳見漢書王郎命索公家書來觀之稱其簿	Chẳng ngờ câu truyện xem tướng lại lọt đến tai Quân- Công, Quân-Công biết thế, giả vờ triệu ông vào dinh để hỏi
+HVB_003_0573	學時公方以事被遣未幾除清花聲同仕至寺癖以風疾不視朝始信從	Mục ngưu tăng, mặc hội linh thông SU CHĂN TRÂU, HIỀU PHÉP THÂN THÔNG
+HVB_003_0574	日祠神對語之聽	bồ-tát chân-nhân,
+HVB_003_0575	參議武登顯記	Vương sức tình
+HVB_003_0576	多者至八九名少者不下四五十名連名覆中率以為常而午年科保提調	Về sau đến năm Giáp-Tuất, Ta vâng lệnh đi bồi đắp
+HVB_003_0577	官其左夫阮澧性頗廉直以慕澤從來多中必有私巧者在乞為海陽提	Hạ-bi dị nhân toàn thuyền khước bắc binh LÀNG HẠ-BI CÓ DỊ-NHÂN, ĐỤC THỦNG THUYỀN BẦY LUI BẮC BỊCH
+HVB_003_0578	調以察之朝延協議考至第四場公命攝地為安合士人坐在穴中籠	chẳng dám ở lâu, vội vàng nhổ neo đi thẳng. Còn phần Dị-nhân sau khi làm tròn nhiệm vụ cứu
+HVB_003_0579	"蓋其上防守其甚嚴迨同考院考訖送來公無嚴飾覆考官詳看文勢	.."	cũng Tấn phong cho trước Đại- Vương, và cho con cháu quản lãnh những chỗ cửa sông,
+HVB_003_0580	精純全篇無瑕者方得挑取而覆考擇得十卷公親自評之汰去四卷只	Kim-Tông Thân miếu hội đê tỏa Điền-Quân THÂN MIẾU XÃ KIM-TÔNG PHÁ ĐÊ, LÀM MÁT NHƯỆ KHÍ
+HVB_003_0581	取六卷既而呼各優頂一名皆來澤社武登顯首科纔十八歲第二名某	ĐIỀN-QUÂN Huyện Thiên-Bản , xã Bảo-Ngũ , có Điền- Quận-Công , vì là em ruột bà Bảo-mẫu Mạc-Thuận-
+HVB_003_0582	澤社人第四建亦慕澤社人其三名乃永賴古庵唐安王司青林樂實人	trong thuyền, tuốt kiếm hò thần Thiên-Cương, thư phù niệm chú, rồi mới hạ lệnh cho các tướng-sĩ cầm
+HVB_003_0583	也一科續取六各而纂澤居其半同院取卷觀之見三卷文理各殊不相蹈	sản giáo mác xông lên, hai bên đều dùng hỏa pháo bắn ra, khói đen mù một phủ khắp một vùng, đứng cách chỉ
+HVB_003_0584	襲深嘉嘆賞貞始細信慕澤為世尚儒流文物之地文衡公器初非本私其	Kinh thưa Thủy-Thần linh-vị : Mới rồi đi qua trước miếu, tôi đây một phen lầm lỡ trót đã xúc phạm oai linh,
+HVB_003_0585	後武盞顒宏詞科中優一會試賦優士分但中三場嘗以未遊青雲為限	Khẩn Thần xong rồi ông lại ra lệnh cho quân-sĩ bắt tay vào việc, hễ dấp đến đầu thì đất chắc nich đến đó,
+HVB_003_0586	官至北京處參議以親老辭官歸養設場教授及其門生擢大科儒者者	một quãng lớn, làm ông hoàng sợ, vội vàng sắm sửa lễ vật để ta thân linh rồi sai dắp lại, nhưng mà dắp mãi cũng
+HVB_003_0587	稱為尊師至今猶歆為裳	với Thủy-Thần. Vậy xin nhẫn lời cho chị tức là Bảo-Mẫu
+HVB_003_0588	節義 樑鼎景詢記附光貞	Quang côn hán trí man linh tử KẾ TRỘM KHÔN NGOAN BÁNH LỬA THÂN THÁNH
+HVB_003_0589	陳朝樁景詞其祖汝猷淳祿老疎人也為諒江知府娶唐安慕澤	(Quỉ thân bất trắc là quỉ thân khôn lường đoán ra được). Cường-bạo vương, kẻ kháng Thiên Tướng
+HVB_003_0590	武氏之女因以妻鄕居焉詢覓太學生少與青沔縣扶助社內裴伯耆	Cường-bạo đại-vương người làng Bối-Cẩm thuộc huyện Thiên-Bản , khi trước bà mẹ nằm mộng thấy
+HVB_003_0591	相善陳末胡墓位伯者如燕京乞師伐胡明遣張翰沐晟等分道	đánh. Ông Táo biết truyền xuống trước bảo khẽ với Vương : Vương xin Táo-quân, bày kế giúp đỡ.
+HVB_003_0592	而來伯耆為先鋒向道拾逆胡父子送同明人拜伯耆為參護諭	v... Vương được Táo-quân dạy cho điều kế như vậy, lập tức đi kiếm Mông-toi đem về giả lấy nước giột, và sắm các
+HVB_003_0593	郎上萬言書于伯耆其畧曰若能立陳為上策僕願為佐龍中藥物	Thiên-lợi loạng choạng chạy về Thiên- đình, Vương đoạt được sợi dây đồng đỏ dài hơn một
+HVB_003_0594	任足下所用為陳辭官為中策僕願執籩籩豆奔走任足下所使	chí tôn trong hạng Tam-tái, nay cho nhà người xuống dưới hạ giới để làm vang đội oai danh, hỏi rằng đánh đầu mà
+HVB_003_0595	若貪其禄位斯為下矣則僕樂鈞耕間而已伯耆不聽父伯耆犯	tên bạo tặc đó, để làm mời cho lũ cá giải, nghe ! Lần này Táo-quân nghe được lệnh trên, thì lại với
+HVB_003_0596	明法明人籍其家得其書目詢變姓各遊匿後明人於我國立學校諭	đến thờ phượng, hương khói lưu đến đời sau, và được vinh quang trong sổ bách thần của nhà nước.
+HVB_003_0597	往觀之明人見其才學以為教授饒而知萬言書日乃誨師依郡補師	viễn chi, của đức Không-Tử đã dạy, ta cũng phải nên ngầm ngợi xem đối với quỷ thần có nên kinh trọng và coi như
+HVB_003_0598	去其三子太顚少顚叔顚皆願從行送至開門詭語之曰一當從	Mở nhốt, Thiên-lôi không hoảng sợ. Nước dâng, bê chuối khỏi lo phiền.
+HVB_003_0599	二次且囘已奉舉以報君父之答眾子慟哭拜別詢其太顯至北京	Nguyễn-Giám-Sinh tác vọng quốc Hoàng-đế NGUYỄN-GIÁM-SINH, KIẾP SAU LÀM VUA, NƯỚC LỚN
+HVB_003_0600	明人訝之曰爾教伯耆立陳後陰國不軌何也詢曰我南人志存南國跖狗	Nghè Hiến-Sử kề lại giấc mơ kỳ quặc như thế, ông Đồ cũng lấy làm lạ, cáo biết ra về, rồi trong năm ấy cậu
+HVB_003_0601	吠非其主又何問明人怒送于金陵獄父子皆卒于獄中掾萬言書與	lo toàn cướp ngôi tôn quỉ, chẳng sớm thì muộn rồi cũng mang lấy cái nạn diệt vong, sao chúng lại chẳng soi tấm
+HVB_003_0602	朱安七斬疏皆忠誠所發陳樸宗先安上疏乞斬七侯臣時稱七斬疏後芸棠故胡公作	đòng suối gọi là Hán-Tuyền phát nguyên từ trong dãy núi của xã Ý-Tịch cháy qua xã đó rồi thông với
+HVB_003_0603	越鑑有六萬言之書忠貫印月七斬之疏義動鬼神詠史詩云	Danh phần, Dương trạch quyết KIỀU BẤT VỀ MÒ MÁ VÀ HƯỚNG NHÀ
+HVB_003_0604	上庠琴劍一書生三策懐憐許國情萬里虜廷終不屈先忠十孝而成名	Táng thân mã, Binh thị dĩ khác thăng nhất dư ở TÁNG MỘ VÀO CON THÂN MÃ, HỌ BÌNH THĂNG TRẦN
+HVB_003_0605	曾孫光貞有詩云超延詩禮講明請自勵懸壯士餌寒蹇匪朝誠協	THỐNG NHẤT NON SÔNG Đinh-Tiên-Hoàng người đồng Hoa-Lư hoa quan,
+HVB_003_0606	一拳拳許國策陳三綱常自任他奚恤鼎饒知餡死亦酣累世亦蒙	xưng hiệu là Vạn-Thắng-Vương , binh định
+HVB_003_0607	忠義報光弼盡業振天南其後明人姜黃福鎮安南設場教	Chăm hậu tượng, Trần-Gia dĩ sắc đặc Thiên hạ
+HVB_003_0608	學以收我國人才穎題兄弟竝往受業黃福愛之認為己子忽	Mỹ-Lộc nỗi đời làm nghề chài lưới, suốt cả một giải Tràng-giang ở nam đảo, tới đầu thì cũng là nhà, chừ
+HVB_003_0609	一夜雨電壞牆發屋明日黃福出城南玩景口占一旬云照朝風雨	thì đêm hôm ấy sấm sét nỗi dậy ầm ầm,
+HVB_003_0610	家家額壞舊牆垣以喻南國被侵必致額壞額頸即對云今日	ngư-phủ họ Trần vội vàng đem các thứ ra chỗ ngôi mộ Tồ nhà Nguyễn-Cổ, cắm lưỡi tâm sét xuống chạm đến quan
+HVB_003_0611	乾坤震處發榮新草木黃輝是簡高見人聞此句望天嘆曰安	điểm vào chỗ Thổ-phúc Tăng-Kim tim đất giấu vàng , ngời phương can trống chư Tốn, công việc
+HVB_003_0612	南已有聖主出乾坤方南國復還南國我亦不久且歸矣二子盡往	lộc ! Thầy đáp : chẳng cần phải thế, hễ mà sau này nhà ông lấy được quốc gia, thì con cháu tôi đời đời cấp cho
+HVB_003_0613	從之以圖立功穎顯遂依報尋至愛州已見我大祖蘇山奮勵兄	có tướng mũi rộng mắt phương, được Lý-Chiều-Hoàng nhượng ngơi, hiệu là Thái-Tông.
+HVB_003_0614	弟皆來歸附未幾大破北兵沐晟黃福等投降之和太祖縱之北還	nhà Trần suy yếu để Xích-Chủy-Hầu tức Hỗ-Quý-
+HVB_003_0615	顔顔等戲師歸國至交開相告別同跪請曰儀等蒙作育久矣	Cát cúc thàn lưu Võ tộc, thế truyền tước lộc QUÍ ĐỊA THÂN BÊ CHO HỌ VÕ, TƯỚC LỘC BỜI BỜI
+HVB_003_0616	未審何時復頒教誨請指示陰憤吉昌歸塟先人是吾師之賜也並福	Cựu huyệt thiên táng, hàn thê dựng xuất cung phi HUYỆT SẢN TRỜI CHO, VỌ NGHÊO ĐƯƠNG CHÚA,
+HVB_003_0617	曰我非忘了試觀二子之志耳前日噐心一穴在亦邑兌邊桃樸頭向銀帶	ao rộng kẻ mấy chục trượng, chẳng ngờ giữa lúc dân làng kẻ nom người vô dương mãi bất cá ở dưới ao, thì
+HVB_003_0618	日月扶裔天馬在其西旁正乎年我已埋下木板歸而尋之囑其子孫	trăng mỗi khi ngả bóng chiếu tạt xuống nhà, trong như hình con Thiềm-thư ngồi ở trên nóc, vì như thân ở cung
+HVB_003_0619	後有北使遲歸便可鑿這馬足郎當反轡二人拜辭而回時太祖已矣	Đặng-Canh dùng phép châm cứu nên ngài mới được hồi sinh, về sau ngài bị liệt dương, Đặng-Canh xin cho mở
+HVB_003_0620	天下擇人北使無敢行者少頴以父兄之故敵然請往太祖許之拜審	bung dựa trẻ con trai lấy gan hòa với vị Dương-khởi- Thạch để cho vua uống, và bảo vua phải thông dâm với
+HVB_003_0621	刑院事、秦陳情表于明其畧曰天地之於萬物雖有雷霆之怒而發	Thoát-Hiên có vinh bài thơ tứ-tuyệt như sau : Phiên âm Ký nhân bặc nghệ Yêu quân sủng !
+HVB_003_0622	生每行乎其間父母之於眾子雖有笞檳之威而鞠育常存乎其內	Hai mẹ con thấy mụ già xin ngủ đổ thì cũng niềm nổ cho mụ ngủ ở nhà ngoài, còn hai mẹ con thì ngủ phòng
+HVB_003_0623	是以人有疾病未常不呼天地父母此臣子之歷緬陳詞以伸表籲	có xảy truyền lạ, thì phải chạy với lên chỗ gò cao, chứ đừng lưu luyến gia hương mà khở.
+HVB_003_0624	也寫所作並替代金人二軀各重二百兩至燕京陳于關下懇訴明人恨我	có một cái bẻ thuộc xã Tiên-Loan chi bên tả có 2 cái bẻ thuộc xã Nam-Mẫu chỗ cùng tản bẻ lên mãi
+HVB_003_0625	國徵殺柳昇之故甄唾罵不問物火頴于門下外漆其兩目不許飲食	THỦ LOẠI Lang đã tâm ăn đường nan tuần THI ON CÚC DỤC, DÃ TÂM CỌP CŨNG KHÓ THUẬN
+HVB_003_0626	時黃福八朝見之知其少穎嘗取貓餅藏穀中每過即授之三月餘不死	giữa sân có 1 con heo, đến hôm dám ma thì lại thấy có 1 con bò, rồi sau gặp ngày tế tự cũng đều thấy có lễ vật để
+HVB_003_0627	明人以為神始受貢禮使囘復命火穎因尋父兄不知沒處至于僧奇只	đến ơn chủ, chỉ vì người trần mất thịt không hiểu thấu
+HVB_003_0628	見一詩一畫存焉即將固本鄉虛墓之後諫太祖忤旨降禮部員外郎光	Lão đáp : Mổ đây vàng mệnh Thượng-Đế sai xuống, chẳng may một sơn sa cơ, tội đáng muốn chết.
+HVB_003_0629	貢有詩云壯年表表頁高各開創寅緣際聖明詩草預陪寫掖運	DANH-THẦN Phụ danh-nho danh-thần Phụ chép thêm các bậc danh-nho, danh-thần
+HVB_003_0630	垂朝先擁使花行王臣襄惕忠兼孝天理昭明困復亨未商于今循故	Mạc-Đinh-Chi, Lưỡng quốc Trang-Nguyễn, Trang-Nguyễn hai nước, (Việt-nam và Trung-
+HVB_003_0631	轍功成事濟是前程其孫孫襄中狀元生下共責五歲好學人號袖童	Ngải vón là cháu quan Thượng-Thư Mạc-hiền-Tích
+HVB_003_0632	統元年號、丙辰科中黃甲仕至戶部左侍郎奉往北使時有中使輔行等	Sĩ đệ nhất danh khoa Bình-Dân thời Lý Trung-Tông, làm đến Thượng-Thư bộ Lại và được nhà vua bán cho bộ áo
+HVB_003_0633	寧貴物假作金銀替代潛取原物公不知之比至南寧府總督啟發見	kim-ngư (cả vàng), em là Kiến-Quan cũng đồ Tấn-Sĩ làm đến Công-bộ Thượng-Thư, còn ông Trang đây là cháu
+HVB_003_0634	其非真遂以事聞皇帝怒其無禮命拘晉于北那官仍以蛤蜊覆公	Nguyên-đế bèn sai ông cùng Sứ-thần Cao-Ly mỗi người
+HVB_003_0635	兩目以漆粘之曰瓶氣馬角方得還期公怡然自樂不少動心書於冬日	Chu-Công ; Mưa tuyêt đầm dia, Bá-Di Thức-Tề. Ý nói mùa hạ nóng nực, thì cái quạt đắc dụng như hai ông Y-Doãn
+HVB_003_0636	出時輒圓一小床曝于日下一明人問其故公即撫其腹曰我曝腹中經笥耳	kinh, một hôm, ông cởi lừa đi đạo phố, chẳng may con lừa của ông xó vào con
+HVB_003_0637	明人使讀大槩演義公讀了一遍不差一字明人大奇之即去其粘目甚加	Quých đọc sách Luận-Ngữ có những tiếng Tri chi v. v... Ông liền muốn ngay mấy câu trong sách Mạnh-Tử
+HVB_003_0638	禮重公客旅中有撲逃本社諸先靈詩集寄歸時有葉人鄭洪震見公	Cư quan bất cải cựu thanh bản Phiến minh hựu trọng Yên-dài dự
+HVB_003_0639	紫閣僕長郎八門受業癸未科中進士第除廣東知縣陞燕京重事以念	Nội-hành-Khiển Hữu-Ty Lang-Trung, sau lại đổi sang Tả- Ty, rồi lại thăng chức Bộc-Xạ, trong đời văn-chương, ông
+HVB_003_0640	其師淹晉不返即具本奏聞明帝始原之因召至京慰問二月遣還洪震	chí phục thù, đến lúc Minh-đế sai Trương-Phụ đem
+HVB_003_0641	即設愛買斂並綵銀致饒公出侯凡十八年其家黃橋福之言始鑿金為足	binh sang đánh nhà Hỏ, đại binh đóng ở Bắc ngạn sông Phú-lương , họ Hỏ bắt hết nam phụ lão ấu trong
+HVB_003_0642	王是歸國陸吏部尚書蘇川侯後贈少保蘇郡公人獸武前身蓋相類者	bèn từ Nam-sách lên lên Tam-đôi-Châu, hiệp lực với viên Thiềm-phán Đặng-Kinh đơn hàng Trương-Phụ đề
+HVB_003_0643	尚書張孚記	Trương-Phụ bèn dùng
+HVB_003_0644	青沔金壤断慶帝年號乙酉科中黃甲公性頗剛直統元	Bình Binh-Giao Nam-Lục của Khâu-văn-Tráng
+HVB_003_0645	末莫登庸欲篡位時公為吏部尚書百官以其故臣使作禮詔公張目	phong cho quan trước, Toại làm Tham-chánh, Dịch làm Chi-huy-Sứ, Viễn làm Diệm-Thiết-Sứ, về sau vua Lê Thái-
+HVB_003_0646	叱之曰此何義也終不脹屈改命願公泰為之後公歸田里適間中館	Nghi-Dương rồi sanh ra nguy Thái-Tổ là Mạc- đăng-Dong , tức là cháu 7 đời của Trạng-nguyên
+HVB_003_0647	問野服乘涼與常人無異時則令偶經伊處人皆起立公獨靜坐矣之	ông gặp Nàng 7 dẫm xuống âm ty, câu truyện kẻ cũng hoang đường, nhưng theo lời các bậc tiên bói kẻ lại, thì
+HVB_003_0648	從者叱曰何人無禮將欲攻之縣令望見公駿須之異急止從者曰吾觀此	Cách mấy năm sau, vua Võ-vương kéo quân Chư- hầu vào đánh vua Trụ , hai ông đón đường giữ lấy
+HVB_003_0649	鬚美且認其體構必有識字試出對句若或不成打之未晚即出對	cương ngựa can rằng: Con mà giết cha có đáng hay không? Bê tôi giết vua có phải đạo không?
+HVB_003_0650	六知縣青沔見无礼而欲攻公郎應之曰進士金燭幸有珍餚而得晚賂	Nhưng vua Võ không nghe, cứ diệt vua Trụ để cướp lấy ngôi thiên-từ, dựng nên cơ nghiệp nhà Chu, vì thế
+HVB_003_0651	令始知其公即連遜趨拜自言途由錯誤過咎是耳幸大人見恕公	kết mà Tiễn-sinh lại mượn lời của đức Không-Từ để tỏ đức độ của mình, thì quả là cao kiến hơn bài của Sư Cao-
+HVB_003_0652	笑而釋之公前不附偽莫後辭歸不仕蓋在節義之列云	thiên Ly-Lâu hạ , thầy Mạnh nói rằng : Vua Thuấn sinh ở đất Chư-phùng là người
+HVB_003_0653	大興候記	Đạo giáo gọi
+HVB_003_0654	院世儀當泰澤社一下村人中官蒞國公世恩之第附焉賜之叔也為人焉	là núi Thiên-Trụ thuộc tỉnh Thiềm-Tây , khi Chu Thái-Vương trấn nại Di-Địch đem dân sang
+HVB_003_0655	浪不循禮度而高尚志氣少善盈文尤長於文體十五歲頴鄉舉	Tĩnh là yên tĩnh, chứ không phải năm Gia-
+HVB_003_0656	特同科諸貢士拜試場官皆用烏紗帽青吉衣公獨著紅色衣烏尾	con hổ lớn, sắc vàng, đầu trắng, sừng sọc nhảy vào, trên lưng có công một người đem quảng vào giữa đồng xương
+HVB_003_0657	暢場官怖乃兄勢熖仍免覆問平日共奠登庸相有交善統元間	khác gì treo một sợi tóc, biết tình sao đây? Ngờ đâu giữa lúc nguy nan như thế thì chú bỗng nhó
+HVB_003_0658	也音托不檢束也。	cũng chẳng còn kể gì.
+HVB_003_0659	出居京城外長生寺不求療	da mà cũng không hóa đi được. Hưởng chi ngày nay lão
+HVB_003_0660	達一月莫簽庸迫至欲加以好官公辭不受願得一爵為各稱足矣	Lão đáp : Mổ đây vàng mệnh Thượng-Đế sai xuống, chẳng may một sơn sa cơ, tội đáng muốn chết.
+HVB_003_0661	因請以大興二字為號登庸許之即拜為大興侯任行高志儀嘗	DANH-THẦN Phụ danh-nho danh-thần Phụ chép thêm các bậc danh-nho, danh-thần
+HVB_003_0662	浪吟一句云英雄埃乃剝剝帝境鉅剎大興庄輪題于登龍城大興門	Quan Thượng-thu thì đồ Tấn- Sĩ đệ nhất danh khoa Bình-Dân thời Lý Trung-Tông, làm
+HVB_003_0663	左自謂己在其上而人皆出下之意歷歴莫大李尚存時莫氏荒怠政命	cụ Hiền-Tích, tên tục gọi là Sách-Tú , (vì xã Lũng- Đông quen gọi là Kẻ-Sách, cho nên mới có tục danh
+HVB_003_0664	著樂昌分鏡國語傳序陳隋奢欲事寫意諷論他亦不之悟也又嘗	thấy ông tướng mạo thơ lỗ nên không muốn cho đồ Tràng. Vi thế ông mới soạn ra bài phu (1) Ngọc-Tỉnh-
+HVB_003_0665	有北侯至途經	Ông liên đối lại rằng: Xuất đối
+HVB_003_0666	"南門聞門上題字係我國臣子各號輒停車不進要以架梯從上而行	."	Sang qua cửa ải Nam-Quan, ông cùng sứ bộ tiếp tục lên đường, khi tới Bắc-kinh triều thần nhà Nguyễn thấy
+HVB_003_0667	時尚書武惟斬為援伴官伴應以知命部下生一計陰取送象來從	Nghĩa là : Khí nóng bùng bùng, Y-Doãn Chu-Công ; Mưa tuyêt đầm dia, Bá-Di Thức-Tề.
+HVB_003_0668	後痛刺槪大吼衝突北人叱了一驚郎撓愕走過自知墜于計中不勝	Nhĩ ư tư thi hề, Y-Chu cự nho. Bắc phong kỳ lương, vũ tuyệt tái đồ, nhĩ ư tư thi hề,
+HVB_003_0669	慙憤至今猶傳其事云	An khứ nữ, dĩ thi
+HVB_003_0670	扶擁節婦記	Cầm sắt Tỷ bà bát đại vương.
+HVB_003_0671	"上洪唐安有范氏各援者自少通穎尙間頗有姿色既加笄即歸于唐	."	Kỷ-Sơn minh phương lưỡng trình trường, hùng
+HVB_003_0672	豪令族之家生下男女四人值北兵南侵夫以病死婦撫幼育孤以不一	thanh lục, thư thanh lục, lục lục tam thập lục thanh, thanh thanh hưởng triệt cừu trung thiên, thiên sinh gia tinh
+HVB_003_0673	庭不雨醮自誓言其悲酸情狀缺石心腸非言語形容所莊盡將當	Phiên âm : Thanh-thiên nhất đóa văn, hồng-lò nhất điểm tuyêt ; Thượng-uyên nhất chi hoa, Quảng-hàn nhất
+HVB_003_0674	兵火人罕自全城或饑寒失守為盜賊所污者或道路流亡苟來生	Dịch nghĩa : Trời xanh 1 đám mây, Lò hồng 1 điểm tuyệt; Thượng-uyên một cảnh họa, Cung quảng một vùng
+HVB_003_0675	浩而婦周旋其間以死自誓言變容斂色不為隱暴所侵一方之人皆	phong thủy đều ta, nhân tiện ông có dẫn họ xem lại phần mộ tò tiên, ngôi nào họ cũng lắc đầu bảo rằng không
+HVB_003_0676	以故郡鄰目之造天日明基圖復舊朝之達官鄉之豪右屢欲奪其操	Phiên âm Đệ nhất khôi nguyên tạo trí thân Cư quan bất cải cựu thanh bản
+HVB_003_0677	詔求真烈有司以名聞	Phiến minh hựu trọng Yên-dài dự Sử tiết phương tri quốc hữu nhân
+HVB_003_0678	仍表其問曰節義門賜奉事以旌揭之年八十而終子孫累世長冠	Dịch Chiếm giải khôi nguyên tự thiếu thời, Quan sang vẫn giữ nếp nghèo thời,
+HVB_003_0679	為一鄉之明王族今扶櫨社有故碑存焉	Yên-kính đã trọng thơ để quạt, Cò Sứ nếu cao, nước có người.
+HVB_003_0680	陰境 陳朝祖墓記	Giải nghĩa
+HVB_003_0681	陳朝之祖美禎，即墨人也。	cũng đều làm đến Viên-ngoại. Cháu là Dịch, Toại, Viễn , ,
+HVB_003_0682	世以魚為業，南道長江一帶，到處是家焉。	Trương-Phụ không rõ hư thực ra sao, nên không dám vượt sang sông.
+HVB_003_0683	時有堪輿北客就我國相地自三島祖山從龍脈而來歷昇龍古	bèn từ Nam-sách lên lên Tam-đôi-Châu, hiệp lực với viên
+HVB_003_0684	碑至金洞縣偈州社高會社見土堆環聚即笑而言曰是也	Thiềm-phán Đặng-Kinh đơn hàng Trương-Phụ đề báo-cáo tình-hình họ Hỏ.
+HVB_003_0685	駐兵造厭旁至南昌縣芳萊社江漢沒了臨江顧望良久曰江水	làm Hướng-đạo quan, rồi sau cùng với viên Hạ-hòa-mục là Võ-Thạch-Khanh , bắt được Hán-Thương
+HVB_003_0686	急流豈有六藏水底耶因過河而往至御天縣河柳社見星峯草	Bình Binh-Giao Nam-Lục của Khâu-văn-Tráng
+HVB_003_0687	立郎指之曰撞頭旁在是寧能適我耶遂尋至日果社起宗到太堂社	phong cho quan trước, Toại làm Tham-chánh, Dịch làm Chi-huy-Sứ, Viễn làm Diệm-Thiết-Sứ, về sau vua Lê Thái-
+HVB_003_0688	阮固結苟旁續下盤針看了輒躊躇不敍去適西衙人阮固見之問曰地仙	Nghi-Dương rồi sanh ra nguy Thái-Tổ là Mạc- đăng-Dong , tức là cháu 7 đời của Trạng-nguyên
+HVB_003_0689	屬意于見不知這處有吉穴耶客人仰面笑曰不謂奇王大地出平陽	cao để làm nơi tế lễ, các quan nhà Mạc đi qua nơi đó đều đến bái vọng, hai chỗ hiện nay vẫn còn (Điện ở bản
+HVB_003_0690	可笑聰勁時師都無眼力固曰果如此請以許我師謝禮如何我亦可	Nay tôi là kẻ hậu sinh, kiến văn dẫu rằng thiên lậu, cũng xin tạm thuật một cách đại lược ra đây.
+HVB_003_0691	"辨客人曰爾既有福而遇我我則予之郎還謝我以百緡錢他時有	,"	vua Thành-Thang biết có tài đức, sai sứ đem lễ đến đón trước sau 3 lần, ông mới chịu ra làm tướng,
+HVB_003_0692	國當分其半國許諾遂將祖墓葬之客人反覆謂之曰這誠大地	đánh tan vua Kiệt nhà Hạ lập nên cơ nghiệp nhà Thương . Chu-Công là em vua Vũ-Vương nhà Chu ,
+HVB_003_0693	登了必有嘉祥但於百日之內時常往來以探倘風雷之後見有異事	dám nhận, rồi sau cũng bỏ trốn đi nơi khác. Cách mấy năm sau, vua Võ-vương kéo quân Chư-
+HVB_003_0694	便是剣多古少一可急殺塞之葬纔三日忽夜聞巨雷振起一聲所在	hầu vào đánh vua Trụ , hai ông đón đường giữ lấy cương ngựa can rằng: Con mà giết cha có đáng hay
+HVB_003_0695	地方人畜皆驚而次日視之見蜀會西衙太堂三社有石突出人稱貓耳石	lấy ngôi thiên-từ, dựng nên cơ nghiệp nhà Chu, vì thế hai ông không thêm ăn thóc nhà Chu, rồi cùng lên núi
+HVB_003_0696	園池在在皆有時同自知得地喜不自勝其要謂之曰此地雖然然發	cháy đá, bài Chiêu-Hồn trong Sổ-Từ có nói rằng : ở phương đông có cây Phù-tang, phát ra khí nóng
+HVB_003_0697	福但今損百緡錢如何可得又來日半分天下其所得者幾何因以是無意還謝禮錢客人問之固約以某日具還至日客抵其家固即捉	Phong. Đại ý nói rằng : gặp thời nóng nực thì cái quạt đặc dụng như ông Y-Đoãn ông Chu-công ; gặp buổi rét mướt thì cái
+HVB_003_0698	來縷定乘夜救之江中惶遠而歸不意這處乃浮沙水漲自他將投下	quạt thành ra vô dụng, bị bỏ chết đối như ông Bả-Di, ông Thúc-Tê. Dụng chi tắc hành xả chi
+HVB_003_0699	忽然潮水漸涸圖在沙上適陳氏魚舟過聞有人喚聲急來救之上	tắc tang, câu này ở thiên Thuật-Nhi trong sách Luận- Ngữ , đức Không-Từ bảo ông Nhan-Uyên
+HVB_003_0700	船觧去其縫換以新衣間故客人具道由來因謝曰感君子角生之恩	dám nhận, rồi sau cũng bỏ trốn đi nơi khác. Cách mấy năm sau, vua Võ-vương kéo quân Chư-
+HVB_003_0701	當以此地相報陳氏謂這地他已葬了若將之何客人曰某已先葬此	Ly vậy. (4) Đông-di Tây-di, câu này ở sách Mạnh-Từ thiên Ly-Lâu hạ , thầy Mạnh nói rằng :
+HVB_003_0702	地必為公有陳氏遂畱之舟中不露人聲跡客人即教以多采調器	Vua Thuấn sinh ở đất Chư-phùng là người
+HVB_003_0703	鑄為霹靂斧形及蘇木樑煮湯待有授用處忽是夜雷雨交作數	Trâu-Thu là sách Mạnh-Tử , vi thầy Mạnh sinh ở Ấp Trâu, lúc thầy Mạnh vào yết kiến vua Lương-
+HVB_003_0704	然有雷轂手之聲，震師將雲辟雲蓋，斧穿重於墓上，面透至棺，隨以蘇	Lạc, có con Rùa-thần nổi lên, trên mo có 9 vạch, dưới bụng có 9 vạch, vua bèn suy diễn ra thiên Hồng-Phạm-
+HVB_003_0705	木水灌下明日固往探見之以為雷打墓中流血因惧而殺去客人遂將	là núi Thiên-Trụ thuộc tỉnh Thiềm-Tây , khi Chu Thái-Vương trấn nại Di-Địch đem dân sang
+HVB_003_0706	陳家祖墓就塟焉。	Thám-hoa Đặng-đình-Bảo ! Thiên hạ cộng tri danh.
+HVB_003_0707	這句前望三陵大江在美樣縣有備社格曰新巡礦後拖伏象樓壹	Đời trước truyền ngon lại rằng : Lúc ông ra Kinh ứng thí phải qua sông Uông , khi ấy sông còn nhỏ hẹp
+HVB_003_0708	旌劍羅劉左右穴在土腹藏金坐乾向巽事襄客人有課云彩岱黑當堤	có thể bắc cầu qua được, nên ông khẩn thâm xin giang thần phù hộ cho ông đỗ Trạng-Nguyên, thì ông bắc cầu
+HVB_003_0709	陳氏曰果如其言當分民祿之半客人	con ông dự hưởng ở nơi đền thờ. Thám-Hoa Đinh-công-Lưu
+HVB_003_0710	顏色得天下陳氏曰果如其言當分民祿之半客人	biểu-diễn đến mấy trăm lần. Hoàng-thượng thấy vậy cười
+HVB_003_0711	照煙花對面坐必以顏色得天下陳氏曰果如其言當分民祿之半客人	câu: Tam-đô đắc thiên-hạ nghĩa là : Tam-đô lấy được thiên-hạ, đến khi tinh dầy Ngài bên nghi
+HVB_003_0712	得奈 景須如此但君家世世享國則我家世世給足衣糧可也陳氏謹當書目伸	trong số Tam-đô, và lại có con lối lạc, nên mới ra lệnh cho Cự và ông thứ nhi phải tự tử, mà không để ý đến vị
+HVB_003_0713	各有書交為質部說客人心多機智又密寫識一道雷與彼子孫藏之	quan rất thanh liêm ngay thẳng, gặp những vụ án uẩn khúc, có tài xét đoán như thần, vì thế ông ở trong đại
+HVB_003_0714	嘯以異事特他如禮不替者便以冥告倘者背約即如此因與陳語曰	quan văn cho được kiện, nhưng sau đến lượt ông xét thì ông lại xử cho thua, từ đấy về sau không đi kiện cáo
+HVB_003_0715	某恐遺下二法有漆長遠來時便可造之陳氏不勝感謝至二世陳賜	ông là một vị liêm chính tài năng, nên lại cho sứ về triều để ra cảm đầu trong đại Ngự-Sử, dần dần thăng đến
+HVB_003_0716	守度曰陳家皇族乎陳家赤族乎後遂禪位、	nuôi, rồi sau lại được người cùng họ là Thường-quốc- Công xin lại, nuôi làm nghĩa tử (Quốc-Công cũng
+HVB_003_0717	逮季世後禮日寢哀客人即進言臣先祖遺一譜囑以某年遂就黃國	quan nhà Mạc phong chức Đại Nguyên-Soái Tổng quốc chánh trước là Thanh-Vương, về sau nhà Mạc mất thì tự
+HVB_003_0718	陳朝取讖者之見內言太堂發跡舊墳今將不旺當疏通水道	dinh vẫn cứ thanh bạch, bởi thế ông mới thảo ra những bài phú như : Thái-Môn-Nhân-Túc nghĩa là
+HVB_003_0719	遂信其言照識內書圖鑒自富初社大江而八紫囘至太堂	Linh Phong-Thổ ký và bài Vương-Thăng-Truyện , với bài phú Ngư-Tiều Canh-Mục, đều được
+HVB_003_0720	蓋陳家享福該有此數是亦出於天命豈人力所能及或按陳家祖墓提生	cả môn Địa-lý, người ta đồn rằng: chính ngôi mộ Tò của nhà Trang-nguyên ở Hùng-Khê cũng là tự ông coi đất điểm
+HVB_003_0721	天下後生仁宗火時清秀面字號金仙童子明宗清秀非允時人	Quan Thương-Thư trức Nghiêm-Sơn Hầu Nguyễn-công Doãn-Khâm, ở làng Kiệt-Đặc, huyện Chi-Linh
+HVB_003_0722	"稱為神仙人中蓋亦土地之壇客言信不誣矣	—"	Quốc-triệu đáng-khoa-lýc — Những suy-niệm siêu-hình-học
+HVB_003_0723	詠橋祖墓記	Lê-dinh-Huyền Bài-văn-Bảo
+HVB_003_0724	東崖誄橋京北阮族之祖號福過平生樂善音築木千豐盈縣東蕃社以	Nguyên trước Trị-sở Thừa-Ty của tỉnh Hải-dương
+HVB_003_0725	釀酒為業傍有菩提樹為風所拔因買供新爨適極至樹根見下有	giải võ của Ty, đánh 3 hồi trống, các quan trong Ty ngò có việc công, vội vã khẩn áo chính tề tới họp.
+HVB_003_0726	銀穴約三婁許即收囘晉貯之已而撤廬去經二年餘時有北客來取銀見	quan ngạc nhiên hỏi vậy: Cớ sao lại dám đánh trống? Ông đáp: Tới đây là kẻ hàn-sĩ muốn đến để xin lương
+HVB_003_0727	雀跡不存只畫空穴即聞諸旁人知這銀已為公所得遂尋至家出雀	Mọi người lấy làm khâm phục, đem cấp cho 5 quan tiền và 1 thùng gạo; thế mới biết ông quả là một kỳ tài.
+HVB_003_0728	識一道示之曰某為先人遺貨跋涉而來不想天已賜公今早覓歸程所	Theo lời truyền lại thì ông sinh trưởng trong một gia- đình nghèo túng, phải ở gửi rể nhà một phù ông cùng
+HVB_003_0729	望出資路費受賜不淺而公得銀藏之不知多少至是取識者之因熙熙	nhẫn phi Hằng thì Trí; vì thấy tài học của ông còn hon Phạm-Công xa lắm, thế mà về sau ông chẳng
+HVB_003_0730	銀數與記不差即疑得其人謂曰聊這銀繫我取的原來收時如故不曾取	Nhắc lại khoa trước mà ông bị hỏng, thì lại chính là cái khoa mà ông tin chắc thập phần, vì thế trước khi
+HVB_003_0731	用既是公家原物當盡以付還其人謂曰那物雖我家先遺一下今既為公所	nộp quyền đi thì, ông đã xin với nhạc-gia cho mở 1 trâu đề ăn khoa trước, và hẹn người làng chặt tre làm sẵn
+HVB_003_0732	得是公家物倘蒙惠顧只願費路錢足矣若更以相還豈敢如命公固執	Ông gia nghe xong bảo rằng : Nếu ông bỏ ra thì ai là người đáng mặt ở lại thì cứ ?
+HVB_003_0733	不可客人曰公既有是心願頒其半公曰我不穀人情之所欲第這銀非我	Nhẽ nào khói-nguyên mà phải ăn cấp chữ của người khác, vừa nói vừa dáo bước đi, không thêm ngoài cờ trở lại.
+HVB_003_0734	之財天使我為公守耳故為此以待勿復牢辭客人恐遠其意輒	Ông Đắc nói : Chương ấy em vẫn thuộc lòng, vậy xin anh cứ ở lại, em sẽ đọc cho mà nghe.
+HVB_003_0735	頒銀歸國後嘗以其事對北人言時有風水師者聞之曰難如此	Câu Tự thấy anh bảo vậy, quyết chí học thêm rồi sau cũng dỡ đại-khoa, anh em đều được vinh hiền, sự
+HVB_003_0736	人好心我今老矣尚尚火時郎當往安南擇吉地以報其人懇之	Ông người làng Hùng-Khê , huyện Chi-linh , thân phụ mất từ khi ông còn thơ ấu, chỉ nhớ
+HVB_003_0737	師曰我有二門弟一可遣遂與之偕往北客至詠橋社探問則念已	tế Tiên-sư cho cháu nhập học mới phải.
+HVB_003_0738	於前年捐館矣郎辨一購禮致祭而去二月餘復至謂公之子曰我感	Nguyên trước có lần Tiên-sinh mơ thấy mình dỡ, mà trong lên bằng thấy người được dỡ thứ nhất tên là
+HVB_003_0739	受先人之德無以相報今帶得地師來來尋告地以謝有一處群山	sĩ ngày nay mà mình quen biết, chẳng có tên ai như vậy. Cho nên ông đã mượn nghề dạy học đi khắp đó
+HVB_003_0740	供伏可做一代帝王又一處緒軸花畫可做一代駙馬於二者何擇其	muốn mấy. Quả nhiên cách mấy năm sau, giữa khoa nhâm tuất (1562) niên hiệu Quang-Bửu nhà Mạc, thầy trò cùng dỡ
+HVB_003_0741	子曰我家村鄙野人何慼望比所望者世出文儒之地不慼二地	sinh bảo nhỏ Cậu rằng: Trạng-nguyên khoa này phải nhượng phần thầy đấy nhé, cậu Trĩ cui đầu dạ, dạ.
+HVB_003_0742	師曰苟如此在貴邑內何事遠求按地自錦章社來龍屈勢如蛇	triều : Trạng-nguyên khoa này thế nào cũng lọt vào tay học trò của tôi tên là Duy-Trí đó.
+HVB_003_0743	形至詠橋社八首突起二小阜一阜稍大平坦一阜差小勢頗微科一地師	sách địa-lý đi, chứ để làm gì cho nhầm lấy đến người khác? Quả nhiên năm ấy Phạm-Công được dỡ khỏi
+HVB_003_0744	認穴在大阜十次一地師不可即就前面澤澤處浸卧水中貼仰良久方	Tân kéo đến, 9 khúc triều về trước mặt, huyết kết tại nơi khe nhỏ nhất, lại có cái gò cao đứng cách trước mặt
+HVB_003_0745	起日我已驗之果然方在小阜二師爭辨不決因畫成一圖使人北還就諸老師取正老師曰這曷是黃鶴咱蛤其氣在耳兩阜間兩耳也大耳是	quyết khoa, còn ông thầy Tàu vì lập sai hướng, nên tuy
+HVB_003_0746	等小耳是微科有氣旁必在杳其子即依言移公藝之坐恩向坤至三世	tương kỳ, vật đã tiêu hiềm giới ý, Nghĩa là: Kẻ trượng phu chỉ khí hẹn hò, truyền nhỏ nhất đừng nên để ý.
+HVB_003_0747	文徽以明德翼登庸乙丑科中探花官至尚書致仕其三子伸調以永定	Thái-Bửu, sinh hạ được 3 con giao, con trưởng làm chức Tri-huyện Gia-định, con út làm Tri-bạ, được phong chức
+HVB_003_0748	奠福原丁未科中黃甲官亦至尚書日達善以光寶員乙未科中黃甲仕	Ngưỡng hậu thô giám làm hâm nạp, Tí vong hồn phần mộ
+HVB_003_0749	以淳福年考乙丑科中進士至侍郎其孫教方	Truyền gia kẻ gia, lộc thêm đưa nò. Xuất tướng nhập tướng, tài được nỗi sinh.
+HVB_003_0750	之文知江漢之水愈出愈奇四代孫福胡王以陽德繼中興嘉慶末科	Quang-Hung năm thứ 16 đời Lê-Thế-Tông (1596), Mạc-Khang-Hựu chiếm đóng thành Phao-Sơn
+HVB_003_0751	中會元再中東閣仕至都臺公坦德敦國益相鄰緒北省其苗裔商今	thư, Đông-Các học-sĩ, Quốc-từ-Giám, Tế-Từ, Thiếu-báo
+HVB_003_0752	旋中相傳諸預登紳甲者面必微科蓋地氣之所鍾也卻說頭乃文微	phủ đầu để là Quang-võ được mã phú , ông
+HVB_003_0753	次子火領鄉舉惟善飲酒懶廢學業見海陽處隨號嘗往珥	Thể sau ông phê hai chữ minh khoái , nghĩa là : sáng sửa khoái hoạt, nhưng
+HVB_003_0754	河竹木津邊明儔對飲通就河津濯行見竹筏上有紱字在焉拾而	trong Hàn-uynh tập và Ky-anh tập, cùng hơn 10 bài thơ mừng Đạo-phái Hầu đạo ấp sang sử Bắc quốc, lời văn
+HVB_003_0755	觀之乃是舊賦一箇因記之燕燭每飲酒後輒叩盤歌詠習以為常乙丑	danh nho của một thời đại vậy! Ngày nay xét lại sự tích của ông, trước kia cũng có
+HVB_003_0756	科八第一場得親朋友之助頸在中第至第二場携酒而入坐間醉酒睡著	Bài số 22 Giải nghĩa Câu 1: Ngô: ta, hà: cái gì, Ái: yêu, Ái: yêu, duy: chỉ
+HVB_003_0757	日已向暮忽大風驟至塵霧漫天續睡中驚為起輩目觀之見有數片	vân: mây, sắc: màu sắc, lão: già, âm đạm. Ngước mắt trông lên giới thấy có màu âm đạm của mây.
+HVB_003_0758	紙字飛到其前收來紬認乃是四六體文續喜曰此天賜吾也依樣寫	Câu 6: Bá: cây Bách-diệp, lặp: đứng, đồng: phương đông, phong: gió, mậu: tươi tốt, tuế: năm, hàn :
+HVB_003_0759	之已而果中至第三場賦題乃前日所得舊賦者更預中第追至四	Câu 3: Thiên : giới, hạ : dưới, hữu : có, thiên : giới, xuân : mưa xuân, bất lão : chẳng già.
+HVB_003_0760	場日學業文廢不能措一辭因取晉侯國語舊傳凡諸鄙俚者換	Ông Dương-công-Tôn người xã Lục-Dương huyện Chi-linh về văn học đáng được người đời
+HVB_003_0761	以新聲每句撥成輒需乘醉吟詠采察官見之謂曰天日已晚入皆	bài Cao-Tổ-Kiểm phú , bài Ngọa-Long phú , bài Bạch-Y-son nhân , bài Áp-tử từ-kê-
+HVB_003_0762	行文過半而新進士何乃尚番空卷而放浪酣歌乎續酩酊音落頃答	bài Nghinh-xuân Uyền , và bài Cương-Thổ-phục- Hán-Đường cựu đĩ-Thiên-hạ vi-tâm ,
+HVB_003_0763	之日欲寫郎寫何難遂寫了這傳授納時同考院有知音者見其	ở bên cạnh nhà ông Tới đây Cậu muốn nhắn gì? Cậu sỡ sàng đáp: Nhờ bác về báo ông Tới : Thiên
+HVB_003_0764	詞調清遠每得佳句郎援筆闋之因語諸同院曰這卷寧為我	Đại nhân ất tị, tư văn tại ti, thành tập đại kim thanh ngọc chấn, đức hạnh thảo an hành sinh tri.
+HVB_003_0765	院獨私當送與亞覆考獻笑既而覆考官會者以為戲談大笑	Quan trường thấy vậy không dám lấy dỡ
+HVB_003_0766	周一場聲聞于外采察官見問全院具道其事考訖即擇諸中	Quan trường thưa rằng: Chỉ còn có mỗi
+HVB_003_0767	卷者適同候旨時上以其取中頗少亟差往命增取之諸考官對	Khảo quan lại thưa: Cứ ý Thần đăng: Quyền ấy không lấy thì thôi, nếu lấy thì nên cho dỡ Thủ-khoa
+HVB_003_0768	諸中官曰申格之文這等卷已盡矣其餘無足之取中官以內首見逼	mới xưng. Vương Thượng phán: Chư khanh xét thấy có thể cho dỡ Thủ-khoa thì cứ việc cho, còn ngò chi nữa.
+HVB_003_0769	考官曰所存者晉侯一卷外此更無中官郎馳回具奏有首判云晉侯	Thượng-Thư, Thượng nghe lời lập tức thăng ông chức Thượng-Thư Công-bộ, tước Đinh-xuyên-hầu, để bưng sách
+HVB_003_0770	不取更取何人郎傳與考官批取饒而返同觀之葉已取中輒藏不匿以宣	sao được. Vi ông vừa mới bị Thượng giữ lại, không dám xin nữa, cho nên ông mới giả nhồi bằng câu hải
+HVB_003_0771	露後績仕至兵部左侍郎會我朝中興出首左遷宣光處承使魯任按	Rồi sau đến ngoại 80 tuổi ông mới trí sĩ với chức Công-bộ Thượng-Thư và tước Thiếu-bảo Cẩm-
+HVB_003_0772	自有科目以來諸預中格者必是文理可取茲以國語傳取中頗微訛	tục, tạo riêng khuôn mẫu văn học của một nhà nho, bao nhiêu văn tự ứng chế trong triều cũng do một tay ông
+HVB_003_0773	傳或者是時莫朝取士無章故有此異爭亦以見其為學在人而中否	thảo. Lúc về tri sĩ ông soạn 3 thể tạ văn, mỗi thể một khác chứ không trùng điệp, hiện còn ghi cả trong tập
+HVB_003_0774	之中有天數存焉近日有監生者八省試第四場文理不成卻寫國	Nhưng nay chỉ còn thấy có mấy bài, như là bài phu Duy nghĩa-lý phong niên phú ; và bài văn-
+HVB_003_0775	音雜技投納試場官論以無為行仍論失監生袁訢幸免是為	khứ-Tật, Hoặc-khứ-Bệnh, tật bệnh khứ trừ, đối với Hán- duyên-Thọ, Đỗ-duyên-Niên, thọ niên duyên vĩnh.
+HVB_003_0776	效類準之戒為初學	Tiên sinh vốn là bạn
+HVB_003_0777	安陽中行記	NGUYỄN-CÔNG-DĂNG
+HVB_003_0778	安陽中行有武姓者起世寒微而頗好學時有裴氏來風水師相地釋得	người xã Đại-Tôi thuộc huyện Quế-Dương là người quán quân về từ phú lúc bấy giờ, mà đến cả
+HVB_003_0779	地吉塗之亊襄其師謂曰之這曷世世公假未審我家能稱此否既而	làm bài phú Tu-thán Trị-quốc để chê bai vua Thái-Tông và Cao-Tông ngày trước, từ ý rất là
+HVB_003_0780	受神人罵日本地係我管了汝何人來塗我地不穢必有災殃其人特	sông Lạc đời vua Hạ-Vũ, rồng ở sông Hà đời vua Phục- Hy, mà đây chính là ông Hoàng-đế nối đời trị nước
+HVB_003_0781	疑不決未幾幾舉家病作族中不寧復變神人謂曰汝福淺不堪此命	Ba ông văn-sĩ thoạt nhìn mấy câu phá đề biết rằng không thể dịch nói, vội vàng gác bút xin lui.
+HVB_003_0782	我晉後待武強汝當讓與他則汝子孫亦當享他之報其人如言即	hiệu Hoằng-định tam niên (1603) đời Lê-Kinh-Tông , mới đỗ, sau cùng với quan Thượng Lưu-
+HVB_003_0783	邀武氏告之曰我有吉地一穴今許與汝來日汝家發福當無忘我	đêm gót giữa thật là đặc ý, rồi hôm đến chùa, Lưu-Công giả vờ xin ông Tới vịnh một bài phú tức cảnh.
+HVB_003_0784	子孫武氏許諸郎將先人塟之其後武家興旺多產才藝健武的人中	Quan Thám-hoa Đong-Các Nguyễn-dăng-Cảo người xã Hoài-bảo huyện Tiên-du , lúc nhỏ đã
+HVB_003_0785	興問滅莫有向道功榮封功臣至今世襲典兵爵禄未次誘言安陽	May sao giữa lúc ấy thì có quan Phó-đô là Nhữ-đình- Hiến, vẫn thường trọng ông như bậc cha chú,
+HVB_003_0786	中行金誠璽淡蓋言世臣之多也	than thở mà thôi. Đô đức độ của ông đại loại như thế,
+HVB_003_0787	陽宅、紫泥鄧庭記	NGUYỄN-CÔNG QUÍ-ĐỨC
+HVB_003_0788	安山縣北荒地之西有石嶺千餘峯盤桓一里許清奇可愛中有石洞	Ông Nguyễn-Quí-Đức người làng Thiên-mụ huyện Tứ-Liêm , lúc còn ít tuổi theo học ở hạt
+HVB_003_0789	安山鼎北。	Đông-ngạc.
+HVB_003_0790	江左之。	Y, Phó, dĩ phụ vương.
+HVB_003_0791	有大。	Cự ý chuẩn sơ kiến hạ.
+HVB_003_0792	有。下有禪。	Sào Do di ân.
+HVB_003_0793	高陳先聖。	Phó giúp vua.
+HVB_003_0794	宗築宮於此。	cho nhà Ân.
+HVB_003_0795	屢臨幸。	tùng bộ khan.
+HVB_003_0796	焉。始改為龍珠社。	nguyệt tự nhân.
+HVB_003_0797	按山之東。	từ rất nhiều.
+HVB_003_0798	有 一石突起酷類蠅餘舊傳有仕社人鄒庚家貧為人傭借適在田間	Chánh-Phủ, nhân gặp được hôm rồi rải, ông cùng với các quan lên du ngoạn ở chùa Sài-son thì vừa
+HVB_003_0799	校未有相客經過二言我有吉地一處如有何人請者我即與之度聞其	gặp lúc hai vị triều-sĩ là Nguyễn-Xá và Nguyễn-Côn đi trợ tế cho một gia-đình nào đó, nhân tiện có ít
+HVB_003_0800	言去禾而上前来拜請因邀北寒同只辨得一黍小鶴為禮前致辭曰	phần biểu đem về, bèn sai người nhà mua một be rượu đặt cả lên bàn để mời các ông thụ lộc.
+HVB_003_0801	僕候遇明師自知有福但家貧冷淡愧怍殊深倘吾師惠以福地幸	nhận thấy Văn-Miếu nước nhà chỉ giữ hình-thức bề ngoại, còn ở bên trong thì để um-tùm lạnh lẽo, mà việc
+HVB_003_0802	來時發誓不忘恩拒人見其誠心即引在山傍蟾蜍又一指之曰此地最	Xét thấy việc này ông đứng độc công thực đã hết lòng hết sức, thế mà cũng đến hai năm mới được hoàn-
+HVB_003_0803	好當作陽宅居之必然大發富貴但得近君後急撤去之切不可要庚	thành, tồn phí có tới hàng vạn, mà tiền Vua ban chỉ được một ngàn quan, còn thiếu bao nhiêu riêng một mình
+HVB_003_0804	依言即構茅屋數間居之纔及三年時有打魚俗例其池在山傍宅之前長	Trong thời-gian ở nhà, ông vẫn giữ lễ mỗi tháng hai kỳ sóc vọng (rằm và mồng một), cũng tới trường giám
+HVB_003_0805	潤數大許邑人鑒網相下庚於池中忍值魚鬚斷其絕郎上池畔山邊取藤英	Bài thơ quốc-âm trên đây, đề tài là thân mẫu ông Vương- Lãng nhân lời sử giả nhà Hán, về bảo cho ông biết nông-
+HVB_003_0806	接經束之腰間忽然陽事大舉壯硬異常原有敵樁一啟恐不敵敵因晉浸池	Chú thích Vương-Lãng sinh đời nhà Tiền — Hán, quê ở ấp Bái nguyên trước làm chức Huyện - hào, Lực Hán - Cao - Tô
+HVB_003_0807	中不敵上畔時打魚陸續而歸庭獨不見眾人意其得魚而藏匿者其母郎	đánh nhau với Hạng-Vũ , Vũ thấy Lãng có tướng tài, bèn sai người đi bắt cóc thân mẫu của Lãng, Lãng được tin
+HVB_003_0808	徙尋之見廣猶在池中仍聲以遲歸之故廣郎鮮魚共母將同襃解釋其	cho sứ sang thâm, Hạng-Vương bắt buộc Bà phải gọi Lãng về bên Sở. Bà bảo riêng với sứ giả rằng: Tôi nhớ sứ quân về
+HVB_003_0809	藤陽事漸漸而倒既歸世問其故庾具以宴告母即取藤使試佩之陽輒勃	Từ-Thú? Vì Bà còn du dự đến nỗi mắc mưu Tào-Tháo, dùng bức thư giả để triệu Từ-Thú sang Tào, rồi khi trông
+HVB_003_0810	起築安試箋驗母取曝乾置之灶上時陳裕宗陽爭不舉廢罔治弗效使人	thơ Tam-kiệt-thi bài thơ của một vị túc nho là Đồng-Bình-Quân được khảo quan xếp vào
+HVB_003_0811	禰詣國中有能治者許天下民祿之半適詣至伊社庚丹聞之曰劣陽	phạm nan phù vong Sở quốc, bách tham thực dữ sáng Luru-
+HVB_003_0812	是世之病，使者具道可其六詳母曰我家有一物必能治之母子即取而勝隨	co (Ky), nghĩa là : Một Phạm-Tăng khôn phù được vạn nước Sở cho khói mất, dẫu có Trẫm Tào-tham, cũng
+HVB_003_0813	使者赴京獻上祿宗佩之忽然陽事雄壯生得二皇子以度為神醫	Tin . Phạm-Tăng , Tăng là quân-sur của Tây Sở. Tào-Tham là Đại tướng của Hán Vương Luru-
+HVB_003_0814	畫之宮中侍藥賞資不可勝計寵幸無比廣既得君都忘客人	vẫn làm tướng rằng văn-học của các Tấn-sĩ cũng tẩm thường thời, chẳng ngò ngày nay được thấy thơ của
+HVB_003_0815	之言不徹舊宅其後庚子通渙宮女事覺被刑庚被驅囘田產盡沒	Quan Thượng-thư Lê Công-Hy người làng Thạch-Khê huyện Đông-Sơn, Đông khi thảo tờ chế đến câu
+HVB_003_0816	始曩時貧寒的人接這宅接外有高數武形如理藥刀盤以故贓得	Nguyễn Lê-Công lúc cầm chính quyền, rất là khắc- nghiệt ghen ngừơi hiền, ghét ngừơi tài năng, ai có danh
+HVB_003_0817	各又宅處與山相近每日月斜照山影隨下胡王之知蟾蜍在屋簷上當如	vọng, ông cũng tìm cách mạt sát đến cùng, vì thế thiên hạ đều phải khiếp oai!
+HVB_003_0818	身在蟾宮故得近君王出入宮掖但嫌宅在山傍地荒其適又前面卻	là Nguyễn-quán-Nho đồng thời làm quan ở trong chánh phủ, nhưng lại nổi tiếng là người có đức độ, nên
+HVB_003_0819	山去來靡定以故富貴不久按國史記裕宗遊西湖墜水中鄒英齋	người đời mới có câu rằng: Tề tướng Lê-Hy thiên hạ sầu bi; Tề tướng Văn-Hà, thiên hạ âu ca.
+HVB_003_0820	之復生因陽事不舉廣請取童男肝和陽起石服之及通同胞女以助	Ông Lương-Hữu-Khánh quê xã Hội-trào là con trai quan Bảng-nhân Lương-dắc-Bảng ở huyện
+HVB_003_0821	疑道乃通其端羅裕宗服之屢驗與此說不同未知孰是晚斬詠史詩云	Còn Kế- Khê-Công thì cũng dự đoán ý ông như vậy, nhưng chưa chắc hẳn. Bổng một hôm thấy bài phú Tần-quan-văn-kê
+HVB_003_0822	既因薄載云要君寵又啟滯風逞已私行險小人心似鬼當時謾說是神殿罔	Luru khách phiền thành khứ khách, thì mới ngạc
+HVB_003_0823	神怪厚捧光明寺	VÕ - DUY - ĐOÁN
+HVB_003_0824	嘉福縣厚榛社屬海陽處有光明寺千重碧樹四面波濤里路通其前河水	Tràng-nguyên Giáp-Hải người làng Sinh-Kế Túy Tín huyện Phương-nhẫn Phù Lạc, lúc nhỏ theo học tại một
+HVB_003_0825	繞其左真禪門一勝槳也舊傳有一婆蒼僧號玄真住持在此只誦經	như sau : Xảo tràng xảo đoạn đoạn xảo tràng, rồi đảo ngược lại rằng: Xảo đoạn xảo tràng tràng xảo đoạn v.
+HVB_003_0826	禮佛不營人間事業利欲卻意人皆以為禪處高僧稱許晚年于房後	Quan Bảng-nhân Ha-Tôn-Huân người xã Kim- Thanh huyện An-định , là người thông
+HVB_003_0827	打眼忽愛彌陀伏降臨實殿邀來按前謂曰爾有功梵教委厥上有主	lãng huyện An-lãng, khi chưa đỗ có đến chùa Xuân-loi huyện An-phong để cầu thần báo
+HVB_003_0828	且慈悲一點善心達于玄後劫富降生為胡王國皇帝爾其知之既	ông đỗ Hoàng-giáp, rồi sung chức trong chính-phủ, có công trù được nội nạn, dần dần thăng đến Lục-bộ Thượng
+HVB_003_0829	醒乃召諸道場謂曰某自初出家飯依禦率每謂塵緣淨盡果	Bất dĩ Bồi-lăng thung nhất đầu , Thầy học
+HVB_003_0830	福圓成寶座金蓮是我遂後身之報誼意他日迴輪都以累年或	Võ Thám-hoa gửi thơ thành lời sám Thám - hoa Võ - Tôn - Sur người xã Đan - loan
+HVB_003_0831	行三夫消也得塵寰一大艱難且日月國君之哲言昔人所不願也不知	Gió đưa muốn dặm trời coi hẹp, Chim-chích len
+HVB_003_0832	生前葉障其未盡除去而然耶這事現有問夜佛旨爾等同記吾	Rồi sau người ấy quả nhiên dỡ đạt, còn người kia thì lưu lạc suốt đời, khác nhau như thế
+HVB_003_0833	言當於圓寂之後寫來數為詭以驗之也及卒後道場依其言乃朱	Hầu, rồi ông tự hiệu là Đại-hung Hầu , và có đề
+HVB_003_0834	書十字于肩上用佛家火藥法收舍利時銀瓶埋之尋藥以石庵時加	hoang dâm, bỏ bê chính sự, ông có soạn ra một truyện Lạc-xương phân-kính bằng chữ quốc âm chè
+HVB_003_0835	供養焉都說永賴縣前烈社阮自隱家貪好學及長從師長安路	Ông Thượng người xã Bao-Trung huyện Gia- Phước vốn người mãn tiếp, thi dỗ Tấn-sĩ khoa
+HVB_003_0836	經予此每往返間輒檢特休息或至登臨玩賞亦不知其光明奇焉	lối văn hai hước của ông đại khái như vậy. Lại có một lần, ông ra ngoài chợ chóng gheọ con
+HVB_003_0837	弘寳稱敬崇甲長科中進士第仕至禮部左侍郎其後徙北使皇帝召	TRUNG - HUNG HẬU VĂN THỂ ÍCH TÍ Sau thời Trung-hung văn càng thấp kém
+HVB_003_0838	問曰小南國陪臣未知南國各蓋何處是光明寺即跪奏曰臣本國各蓋	Nghĩa là: Ông Giả-Phục được làm Dao-dong- Hâu, ăn lộc 4 huyện, thế mà trong trường có bao nhiêu
+HVB_003_0839	甚矣如瓊林普明報天寵田諸古刺臣亦素聞至如光明寺各未知	Tích thi kỳ trước gian nan, kim nhật nghi đồng phú
+HVB_003_0840	何處不審有何緣故願示其詳皇帝喟然曰朕生之始有上朱書	Vì chữ quan trên là nói vào hoàng thượng vua Lê ; còn chữ quan dưới là nói vào vương thượng
+HVB_003_0841	痕迹冤	máu bà đẻ.
+HVB_003_0842	然脫意脫是依奇僧令雖降生上國脫欲洗了字痕不知有何術公郎	Vì thế sau khi chết, hồn ma của y mới đi khắp cả trong nước, tìm để hút máu dân bà, nếu ai mắc
+HVB_003_0843	奏曰臣聞佛家有八水洗塵之法既是寺中降誕須取那寺中井水洗之	Trong truyền rằng: đền thờ Phạm-Nhan ngày trước ở trong Tự-diễn được đặt lên hàng Thượng đẳng, chỉ vì
+HVB_003_0844	方可耳皇帝曰爾言誠有理宜為朕亟還本國尋這奇的取井水來	cửa miếu thì thuyền của hậu-cung không tiến lên được. Hoàng-Thượng cả giận, hạ lệnh cho quan hậu đem súng
+HVB_003_0845	那時頗有授用公頒拜命謝而還且達於我國王因備行探訪不意乃原	Nam-Chân , có quan Tràng-nguyên Đào-Công Sư- Tích , khi vào kinh thi hội, vừa bước chân ra
+HVB_003_0846	捧社寺平日素所休息處也至來年貢部函奉命往仍取井水就京	Lại như trước đây ở làng Phù-Chân thuộc huyện Đông-Ngàn có một Cống-Sĩ thường soạn
+HVB_003_0847	獻上皇命取來洗之果然消得舊痕書頁愈加光澤因大喜慰再	Kham ta ân thiêu Cao-hoàng; nhẫn phụ công cao tướng- quốc. Nghĩa là: đáng buồn cho đức Cao-Hoàng ít ra ân
+HVB_003_0848	召公至將大論諭曰朕得尓敵發頃悟首綠不亦終焉浪度尓宜為朕重	Ngò đầu Cống-sinh dùng dùng nói giận, chửi bới cha ông chú lái rồi bảo: Tấn-sĩ Ta đây không thêm !
+HVB_003_0849	修梵字輪矣一新俾今春勝昔春非惟副朕心之誠耳類尓國鐘靈為	Tấn-sĩ, còn ông Thánh non, thì lại bị rớt, mà cứ rớt hoài! Như vậy chẳng đúng như câu tục ngữ là linh linh thân
+HVB_003_0850	中花皇帝是品中之一奇也朕令付尔金三百兩銀三千兩帝同作	thế. Triệu-sĩ đáp: Vàng vàng; Thế rồi khoa ấy quả nhien ông đầu Tấn-sĩ.
+HVB_003_0851	仗奇並金銀燈擎各一樹番為奉佛之器還國之後當了此功	Thượng ngự ở trên điện để nghe xướng danh các vị Tấn sĩ, trong đó có người tên gọi là Nguyễn-công-Phái
+HVB_003_0852	德如朕親視否則佛家有得福果報之機須於身上與弟子孫上	Mụ lại nói tiếp: Tôi thấy trên diện xướng danh rất lâu, có lễ khoa này được nhiều Tấn-sĩ.
+HVB_003_0853	看公陛辭拜頒而歸再以這等情頭達于國王國王大奇仍許依天	mang vào đây Sư-vương (Thái-tử), vì có công ấy được tiền làm Triều-sĩ, dần dần thắng đến Công-bộ Tả-thị-
+HVB_003_0854	朝所命公即以所頒金銀市木鳴工崇修梵字一簽前後三十六連範	Lang rồi mới tri-sĩ, hưởng thọ đến ngoài 80, khi mất, được tặng phong đến chức Thượng-Thư.
+HVB_003_0855	巍哉壯麗恰似真明境界兼築浮屠一塔近百餘丈延望簷然惟	Than ôi! như ông về đường quan giai phục lộc, tìm
+HVB_003_0856	金銀兩燈檠番為家用別鑄鐵器世方之其後八朝成祖哲王聞公相人	người mơ thấy Thiên-quan đương ngồi đề xếp thứ tự người đỗ, đầu tiên đã định lấy ông Đăng-dinh-Tương
+HVB_003_0857	之術乘間問曰我諸子誰啟闕守王基時萬都公得寵將有儲副之命	Thiên-quan bên đời ý kiến rồi viện lẽ rằng : hể nhìn thấy mặt ai trước thì cho người ấy
+HVB_003_0858	而清都位次未及公以相術直對曰諸子惟清當有天下萬都公深愠	Còn phần Đặng-Công thì làm đến chức Thái-phó Quốc- bảo rồi mới trí-sĩ, nhưng sau vua lại triệu ra, làm đến
+HVB_003_0859	佯乃問公以他事因投以毒藥尋卒後文祖王正位公贈封太保	chức Đại-Tư-Không, hơn 10 năm nữa rồi mới trí-sĩ, hưởng thọ 86 tuổi ; con cháu 4 người được lấy Công-chúa, đại
+HVB_003_0860	郡公其雲仍至今猶存率皆廣賤每以兩燈敬手報應為根其寺廢經	thứ cao cả nhất xưa nay, thực chẳng sai vậy. Lại truyền ngọn rằng : lúc ấy có quan Thượng-thư,
+HVB_003_0861	兵火付之殘灰惟浮屠一嶺巍然獨存近曰官軍進討等賊亦曾	như sau : Tấn-sĩ khoa này ta lấy tươi. Sợ chi mà đội đến ba
+HVB_003_0862	於此住焉因考僧人事跡以為慈悲中一傳奇也	Huyện Chi-Linh xã Kiết-dặc có viên Diên-bạ họ Nguyễn, thiên tư thuần túy, về phần đức hạnh
+HVB_003_0863	保伍冊郡公記	hiệu Bửu-Thái (1720-1728), Hoàng-thượng ra ơn cho bá quan. Nguyễn-công-Hãng đương ở chức Binh-bộ-
+HVB_003_0864	細都公乃保母吳順妃之弟以故顯典	Vương-An-Thạch ở đời nhà Tống
+HVB_003_0865	兵永慶年間、公年號、大安縣、受雲社堤路水潰、	thứ nhất là viên Huấn-đạo tên là Dương-Mô , người đổ thứ nhi là viên Giám-sinh Nguyễn-Tôn-Cổ , khi
+HVB_003_0866	珥都公奉命培築	Nhị niên từ tam
+HVB_003_0867	每行水次經縣內金錢河津上有水神原廟捻著靈應地方之人皆崇	Đến hôm Triều-sĩ sắp sửa lai kinh, bà con đem tiền đến tặng, riêng có Xã-trưởng thì không giúp đỡ đồng
+HVB_003_0868	奉之時細郡公舟纔過廟輒不進若有沮截之者郡公指而罵曰爾	nào, đến hôm được tin báo tiếp, dân làng kéo đến đồng đủ, Xã-Trưởng cũng không tới thăm, hôm vinh quí bài tở,
+HVB_003_0869	在此不駐護一方之民使水常為民害今我往障頹波歇命至此尓今	một mâm rượu, cho mỗi y đến hỏi rằng : Tôi đây với ông vốn không có sự thù oán, có sao ngày nay tôi được hiện
+HVB_003_0870	欲反沮我耶大罵良久忽見前出舟五艘突來跳戰都細素精符法	ngoài bái phục xuống đất, để nghe Thổ-công phân bảo. Thổ-công bên cất tiếng hỏi : Ta hiện về đây báo cho
+HVB_003_0871	知是木神步見郎於船中內按劍步墨書符念呪已分而撥船夫刀搶併	Triều-sĩ vâng lời cảm bút viết ngay mấy câu : Cung viết : Đăn vi khí bảm sở câu, vật dục sở tể, tắc
+HVB_003_0872	出兩邊鏡口對射煙霧昏黑咫尺不勝辨約一更許這出船先卻顧	Quắc chi hình tùng lục, Uu hi thiết hổ tuy. Tích giã Tứ Thái Tử, Kim Yến Tứ-bá-Ky.
+HVB_003_0873	貯間已失所在細郡即順流而往至貢口誤路處與役築作土功將完	Thúc-Độ người huyện Đỗ-Lãng , thi đỗ Mậu- Tài, làm quan Thái-Thú Thực-quận , nguyên trước quan
+HVB_003_0874	問有巨魚楊鬱水次望似一小小帆以尾邀水大浪懷山堤路築復瀆	Bắt cấm hỏa, dân an tọ, bình nhật vô nhu, kim ngũ khở.
+HVB_003_0875	裂隨難隨破如是者效次遍罰公無知之何郎暗祝于水神曰非者廟經	bao vây. Nghĩa là: năm Kiền-Trung đời Đường Đức-Tông, bị Chu-Tỷ bao vây thật chặt như cái đại lưng, sau nhờ Lý,
+HVB_003_0876	過一時錯誤還亦衡撞神其勿以介意所胡玉餘灵默護使堤圓	chưa chắc đã đúng, vậy mong Thức-giả sẽ bỏ cứu cho. Một vị Triều-sĩ trong ngày lai kinh để dự khoa thi
+HVB_003_0877	完一方之義受福不淺自是堪得堅實不復潰破獨自負戲之曰我築	Đại hiền đối thời nhân ngôn : sở suc giả cư, sở phát tất hoảng giả : Cái sở suc ký cư, Tắc sở phát an dắc nhi
+HVB_003_0878	成此堤雖百靈神亦難壞了忽然河水無故翻動狂波怒浪衝激其	Bồn múa suối chảy chẳng hay mòn. Le te vó cật bên kia suối.
+HVB_003_0879	問這堤裂表尚一叚原來這處貢口傍出沖淵與大河密通乃俗傳淵底	Đứng đinh chảy dám mái nọ non Cảm nhớ đầu ghenh sào một cọc.
+HVB_003_0880	有神常引河水透八以故難於障塞時細都已損了許多工夫因此會怒	Quan lớn cả giận cho là có ý hỗn xược, bèn sai gia nhân
+HVB_003_0881	今斂取縣內竹木環剿樹柵再取民家敗臼破礎并一切舊石煉灰投下俄見	của hàn-sĩ trước, làm quan đã hao thêm 10 đầu gạo, khiến cho Ngài lại giận dữ, quát tháo gia nhân phét thêm 10
+HVB_003_0882	淵底瀝沸魚浮而斃者不勝其數再加培築刻衣處復完纔半月間	sư-ni đương đọc bài kệ, tiếng trong văng văng lên tới từng mây! lúc xa giá trở về, Ngai ghé vào chùa, sư-ni
+HVB_003_0883	細都忍藥不火熟病知在青火黃無灼中廢同治弗效詭病而沒未幾保任	rằng không làm nỗi, Ngài lại sai quan Phó Nguyễn-Soái là Thân-Nhân-Trung-Công làm, ông vâng mạng
+HVB_003_0884	邑內民富不寧邑人相與祈禱于本社廟中冀可捍災忽內有一人	Sắc không tay bự hối lòng người. Chày kinh một tiếng tan niềm tục,
+HVB_003_0885	動而起放大聲曰我是細都公被水神黃乎抱恨而沒兮欲報仇	Công thảo xong dâng lên, Hoàng-Thượng sai sư-ni
+HVB_003_0886	第無象馬兵器難以相關寄達保母尊好為我辨送來不亦非推	Thượng lạy làm vừa ý hạ lệnh cho chở sư-ni
+HVB_003_0887	損物且將父人矣保母聞言即合造與器一如珥郡公生特戰具完足	Thiên vi khâm chẩm địa vi chiến, nhật nguyệt đồng song đối ngã miên, Gia thâm bất cảm thân trường túc,
+HVB_003_0888	焚之翌日見地方一帶河波濤淘湧如牛馬爭夫岸傍聽者似有于戈	gối, đất làm mền, nhật nguyệt châu ta giấc ngủ yên, Đêm khuya đôi cẳng dành co vậy, đuổi, sọ son hà bị đảo điền.
+HVB_003_0889	交戰之聲魚鬱魚紛然而驚保母聞之度必理郡與水神交戰因祝之曰	Anh kép tàu rằng: Khi thân xuống dưới Thủy quốc bổng gặp ngay quan Tam-Lư Đại-phu ( tức là
+HVB_003_0890	吾弟今番共他戰勝負如何倘其有靈即以相報忽有一人搖動躍起	ta gặp phải vị hôn quân nên mới chịu xuống dưới này, chứ như chú mình ngày nay, đã gặp mình chưa, có sao
+HVB_003_0891	言曰拜上尊姊贈以兵器戰具勢顓張皇但他族類宴聚已素	kéo đại binh sang sát biên cảnh, tuyên ngôn là sang đánh họ Mạc, Mạc-Thái-Tổ cùng với triều thần lên
+HVB_003_0892	練習我兵新習水戰未請兼以人形都非介胄薄弱之眾難與他	Vị tiểu quốc bất học võ nhân, lễ nghĩa hà tức thâm trách. Mẫn An-Nam vô có xích tử, phong nhận nhẫn
+HVB_003_0893	鱗甲相鬩纏一交鋒更被挫了今後不可與鬩當於貢口處創一新	Mao-bá-Ôn xem xong bài biểu cảm vi lời lề câu văn đến nỗi sa lẻ, rồi họp các tướng thương nghị để rút binh về.
+HVB_003_0894	綱讓他居之竟免積弊釁族人依言而材構作不日告成自是一方河	Tràng-nguyên Ngô-Công Miễn-Thiệu người làng
+HVB_003_0895	道不聞有異事焉	không được vô lễ.
+HVB_003_0896	彊暴大王記、	Vương cho triệu
+HVB_003_0897	紂大王天本縣令改務	duyên Hán-hoàng,
+HVB_003_0898	、見縝令改	Hoàng-Hậu. TIỀN THÍCH
+HVB_003_0899	人也先其母愛黑漢神謂曰托生猴	HUONG-HẢI TỰ, DU LINH TÚC TRÚ Chúa Hương-hải vẫn anh-linh
+HVB_003_0900	族遂有娠而生時年將十五歲五為兒時好耕耘種樹吃然有巨人之性	Trúc-Lâm đệ nhị đại Tô-Sư hiệu là Pháp-Loa Tôn- Giả sinh vào niên hiệu Thiệu-Long năm thứ 6
+HVB_003_0901	及長率性彊暴耿目一世都忘父母不有忘臘惟灶神朝祈又禱難得	Long, chính tay Sư-Tổ rước long thể vào trong an trí, rồi sư Huyền-Quang theo người để học đạo, lúc nào cũng
+HVB_003_0902	一鯨亦必熟而供之神亦知其心時加頸應一日父母以狀罪訢于天天郎	Vạn duyên triệt đoạn nhất thân nhân, Tứ thập dư niên mộng huyền gian, Trần trọng chư nhân hưu tá vấn?
+HVB_003_0903	命雷神降而打之灶神密先頭告王來計灶神曰以滑物塗屋上縱有火	dẫn dẫn trở thành một chốn danh lam, trong triều nhà Trần quan Đại Tu-đồ hiệu là Băng-Hồ Tướng-công
+HVB_003_0904	觀石斧其盛何施王依其言遂取箝夢條日揚攢與水油相和至日	Một trời cây cỏ trong ngâm vịnh Bồn mạt non sông dưới chi huy.
+HVB_003_0905	直于屋上偏洒之玉潜伏暗中候視俄而風雨驟至雷神從天而下繞	Lưu-quang diện hạ tùng thiên thu, Tận thi kinh thiên
+HVB_003_0906	躡星脊上滑而墜地王從中突步揮杖擊之雷神倏然不見奪得赤銅繩長丈餘郎於靜地埋之雷神歸具以事奏昊天天怒	Giang kéo ra, hợp thành ngã ba, rồi lại 1 chi từ sông Như-Nguyệt kéo ra, một chi từ Thanh-Giang đổ
+HVB_003_0907	謂靈神曰三才我為之尊汝震我威所擊無不摧折者何等人物	tập phong Thiếu-bảo Tư-quân-Công mĩ tự là Văn-Tính , Cụ bà được phong Chính phu-nhận Phạm-
+HVB_003_0908	乃與霹靂抗衡潛報水神以某日引水而上北固彊暴亦為魚	Xuyên huyết son hải tùy xứ hữu Uyên ngư từng trước vị thủy khu
+HVB_003_0909	敞之餌灶神復告之玉遂結蕉為筏取葉為旗翌日水大至浸没	Trung hung dưới ngựa qua sông trước, Hậu hoàn phong beo tiên cửa sau
+HVB_003_0910	蘆舍王郎乘筏而出擊手鼓鳴羅織橫水面設舟震于天大言我與天	cảnh, như núi An-Từ, Ngoa-Vân, Kinh-Chú, Đồ-Sơn, nơi nào ông cũng chống gậy treo lên, thưa hưng ngâm vịnh
+HVB_003_0911	交戰時昊天方與群像論善惡聞之曰何處聲甚緊群像相視莫	thần, phong trước là Trinh-Tuyên-Hầu , dần dần thăng đến Lại-bộ Thượng-Thư Thái-phó Trinh-Quốc-Công,
+HVB_003_0912	祛對雷神方候旨對曰是乃彊暴之賊向既逃罪令復于常恭望定	Phiên : Cổ ngã tồn cô duy nghĩa tại, Tri quân xử
+HVB_003_0913	奪昊天說思良久曰弗敬怒淪動輒抗拒是乃無天地的人今姑赦	Cha Quyền với Thần là chỗ hạn thân từ trước, và đã ở trong nhà thần, hiện nay được ra trấn thủ Thiên-Trường.
+HVB_003_0914	之任他長惡弗悛禍必將意至仍命水細縮水而下五竟免害即乃	sĩ, sai đi phục sẫn ở bên bắc ngạn, ông gửi thư cho Quyền, hẹn sang bên thuyền nâng chén rượu nhạt kẻ lại
+HVB_003_0915	家人具道可以遙來得灶神之助允上帝一言一動必先顯告吾復何辜	thanh thế vang khắp xa gần, đánh nhau mấy trận ở cửa Thần-phù thần , Kiêm-Vương Mạc-Kinh-Điên
+HVB_003_0916	自是益橫其志復得一田雞自灸而食之不以獻灶神怒其忘己思	đại bại, Thế-Tô thừa cơ tiến binh theo đường Tây-Sơn ra đánh kinh bắc, khiến cho trong ngoài nom nọ lo sợ,
+HVB_003_0917	中傷之一日顯告五曰來日雷神打汝五又問許灶神曰次早汝往耕于	sai sứ giả sang ta nói rằng: Vì Thái-phu-nhân một hôm đáp thuyền ra bể, chẳng may bị nạn phong ba, nay coi
+HVB_003_0918	田如雷雨將至即於耕木夾處處穿車其中外用橫木裹鎖定自無事	Nhận thấy lệnh trên, anh liền sắm sửa xe vồng đưa Bà ra hiện tại kinh thành, Mạc chưa ban
+HVB_003_0919	王不意一為其所賣依計而行既而雷雨漫天而至王欲斂之不脹竟被打	là con Chiêu-Huân Tĩnh-Vương, đương lúc ở trong tinh-thế nguy-ngập vì sợ không thoát khỏi tay Trịnh-
+HVB_003_0920	斂頭間雨霽群牛觸土培之宛然成大阜鄉人即其土處封墳數年	tôn là Thánh-mẫu, nguyên quán ở làng Phạm-Xá thuộc huyện Tứ-Kỷ , với ông là chỗ đồng hương, nên
+HVB_003_0921	後方民夜勤畜類不寧一日有村翁早行過予墳處見立而言曰我	một dãy núi giả (non bộ) quanh co, trước núi lúc ấy có những đàn kiến dương men tầng đá lco lên, ông ngắm
+HVB_003_0922	彊暴靈神爾立廟祀之可保無虞不卒無遺類矣將收牛者皆	Hoành-son nhất đại khả dĩ dung thân,
+HVB_003_0923	見之村翁歸而道其事鄕遂構祠崇奉自是始得寧居今至封為	Thứ phu-nhân họ Nguyễn hiệu là Nhu-Tính Á-phu-nhân họ Nguyễn hiệu là Vi-Tính , Tự tức cộng
+HVB_003_0924	福神往年有騷客過祠下題詩云二五鍾靈象貫殊深霄黑漢應	Sinh phong hàm Triệu-Liệt Đại-Phu, trước Quảng-nghĩa-Hâu, Con thứ III phong hàm Hiền-Cung Đại-
+HVB_003_0925	嘉符赤脂煉藥雷何畏白日乘桴水不虞香火永存光祿典泰	sinh ra Thiết-Đức Thiết-Đức sinh ra Đạo-Tấn , Tấn sinh ra Đạo-Thông , Thống sinh Đặng-Doanh
+HVB_003_0926	盤默祻壯玉都古云敬遠今臣味君子休將辨有無	Xích - Tùng - Tử làm quan Vũ-Sư ở đời vua Thán- Nông . Dục hổ Nghi phong hổ Vũ-Vu, là
+HVB_003_0927	羅山阮監生記	Vị Thang Vũ
+HVB_003_0928	羅山縣有阮姓者，生時赤光滿室，人以為失火，父視之，卒無見火而賴	Xương tiếng Giống Gian, biết là hào kiệt Ngày xưa có nhà phú hộ hay đi thưa kiện người làng,
+HVB_003_0929	異性謹愿端懿常受業于本社監生之門毎日輒先至酒掃學堂坐	Rõ thực ngày thường thì coi các ông
+HVB_003_0930	必別席不與諸生同坐是年近鄉試科其師與之就憲便官析出稍	coi, hôm ấy các quan Phủ huyện Thừa Ty đều vào hành lễ, anh phú hộ đứng bên thấy viên diễn lễ, xướng rằng :
+HVB_003_0931	通一各意使官見立命坐日縱本處取中一各亦當取許但他時得志自	Bá Quan tự vị (Trẫm quan tới chỗ mình đứng) Anh cũng xướng tiếp ngay rằng: Giống gian tự
+HVB_003_0932	蒙記憶既而謂曰新貢士第出其師當番別有說詰憲官即以問這	xướng sau đó tức là người đưa hỏi lộ cho mình ngày trước, thì chẳng còn ai dám nói năng gì, như vậy thì
+HVB_003_0933	弟子來歷與八門父近學業如何師具道其詳憲官曰我昨日夜夢	Linh , quốc triều niên hiệu Thái-Hòa, Trưởng-Lão Thuyền-Sư từ núi Đông-Cứu thường qua chơi
+HVB_003_0934	見一人來謁前道有銅柱斧鉞旌旗僕杖皆五者其隨從軍士約	cây cột phía trước có 2 hàng chữ cờ, 1 hàng viết 4 chữ Đại-bi-thuyền-Tự , 1 hàng viết
+HVB_003_0935	二萬人直至廳前謂曰今欲應考稍通不審官肯許一名否俄而醒	PHAO SON HUYẾT ÁN TRIỀU BẠCH NHÂN Huyệt ở Phao son trước mặt có nhận tráng châu về
+HVB_003_0936	覺想愛中所見端的是人不審將來做何等事業是科院公八場果中第一未幾無病而終但精氣不散家人常見倏然往來猶如平日每有求必應大著靈異其後有鄉人舟行至神海口於是舟中	trường thi hương, tới khoảng niên hiệu Hồng-Đức Lã- dương Tiên-sinh khi nhậm chức Tham-chánh-
+HVB_003_0937	卒倒後時方頸因語人曰我見阮醫生乘舟一葉黃袍一帶侍衛甚	truyền là do thầy Tàu tàng hộ, có dự đoán rằng: , . Bạch nhạn sinh mao, sản tận anh hào,
+HVB_003_0938	嚴召至罰謂曰某原承上帝命降生人世作該帝王但方今收福旅	tục gọi là huyết khai oa, nhưng nay đã mất tích, bên
+HVB_003_0939	方隆不可與竪立故復朝帝所別生他國今其從北去矣煩為歸報	lay chuyển, can qua đời chiến quốc cũng vẫn vững vàng. Tần đột không cháy, Hán phả không tan, khôn biến ra
+HVB_003_0940	家人不必思念言詭雝然而去瞧見來乃是一魚既而振其家具以	chỉ riêng có cửa nhà họ Phạm mà thôi đâu. Thế thì những ai đi qua mà nhìn vào cái biển ấy
+HVB_003_0941	"前事苦之自是不見頭應按此與亂鬚將見唐太宗而輒哀者乎	, ,"	Đường Ngu trước đúc, Co-son tiết, để dĩ chi, Tiên-sinh dĩ chi.
+HVB_003_0942	亦相類是其神器有命不可以智力求蓋以道推之則雖天帝降生	giữ vĩng tiết thảo, ngày nay Hoàng-đế cũng thế mà Tiên-sinh cũng giống như thế.
+HVB_003_0943	方且讓他一頭近世么麼之輩不自揣量卻于井底窺天晴圖望	Luật Thương-mãi toát-yêu (tập II) Lé-tài-Triển 60 Đạo-đức-kinh — Lão-tử Nghiêm Toàn 70
+HVB_003_0944	外亦有離身之禍世之亂賊可不成哉	Danh-từ ký-thuật Bộ Công Chánh 30 Thế-giới Sư Đệ Nhất Tăng-xuân-An 50
+HVB_003_0945	槪記字數共五十小張	Nguyễn-nam-Châu Cao-hữu-Hoành
+HVB_003_0946	三名鹹敬自跡	Lê-xuân-Khoa Trần-trọng-San
+HVB_003_0947	昔我越紹基南服自雄朝十八世都是雄王玉帛事	Nữ thi-hào Việt-Nam Phạm-xuân-Độ 22 Văn-học Việt-Nam Dương-quảng-Hàm 35
+HVB_003_0948	書山河一統是為百越之祖焉長値朝雄傳至蜀	Thiên-văn học Đệ Nhất Đặng-văn-Nhân 30
+HVB_003_0949	王蜀王乃傳順王順王娶乎章縣洞為社後	Nguyễn-văn-Chính 15 Anh-văn Đệ Thất
+HVB_003_0950	改洞蒙社明氏女經十三年而未見熊羆之兆乃	Thượng-chi văn tập II — nt — 35 Thượng-chi văn tập III — nt — 35
+HVB_003_0951	立炫場祈禱感動天庭至六月二十一日明代協孕	SÁCH DỊCH Cung-oán ngâm-khúc T.L. Huỳnh-k-Dụng 28
+HVB_003_0952	後生一胞外六十人頭甚其怪異郎將深莖子本	Chinh-phụ ngâm-khúc — nt — 40
+HVB_003_0953	社三岐大路至三月初十日玉皇急差鬼王降鑒	M. Hoàng-q-Trương 6 (A frightful Discovery from Typee)
+HVB_003_0954	墳墓及都憲都承都司尽鉴感照王情上奏天	Lễ-triệu giáo-hóa điều luật — Tự thập thật điều Trần-Khải-Văn 25
+HVB_003_0955	庭下令給許就伊總社迎杜氏名璣現八為君以	Lê-triệu lịch-khoa tiên- si để danh bi ký (tập I) Võ-Oanh 85
+HVB_003_0956	維治天下又催本社胄氏名琚現八為文臣以贊	Lê-Triệu lịch-khoa tiên-si để danh bi ký (tập II) —nt— 75
+HVB_003_0957	治化再催朋氏之人名瓊現八為武將以董兵催三	Công-dư tiếp-ký (tập I) Nguyễn-dinh-Điệm 50 Quốc Triều đăng-khoa lục Lê-mạnh-Liều 80
+HVB_003_0958	名號曰三彭同八明氏克家之子以治天下於雄	M. Trần-thái-Đinh 50 Luận-ngữ Lê-phục-Thiện 95
+HVB_003_0959	朝既熾之秋自此朋氏依貽至來年亦三月初十	Tang-thương ngẫu-lục Đạm-Nguyên 75 Tân-biên Truyền-ký mạn-lục Bùi-xuân-Trang 80
+HVB_003_0960	日挺生一胞子廚王地分第一員生則無面第二員	Công-dư tiếp-ký (tập II) Nguyễn-dinh-Điệm 40 Lê-triệu lịch-khoa tiên-si để
+HVB_003_0961	生則無手第三員者無頭乃三名號三彭一胞之	danh bi ký (tập III) Võ-Oanh 70
+HVB_003_0962	子也。	Bên bờ sông xanh Nguyễn-văn-Mừng 22 Công-dân Đệ Tứ Phạm-thị-Tự — Trần-t.
+HVB_003_0963	其順王見此遂驚乃移萃三員于三牛中一牛在	San 10 Công-dân Đệ Nhị Lè-xuân-Khoa 25 Mũi tên đen Nguyễn-dáng-Hải 25
+HVB_003_0964	後廟二井在路旁三井在上鄕以不存形跡滿百日妙	Vật-lý Đệ Tam A B Bùi-phương-Chi 38 Hóa-học Đệ Nhị Phạm-dinh-Ái 40
+HVB_003_0965	其変化萬千逐打城隍各道第一名無面有救封二	Tom Walker với quỷ sứ Nguyễn-văn-Tạo 8 Silas Marner Nguyễn-văn-Tạo 11
+HVB_003_0966	字足有四縱五橫宇天下莫不重足以居順王意無以	Quan-sát lớp Ba Một nhóm giáo-viên 10 Toán-pháp lớp Nhật — nt — 14
+HVB_003_0967	敵乃親出為駕就洞為左諭以相安之術乃通說其	Địa-lý lớp Tư Huỳnh-văn-Đổ 18
+HVB_003_0968	"各景臣者乃皸皸皸也前日臣為三世都次日為孤	."	13 — Thượng-thư trí-sĩ Toàn-quận-Công. . 18 — Dương - Công - Tôn.
+HVB_003_0969	"魂將今夭心弗佑雄朝臣等卽爲三名鬼將明君欲安	."	77 — Chỉ-khi dừ Thượng-Thư Nghiêm-Son-Hâu — Võ Thám-Hoa Ký thi thành sầm.
+HVB_003_0970	"天下者每日賜祭一筵粥米大盛卽変化無誠妨矣	—"	Chung gian lễ xướng tri hào-kiệt. . . 161 — Trần-Quốc lão, thề xưng di thuật.
+HVB_003_0971	"自此傳本縣與本總及本社設設嗚盡則生事矣。	. ."	163 — Lệ-Kỳ linh Cổ Chung hiện-di. . . . 165 — Đại bị tự bắc nhân sở kiến.
