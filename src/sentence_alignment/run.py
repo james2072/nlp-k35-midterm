@@ -777,9 +777,59 @@ def refine_with_llm(alignment: List[Tuple[int, int, float]],
 
 
 # ============================================================
+def export_debug_segmentation(work_id: str, han_raw: str, viet_raw: str, is_chunked: bool, han_chunks: List[str], viet_chunks: List[str]):
+    """Xuất file debug kết quả tách câu để kiểm tra ngữ đoạn mà không cần chạy mô hình."""
+    debug_path = DATA_DIR / f"{work_id}_debug_sentences.txt"
+    lines = []
+    lines.append("=" * 80)
+    lines.append(f"DEBUG SEGMENTATION REPORT: {work_id}")
+    lines.append("=" * 80)
+    
+    if is_chunked:
+        lines.append(f"\nMode: Chunk-wise ({len(han_chunks)} chunks)\n")
+        total_h = 0
+        total_v = 0
+        for c_idx, (h_c, v_c) in enumerate(zip(han_chunks, viet_chunks)):
+            h_s = segment_han(h_c)
+            v_s = segment_viet(v_c)
+            lines.append(f"\n{'#'*35} CHUNK {c_idx+1:02d} (Han: {len(h_s)}, Viet: {len(v_s)}) {'#'*35}")
+            lines.append("--- [HAN SENTENCES] ---")
+            for i, s in enumerate(h_s):
+                lines.append(f"  [H_{total_h + i + 1:04d}] (chunk_pos={i+1:02d}, len={len(s):02d}) {s}")
+            lines.append("--- [VIET SENTENCES] ---")
+            for j, s in enumerate(v_s):
+                lines.append(f"  [V_{total_v + j + 1:04d}] (chunk_pos={j+1:02d}, len={len(s):03d}) {s}")
+            total_h += len(h_s)
+            total_v += len(v_s)
+        lines.append(f"\n{'='*80}")
+        lines.append(f"SUMMARY: Total Han = {total_h} sentences | Total Viet = {total_v} sentences | Ratio = 1:{total_v/max(total_h, 1):.2f}")
+        lines.append("=" * 80)
+    else:
+        h_s = segment_han(han_raw)
+        v_s = segment_viet(viet_raw)
+        lines.append(f"\nMode: Document-level\n")
+        lines.append(f"--- [HAN SENTENCES] (Total: {len(h_s)}) ---")
+        for i, s in enumerate(h_s):
+            lines.append(f"  [H_{i+1:04d}] (len={len(s):02d}) {s}")
+        lines.append(f"\n--- [VIET SENTENCES] (Total: {len(v_s)}) ---")
+        for j, s in enumerate(v_s):
+            lines.append(f"  [V_{j+1:04d}] (len={len(s):03d}) {s}")
+        lines.append(f"\n{'='*80}")
+        lines.append(f"SUMMARY: Total Han = {len(h_s)} sentences | Total Viet = {len(v_s)} sentences | Ratio = 1:{len(v_s)/max(len(h_s), 1):.2f}")
+        lines.append("=" * 80)
+        
+    debug_path.write_text("\n".join(lines), encoding="utf-8")
+    print(f"\n[DEBUG] - Debug file exported: {debug_path}")
+    if is_chunked:
+        print(f"        Mode: Chunk-wise ({len(han_chunks)} chunks) | Han: {total_h} câu | Viet: {total_v} câu")
+    else:
+        print(f"        Mode: Document-level | Han: {len(h_s)} câu | Viet: {len(v_s)} câu")
+
+
+# ============================================================
 # 7. MAIN
 # ============================================================
-def align_work(work: Dict, use_llm: bool = True):
+def align_work(work: Dict, use_llm: bool = True, debug_mode: bool = False):
     """Thực hiện dóng câu cho một tác phẩm."""
     work_id = work['id']
     work_title = work['viet']
@@ -801,12 +851,17 @@ def align_work(work: Dict, use_llm: bool = True):
     han_chunks = [c.strip() for c in han_raw.split('\n\n') if c.strip()]
     viet_chunks = [c.strip() for c in viet_raw.split('\n\n') if c.strip()]
     
+    # Kiểm tra xem có áp dụng Chunk-wise alignment không
+    is_chunked = len(han_chunks) > 1 and len(han_chunks) == len(viet_chunks)
+    
+    # Nếu bật cờ debug, chỉ xuất file phân tích tách câu rồi thoát ngay
+    if debug_mode:
+        export_debug_segmentation(work_id, han_raw, viet_raw, is_chunked, han_chunks, viet_chunks)
+        return
+    
     all_han_sents = []
     all_viet_sents = []
     all_alignment = []
-    
-    # Kiểm tra xem có áp dụng Chunk-wise alignment không
-    is_chunked = len(han_chunks) > 1 and len(han_chunks) == len(viet_chunks)
     
     if is_chunked:
         print(f"  Detected {len(han_chunks)} aligned chunks -> Running Chunk-wise Alignment...")
@@ -883,6 +938,7 @@ def main():
     parser.add_argument("--work-id", type=str, help="ID tác phẩm cụ thể")
     parser.add_argument("--no-llm", action="store_true", help="Không dùng LLM refine")
     parser.add_argument("--clear-cache", action="store_true", help="Xóa cache embeddings")
+    parser.add_argument("--debug", action="store_true", help="Chỉ xuất file debug tách câu (không chạy embedding/alignment)")
     args = parser.parse_args()
     
     # Xóa cache nếu có cờ --clear-cache
@@ -906,14 +962,17 @@ def main():
             print(f"Work ID not found: {args.work_id}")
             sys.exit(1)
     
-    print(f"Aligning {len(works)} works (Monotonic Dynamic Programming)")
-    print(f"   LLM: {'OFF' if args.no_llm else f'ON ({LLM_MODEL_NAME})'}")
-    print(f"   Confidence threshold: {CONFIDENCE_THRESHOLD}")
-    print(f"   Batch size: {BATCH_LLM_SIZE}")
+    if not args.debug:
+        print(f"Aligning {len(works)} works (Monotonic Dynamic Programming)")
+        print(f"   LLM: {'OFF' if args.no_llm else f'ON ({LLM_MODEL_NAME})'}")
+        print(f"   Confidence threshold: {CONFIDENCE_THRESHOLD}")
+        print(f"   Batch size: {BATCH_LLM_SIZE}")
+    else:
+        print(f"Running DEBUG SEGMENTATION MODE for {len(works)} works...")
     
     for work in works:
         try:
-            align_work(work, use_llm=not args.no_llm)
+            align_work(work, use_llm=not args.no_llm, debug_mode=args.debug)
         except Exception as e:
             print(f"Error: {e}")
             import traceback
