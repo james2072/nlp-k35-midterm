@@ -168,7 +168,6 @@ def segment_han(text: str) -> List[str]:
     
     raw_pieces = []
     for line in lines:
-        # Segment by punctuation marks if available
         parts = re.split(r'([。；！？，、])', line)
         curr = ""
         for i in range(0, len(parts), 2):
@@ -181,11 +180,9 @@ def segment_han(text: str) -> List[str]:
         if curr.strip() and len(curr.strip()) >= 2:
             raw_pieces.append(curr.strip())
     
-    # Process unpunctuated classical Chinese clauses
     final_sents = []
     for p in raw_pieces:
         if len(p) > 28:
-            # Split after final particles or before clause-initial conjunctions
             sub = re.split(r'(?<=[矣也焉哉乎耳])|(?=[至乃遂因俄忽]|時有|其後|又|及|初|後|公曰|帝曰|曰)', p)
             curr_sub = ""
             for s in sub:
@@ -203,7 +200,6 @@ def segment_han(text: str) -> List[str]:
         else:
             final_sents.append(p)
     
-    # Merge short fragments (< 3 characters)
     merged = []
     for seg in final_sents:
         if len(seg) < 3 and merged:
@@ -211,7 +207,6 @@ def segment_han(text: str) -> List[str]:
         else:
             merged.append(seg)
     
-    # Filter out empty or punctuation-only segments
     result = []
     for seg in merged:
         seg = seg.strip()
@@ -225,7 +220,7 @@ def segment_han(text: str) -> List[str]:
 
 
 def segment_viet(text: str) -> List[str]:
-    """Phân tách câu tiếng Việt theo dấu ngắt câu chuẩn."""
+    """Phân tách câu tiếng Việt văn xuôi theo dấu ngắt câu chuẩn."""
     text = normalize_viet(text)
     lines = clean_lines(text)
     
@@ -243,7 +238,6 @@ def segment_viet(text: str) -> List[str]:
         if current.strip() and len(current.strip()) >= 10:
             sentences.append(current.strip())
     
-    # Merge short fragments (< 15 characters)
     merged = []
     for s in sentences:
         if len(s) < 15 and merged:
@@ -252,6 +246,34 @@ def segment_viet(text: str) -> List[str]:
             merged.append(s)
     
     return merged
+
+
+def segment_han_verse(text: str) -> List[str]:
+    """Tách câu thơ Hán/Nôm: mỗi dòng thơ tương ứng 1 câu lục bát hoàn chỉnh."""
+    lines = [normalize_han(l) for l in text.splitlines() if l.strip()]
+    sentences = []
+    for line in lines:
+        if len(line) < 4 or line.startswith("大南國史演"):
+            continue
+        cleaned = re.sub(r'[，,。.\t\r]+$', '', line).strip()
+        if cleaned:
+            sentences.append(cleaned)
+    return sentences
+
+
+def segment_viet_verse(text: str) -> List[str]:
+    """Tách câu thơ Quốc ngữ: ghép liên tiếp các cặp câu 6 và 8 thành 1 câu lục bát hoàn chỉnh."""
+    lines = [normalize_viet(l) for l in text.splitlines() if l.strip()]
+    couplets = []
+    i = 0
+    while i < len(lines):
+        if i + 1 < len(lines):
+            couplets.append(f"{lines[i]} {lines[i+1]}")
+            i += 2
+        else:
+            couplets.append(lines[i])
+            i += 1
+    return couplets
 
 
 # ============================================================
@@ -777,15 +799,31 @@ def refine_with_llm(alignment: List[Tuple[int, int, float]],
 
 
 # ============================================================
-def export_debug_segmentation(work_id: str, han_raw: str, viet_raw: str, is_chunked: bool, han_chunks: List[str], viet_chunks: List[str]):
+def export_debug_segmentation(work: Dict, han_raw: str, viet_raw: str, is_chunked: bool, han_chunks: List[str], viet_chunks: List[str]):
     """Xuất file debug kết quả tách câu để kiểm tra ngữ đoạn mà không cần chạy mô hình."""
+    work_id = work['id']
+    genre = work.get("genre", "prose")
     debug_path = DATA_DIR / f"{work_id}_debug_sentences.txt"
     lines = []
     lines.append("=" * 80)
-    lines.append(f"DEBUG SEGMENTATION REPORT: {work_id}")
+    lines.append(f"DEBUG SEGMENTATION REPORT: {work_id} ({work.get('viet', '')})")
+    lines.append(f"Genre: {genre.upper()}")
     lines.append("=" * 80)
     
-    if is_chunked:
+    if genre == "poetry":
+        h_s = segment_han_verse(han_raw)
+        v_s = segment_viet_verse(viet_raw)
+        lines.append(f"\nMode: Verse / Poetry (Line-by-Line Couplets)\n")
+        lines.append(f"--- [HAN / NOM VERSE LINES] (Total: {len(h_s)}) ---")
+        for i, s in enumerate(h_s):
+            lines.append(f"  [H_{i+1:04d}] (len={len(s):02d}c) {s}")
+        lines.append(f"\n--- [VIET LUC BAT COUPLETS] (Total: {len(v_s)}) ---")
+        for j, s in enumerate(v_s):
+            lines.append(f"  [V_{j+1:04d}] (len={len(s):03d}c) {s}")
+        lines.append(f"\n{'='*80}")
+        lines.append(f"SUMMARY: Total Han = {len(h_s)} verse lines | Total Viet = {len(v_s)} couplets | Ratio = 1:{len(v_s)/max(len(h_s), 1):.2f}")
+        lines.append("=" * 80)
+    elif is_chunked:
         lines.append(f"\nMode: Chunk-wise ({len(han_chunks)} chunks)\n")
         total_h = 0
         total_v = 0
@@ -807,7 +845,7 @@ def export_debug_segmentation(work_id: str, han_raw: str, viet_raw: str, is_chun
     else:
         h_s = segment_han(han_raw)
         v_s = segment_viet(viet_raw)
-        lines.append(f"\nMode: Document-level\n")
+        lines.append(f"\nMode: Document-level Prose\n")
         lines.append(f"--- [HAN SENTENCES] (Total: {len(h_s)}) ---")
         for i, s in enumerate(h_s):
             lines.append(f"  [H_{i+1:04d}] (len={len(s):02d}) {s}")
@@ -819,8 +857,10 @@ def export_debug_segmentation(work_id: str, han_raw: str, viet_raw: str, is_chun
         lines.append("=" * 80)
         
     debug_path.write_text("\n".join(lines), encoding="utf-8")
-    print(f"\n[DEBUG] - Debug file exported: {debug_path}")
-    if is_chunked:
+    print(f"\n[DEBUG] - Debug file exported: {debug_path.name}")
+    if genre == "poetry":
+        print(f"        Genre: Poetry / Verse | Han: {len(h_s)} dòng thơ | Viet: {len(v_s)} cặp lục bát")
+    elif is_chunked:
         print(f"        Mode: Chunk-wise ({len(han_chunks)} chunks) | Han: {total_h} câu | Viet: {total_v} câu")
     else:
         print(f"        Mode: Document-level | Han: {len(h_s)} câu | Viet: {len(v_s)} câu")
@@ -830,12 +870,14 @@ def export_debug_segmentation(work_id: str, han_raw: str, viet_raw: str, is_chun
 # 7. MAIN
 # ============================================================
 def align_work(work: Dict, use_llm: bool = True, debug_mode: bool = False):
-    """Thực hiện dóng câu cho một tác phẩm."""
+    """Thực hiện dóng câu cho một tác phẩm dựa trên genre cấu hình."""
     work_id = work['id']
     work_title = work['viet']
+    genre = work.get("genre", "prose")
     
     print(f"\n{'='*60}")
     print(f"Aligning: {work_title} ({work_id})")
+    print(f"Genre: {genre.upper()} ({'Thơ Lục Bát / Diễn Ca' if genre == 'poetry' else 'Văn Xuôi / Lịch Sử'})")
     print(f"{'='*60}")
     
     han_path = OCR_OUTPUT_DIR / f"{work_id}_sino_raw.txt"
@@ -850,20 +892,29 @@ def align_work(work: Dict, use_llm: bool = True, debug_mode: bool = False):
     
     han_chunks = [c.strip() for c in han_raw.split('\n\n') if c.strip()]
     viet_chunks = [c.strip() for c in viet_raw.split('\n\n') if c.strip()]
-    
-    # Kiểm tra xem có áp dụng Chunk-wise alignment không
     is_chunked = len(han_chunks) > 1 and len(han_chunks) == len(viet_chunks)
     
     # Nếu bật cờ debug, chỉ xuất file phân tích tách câu rồi thoát ngay
     if debug_mode:
-        export_debug_segmentation(work_id, han_raw, viet_raw, is_chunked, han_chunks, viet_chunks)
+        export_debug_segmentation(work, han_raw, viet_raw, is_chunked, han_chunks, viet_chunks)
         return
     
     all_han_sents = []
     all_viet_sents = []
     all_alignment = []
     
-    if is_chunked:
+    if genre == "poetry":
+        # Chế độ chuyên biệt cho Thơ Diễn Ca / Lục Bát
+        all_han_sents = segment_han_verse(han_raw)
+        all_viet_sents = segment_viet_verse(viet_raw)
+        
+        if not all_han_sents or not all_viet_sents:
+            print("  Warning: No verse sentences found after segmentation.")
+            return
+            
+        sim_matrix = compute_similarity(all_han_sents, all_viet_sents)
+        all_alignment = monotonic_dp_alignment(sim_matrix, diagonal_weight=0.08)
+    elif is_chunked:
         print(f"  Detected {len(han_chunks)} aligned chunks -> Running Chunk-wise Alignment...")
         han_offset = 0
         viet_offset = 0
@@ -875,11 +926,9 @@ def align_work(work: Dict, use_llm: bool = True, debug_mode: bool = False):
             if not h_sents or not v_sents:
                 continue
             
-            # Tính similarity và dóng câu đơn điệu trong phạm vi từng chunk
             chunk_sim = compute_similarity(h_sents, v_sents)
             chunk_align = monotonic_dp_alignment(chunk_sim, diagonal_weight=0.05)
             
-            # Lưu lại câu với offset toàn cục
             for h_idx, v_idx, score in chunk_align:
                 global_h = han_offset + h_idx
                 global_v = (viet_offset + v_idx) if v_idx >= 0 else -1
@@ -890,7 +939,6 @@ def align_work(work: Dict, use_llm: bool = True, debug_mode: bool = False):
             han_offset += len(h_sents)
             viet_offset += len(v_sents)
     else:
-        # Fallback: Document-level alignment khi không có cấu trúc chunk tương ứng
         all_han_sents = segment_han(han_raw)
         all_viet_sents = segment_viet(viet_raw)
         

@@ -12,13 +12,13 @@ https://drive.google.com/drive/folders/1szTHxYqiYGSeg5eutJKjRkRfEayf40Hl?usp=sha
 
 ## Danh sách tác phẩm
 
-| ID | Tên tác phẩm | Sino type | Vie type |
-|----|---|---|---|
-| HVB_001 | An Nam Chí Lược | text | pdf_text |
-| HVB_002 | An Nam Chí Nguyên | pdf_scan | pdf_scan |
-| HVB_003 | Công Dư Tiệp Ký | pdf_scan | pdf_scan |
-| HVB_004 | Đại Nam Quốc Sử Diễn Ca | pdf_scan | pdf_text |
-| HVB_005 | Đại Việt Lịch Triều Đăng Khoa Lục | text | pdf_scan |
+| ID | Tên tác phẩm | Sino type | Vie type | Thể loại (Genre) |
+|---|---|---|---|---|
+| HVB_001 | An Nam Chí Lược | text | pdf_text | Văn xuôi lịch sử (`prose`) |
+| HVB_002 | An Nam Chí Nguyên | pdf_scan | pdf_scan | Văn xuôi địa chí (`prose`) |
+| HVB_003 | Công Dư Tiệp Ký | pdf_scan | pdf_scan | Văn xuôi truyền kỳ (`prose`) |
+| HVB_004 | Đại Nam Quốc Sử Diễn Ca | pdf_scan | pdf_text | Thơ lục bát diễn ca (`poetry`) |
+| HVB_005 | Đại Việt Lịch Triều Đăng Khoa Lục | text | pdf_scan | Văn xuôi khoa cử (`prose`) |
 
 ## Cài đặt
 
@@ -47,11 +47,22 @@ Mở và thực thi các Jupyter Notebook trong thư mục `src/ocr/`:
 - `src/ocr/sino_ocr.ipynb` (Dành cho văn bản chữ Hán/Nôm)
 - `src/ocr/vie_ocr.ipynb` (Dành cho văn bản chữ Quốc Ngữ)
 
-**Bước 2 — Dóng hàng câu**
+**Bước 2 — Dóng hàng câu (Sentence Alignment)**
+Pipeline tự động nhận diện **Thể loại (`genre: prose / poetry`)** được khai báo trong `data/config.json` để áp dụng thuật toán phù hợp:
+- **Văn xuôi (`prose`)**: Ngắt hư từ cổ + Chunk-wise / Document Monotonic DP.
+- **Thơ diễn ca (`poetry`)**: Tách câu theo dòng thơ + Lọc nhiễu nhịp lục bát 6-8 + Monotonic DP 1-1.
+
 ```bash
+# 1. Chạy dóng hàng cho toàn bộ tác phẩm
 python src/sentence_alignment/run.py
-python src/sentence_alignment/run.py --work-id HVB_001
-python src/sentence_alignment/run.py --no-llm   # bỏ qua bước LLM refine
+
+# 2. Chạy cho 1 tác phẩm cụ thể
+python src/sentence_alignment/run.py --work-id HVB_004
+
+# 3. Tùy chọn nâng cao
+python src/sentence_alignment/run.py --work-id HVB_004 --clear-cache   # Xóa cache embeddings và chạy lại
+python src/sentence_alignment/run.py --work-id HVB_003 --no-llm        # Bỏ qua bước LLM refine
+python src/sentence_alignment/run.py --work-id HVB_004 --debug         # Xuất file debug tách câu nhanh (0 token)
 ```
 
 ## Cấu trúc thư mục
