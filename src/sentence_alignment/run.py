@@ -289,8 +289,6 @@ def segment_han_verse(text: str) -> List[str]:
     lines = [normalize_han(l) for l in text.splitlines() if l.strip()]
     sentences = []
     for line in lines:
-        if len(line) < 4 or line.startswith("大南國史演"):
-            continue
         cleaned = re.sub(r'[，,。.\t\r]+$', '', line).strip()
         if cleaned:
             sentences.append(cleaned)
@@ -298,17 +296,25 @@ def segment_han_verse(text: str) -> List[str]:
 
 
 def segment_viet_verse(text: str) -> List[str]:
-    """Tách câu thơ Quốc ngữ: ghép liên tiếp các cặp câu 6 và 8 thành 1 câu lục bát hoàn chỉnh."""
+    """Tách câu thơ Quốc ngữ: dòng đầu là tiêu đề, các dòng sau cứ 2 dòng gộp thành 1 cặp lục bát."""
     lines = [normalize_viet(l) for l in text.splitlines() if l.strip()]
     couplets = []
-    i = 0
-    while i < len(lines):
+    
+    if not lines:
+        return couplets
+        
+    start_idx = 0
+    # Tiêu đề thường là dòng đầu và không có dấu câu ở cuối
+    if not re.search(r'[.,;!?:]$', lines[0]):
+        couplets.append(lines[0])
+        start_idx = 1
+        
+    for i in range(start_idx, len(lines), 2):
         if i + 1 < len(lines):
             couplets.append(f"{lines[i]} {lines[i+1]}")
-            i += 2
         else:
             couplets.append(lines[i])
-            i += 1
+            
     return couplets
 
 
@@ -369,6 +375,49 @@ def compute_similarity(han_sents: List[str], viet_sents: List[str]) -> np.ndarra
     return sim
 
 
+def greedy_best_match(sim_matrix: np.ndarray) -> List[Tuple[int, int, float]]:
+    """
+    Mỗi câu Hán → 1 câu Việt tốt nhất. Ưu tiên câu Hán có score cao hơn khi có xung đột.
+    Returns: [(han_idx, viet_idx, score), ...]
+    """
+    n_han, n_viet = sim_matrix.shape
+    
+    han_best = []
+    for i in range(n_han):
+        best_j = int(np.argmax(sim_matrix[i]))
+        best_score = float(sim_matrix[i, best_j])
+        han_best.append((i, best_j, best_score))
+        
+    # Sắp xếp theo score giảm dần → ưu tiên câu Hán có score cao
+    han_best.sort(key=lambda x: x[2], reverse=True)
+    
+    used_viet = set()
+    alignment = []
+    
+    for han_idx, viet_idx, score in han_best:
+        if viet_idx not in used_viet:
+            alignment.append((han_idx, viet_idx, score))
+            used_viet.add(viet_idx)
+        else:
+            # Tìm câu Việt tốt tiếp theo chưa được dùng
+            row = sim_matrix[han_idx].copy()
+            for used_j in used_viet:
+                row[used_j] = -1
+                
+            next_j = int(np.argmax(row))
+            next_score = float(row[next_j])
+            
+            if next_score > 0:
+                alignment.append((han_idx, next_j, next_score))
+                used_viet.add(next_j)
+            else:
+                alignment.append((han_idx, -1, 0.0))
+                
+    # Sắp xếp theo thứ tự câu Hán
+    alignment.sort(key=lambda x: x[0])
+    return alignment
+
+
 # ============================================================
 # 4. MONOTONIC DYNAMIC PROGRAMMING BEAD ALIGNMENT (1-1, 1-N, N-1)
 # ============================================================
@@ -402,9 +451,9 @@ def monotonic_bead_dp_alignment(
     if n_han == 0 or n_viet == 0:
         return []
     
-    # Đối với thơ (genre == "poetry"), ép buộc strictly 1-1 matching
+    # Đối với thơ (genre == "poetry"), cho phép 1-1, 1-2, 2-1, 2-2 để cover chênh lệch dòng
     if genre == "poetry":
-        allowed_beads = [(1, 1)]
+        allowed_beads = [(1, 1), (1, 2), (2, 1), (2, 2)]
     else:
         # Dynamic bead transitions: bảo đảm luôn tìm được đường đi chi tiết từng câu, không bị rơi vào fallback gộp cả chunk
         max_dv = max(3, min(math.ceil(n_viet / max(n_han, 1)) + 2, 15))
@@ -572,7 +621,7 @@ Your mission is to ensure that each bilingual sentence pair is semantically equi
 Strict Quality Standards:
 1. ZERO OMISSION: Ensure the Vietnamese Quốc ngữ text fully translates all contents of the Han-Nom source text.
 2. ZERO ADDITION & ANNOTATION DELETION: If the Vietnamese text contains long historical annotations, explanations, or extraneous details added by the translator that DO NOT EXIST in the Han-Nom text, you MUST DELETE them entirely.
-3. NO ENGLISH TRANSLATIONS: The `han_corrected` field MUST contain ONLY original Han characters (Chữ Hán). You MUST NEVER translate the Han text into English or any other language. Fix only OCR typos using the context.
+3. NO TRANSLATIONS IN HAN COLUMN: The `han_corrected` field MUST contain ONLY original Han-Nom characters (Chữ Hán/Nôm). You MUST NEVER translate or copy the Vietnamese text into the `han_corrected` field.
 4. PRESERVE & CLEAN: Fix OCR typos and misplaced punctuation while strictly preserving Vietnamese historical proper names and official titles.
 5. NO HALLUCINATION & BOUNDARY FIXING: You MUST NOT translate the Han-Nom text from scratch. You MUST find the missing translation parts in the [VIỆT CHUNK CONTEXT]. 
    CRITICAL: If the previous alignment algorithm (DP) incorrectly shifted the translation of Pair N into Pair N-1 or N+1, you MUST move that text back to the correct Pair in the JSON output! Do NOT blindly copy the input boundaries if they are wrong.
@@ -833,8 +882,13 @@ def refine_with_llm_chunk(chunk_idx: int, alignment: List[Tuple[int, int, int, i
         corrected_han = llm_result.get("han_corrected", "")
         corrected_viet = llm_result.get("viet_corrected", "")
         
+        import re
         if corrected_han:
-            pair["han"] = corrected_han
+            if re.search(r'[a-zA-Z]', corrected_han):
+                # Hallucination detected
+                pass
+            else:
+                pair["han"] = corrected_han
         if corrected_viet:
             pair["viet"] = corrected_viet
             
@@ -891,57 +945,37 @@ def align_work(work: Dict, use_llm: bool = True, debug_mode: bool = False):
     all_refined_pairs = []
     global_pair_offset = 0
     
-    if genre == "poetry":
-        # Chế độ chuyên biệt cho Thơ Diễn Ca / Lục Bát (1-1 strict matching)
-        all_han_sents = segment_han_verse(han_raw)
-        all_viet_sents = segment_viet_verse(viet_raw)
-        
-        if not all_han_sents or not all_viet_sents:
-            print("  Warning: No verse sentences found after segmentation.")
-            return
-            
-        all_labse_han = get_embeddings(all_han_sents, get_labse_model(), f"{work_id}_labse_han")
-        all_labse_viet = get_embeddings(all_viet_sents, get_labse_model(), f"{work_id}_labse_viet")
-        all_alignment = monotonic_bead_dp_alignment(all_han_sents, all_viet_sents, all_labse_han, all_labse_viet, genre="poetry", diagonal_weight=0.08)
-        all_refined_pairs = refine_with_llm_chunk(0, all_alignment, all_han_sents, all_viet_sents, han_raw, viet_raw, work_id, work_title, 0, use_llm)
-        
-    elif is_chunked:
+    if is_chunked and genre != "poetry":
         print(f"  Detected {len(han_chunks)} aligned chunks -> Running Chunk-wise Bead Alignment...")
         
         # 1. Segment all chunks
         chunk_sents = []
         for h_chunk, v_chunk in zip(han_chunks, viet_chunks):
-            h_s = segment_han(h_chunk)
-            v_s = segment_viet(v_chunk)
+            if genre == "poetry":
+                h_s = segment_han_verse(h_chunk)
+                v_s = segment_viet_verse(v_chunk)
+            else:
+                h_s = segment_han(h_chunk)
+                v_s = segment_viet(v_chunk)
+            
             chunk_sents.append((h_s, v_s))
-            all_han_sents.extend(h_s)
-            all_viet_sents.extend(v_s)
             
-        if not all_han_sents or not all_viet_sents:
-            print("  Warning: No sentences found after segmentation.")
-            return
-            
-        # 2. Vectorized embedding computation once for all sentences
-        all_labse_han = get_embeddings(all_han_sents, get_labse_model(), f"{work_id}_labse_han")
-        all_labse_viet = get_embeddings(all_viet_sents, get_labse_model(), f"{work_id}_labse_viet")
-        
-        # 3. Chunk-wise DP alignment and LLM Refine
-        han_offset = 0
-        viet_offset = 0
+        # 2. DP & LLM per chunk
         for c_idx, (h_s, v_s) in enumerate(chunk_sents):
             if not h_s or not v_s:
                 continue
-            h_embs = all_labse_han[han_offset : han_offset + len(h_s)]
-            v_embs = all_labse_viet[viet_offset : viet_offset + len(v_s)]
             
-            chunk_align = monotonic_bead_dp_alignment(h_s, v_s, h_embs, v_embs, genre="prose", diagonal_weight=0.05)
+            h_embs = get_embeddings(h_s, get_labse_model(), f"{work_id}_labse_han_{c_idx}")
+            v_embs = get_embeddings(v_s, get_labse_model(), f"{work_id}_labse_viet_{c_idx}")
+            
+            chunk_align = monotonic_bead_dp_alignment(h_s, v_s, h_embs, v_embs, genre=genre, diagonal_weight=0.08 if genre == "poetry" else 0.05)
             refined_chunk = refine_with_llm_chunk(c_idx, chunk_align, h_s, v_s, han_chunks[c_idx], viet_chunks[c_idx], work_id, work_title, global_pair_offset, use_llm)
             
             all_refined_pairs.extend(refined_chunk)
             global_pair_offset += len(refined_chunk)
             
-            han_offset += len(h_s)
-            viet_offset += len(v_s)
+            all_han_sents.extend(h_s)
+            all_viet_sents.extend(v_s)
             
             # Incremental save per chunk
             tsv_live_path = CORPUS_DIR / f"{work_id}_parallel.tsv"
@@ -950,17 +984,51 @@ def align_work(work: Dict, use_llm: bool = True, debug_mode: bool = False):
             save_excel(work_id, all_refined_pairs, xlsx_live_path)
             
     else:
-        all_han_sents = segment_han(han_raw)
-        all_viet_sents = segment_viet(viet_raw)
-        
+        if genre == "poetry":
+            all_han_sents = segment_han_verse(han_raw)
+            all_viet_sents = segment_viet_verse(viet_raw)
+        else:
+            all_han_sents = segment_han(han_raw)
+            all_viet_sents = segment_viet(viet_raw)
+            
         if not all_han_sents or not all_viet_sents:
             print("  Warning: No sentences found after segmentation.")
             return
-        
+            
         all_labse_han = get_embeddings(all_han_sents, get_labse_model(), f"{work_id}_labse_han")
         all_labse_viet = get_embeddings(all_viet_sents, get_labse_model(), f"{work_id}_labse_viet")
-        all_alignment = monotonic_bead_dp_alignment(all_han_sents, all_viet_sents, all_labse_han, all_labse_viet, genre="prose", diagonal_weight=0.05)
-        all_refined_pairs = refine_with_llm_chunk(0, all_alignment, all_han_sents, all_viet_sents, han_raw, viet_raw, work_id, work_title, 0, use_llm)
+        
+        if genre == "poetry":
+            all_alignment = monotonic_bead_dp_alignment(all_han_sents, all_viet_sents, all_labse_han, all_labse_viet, genre="poetry", diagonal_weight=0.08)
+        else:
+            all_alignment = monotonic_bead_dp_alignment(all_han_sents, all_viet_sents, all_labse_han, all_labse_viet, genre="prose", diagonal_weight=0.05)
+            
+        # Chia all_alignment thành các chunk 40 cặp để gọi LLM tránh quá tải
+        chunk_size = 40
+        for i in range(0, len(all_alignment), chunk_size):
+            chunk_align = all_alignment[i:i+chunk_size]
+            
+            # Tạo localized context cho LLM
+            h_start = chunk_align[0][0]
+            h_end = chunk_align[-1][1]
+            v_start = min([b[2] for b in chunk_align])
+            v_end = max([b[3] for b in chunk_align])
+            
+            h_ctx_start = max(0, h_start - 5)
+            h_ctx_end = min(len(all_han_sents), h_end + 5)
+            v_ctx_start = max(0, v_start - 5)
+            v_ctx_end = min(len(all_viet_sents), v_end + 5)
+            
+            han_context = "\n".join(all_han_sents[h_ctx_start:h_ctx_end])
+            viet_context = "\n".join(all_viet_sents[v_ctx_start:v_ctx_end])
+            
+            refined_chunk = refine_with_llm_chunk(i // chunk_size, chunk_align, all_han_sents, all_viet_sents, han_context, viet_context, work_id, work_title, global_pair_offset, use_llm)
+            all_refined_pairs.extend(refined_chunk)
+            global_pair_offset += len(refined_chunk)
+            
+            # Incremental save
+            tsv_live_path = CORPUS_DIR / f"{work_id}_parallel.tsv"
+            save_tsv(work_id, all_refined_pairs, tsv_live_path)
     
     ratio = len(all_viet_sents) / max(len(all_han_sents), 1)
     
@@ -984,7 +1052,7 @@ def align_work(work: Dict, use_llm: bool = True, debug_mode: bool = False):
     
     if debug_mode:
         from helper import export_debug_matrix
-        export_debug_matrix(work_id, refined_pairs, DATA_DIR)
+        export_debug_matrix(work_id, all_refined_pairs, DATA_DIR)
 
 
 def main():
