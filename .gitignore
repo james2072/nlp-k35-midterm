@@ -81,3 +81,6 @@ scratch
 *.onnx
 *.bin
 weights/
+
+data/corpus/old/
+debug/
