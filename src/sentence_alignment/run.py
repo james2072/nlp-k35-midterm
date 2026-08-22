@@ -28,7 +28,7 @@ if not API_KEY:
     sys.exit(1)
     
 client = genai.Client(api_key=API_KEY)
-# Read the model name from .env, default to gemini-1.5-flash
+# Read the model name from .env
 MODEL_NAME = os.getenv("LLM_MODEL_NAME", "")
 if not MODEL_NAME:
     print("Error: Missing LLM_MODEL_NAME in .env")

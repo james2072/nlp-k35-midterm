@@ -42,7 +42,7 @@ Pipeline sử dụng tính năng **Structured Output** của Google AI Studio đ
 
 Cú pháp chạy:
 ```bash
-python src/sentence_alignment/run_ai_studio_alignment.py --work-id HVB_005 --id-start 0 --n 5 --k 1
+python src/sentence_alignment/run.py --work-id HVB_005 --id-start 0 --n 5 --k 1
 ```
 
 **Các tham số:**
@@ -60,5 +60,5 @@ data/
 src/
   ocr/  ← File Notebook chạy OCR
   sentence_alignment/
-    run_ai_studio_alignment.py  ← Script chính chạy dóng hàng bằng Google AI Studio
+    run.py  ← Script chính chạy dóng hàng bằng Google AI Studio
 ```

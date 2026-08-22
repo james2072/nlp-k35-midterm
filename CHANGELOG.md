@@ -1,12 +1,15 @@
 # Báo cáo Cập nhật Phương pháp Dóng hàng (Changelog)
 
-**Đề tài:** HVB - Ngữ liệu Song ngữ Hán-Việt (Bao gồm đặc tả xử lý các tác phẩm phức tạp như HVB_004 - Đại Nam Quốc Sử Diễn Ca)
+**Đề tài:** HVB18 - Đồ án xây dựng tập dữ liệu (corpus) song ngữ Hán–Việt từ các tác phẩm lịch sử, sử dụng Google AI Studio để tự động dóng hàng (Sentence Alignment).
 
 **Nhóm thực hiện:**
 - 25C11027 -- Bùi Quốc Việt
 - 25C11006 -- Nguyễn Tất Hưng
 - 25C11011 -- Nguyễn Ngọc Hồng Lĩnh
 - 25C11065 -- Trần Quốc Thịnh
+
+**Mã nguồn (Source Code):** [https://github.com/james2072/nlp-k35-midterm](https://github.com/james2072/nlp-k35-midterm)
+**Báo cáo chi tiết:** Cập nhật phương pháp mới tương ứng trong [report.pdf](./report.pdf) đính kèm trong cùng thư mục.
 
 Tài liệu này báo cáo quá trình tái cấu trúc quy trình dóng hàng câu (Sentence Alignment) của nhóm, chuyển đổi từ mô hình tiếp cận lai (Hybrid: Heuristic + LLM) sang phương pháp tự động hóa hoàn toàn bằng Mô hình Ngôn ngữ lớn (LLM).
 
@@ -35,11 +38,11 @@ Loại bỏ hoàn toàn các bước trung gian (Regex, LaBSE, DP). Trực tiế
 
 ## 3. Hướng dẫn Thực thi
 
-Chương trình đầu ra trực tiếp tập tin `{work-id}_parallel.tsv` chứa ngữ liệu đã được dóng hàng.
+Chương trình đầu ra trực tiếp tập tin `{work_id}_parallel.tsv` chứa ngữ liệu đã được dóng hàng.
 
 **Lệnh thực thi:**
 ```bash
-python src/sentence_alignment/run_ai_studio_alignment.py --work-id HVB_005 --id-start 0 --n 5 --k 1
+python src/sentence_alignment/run.py --work-id HVB_005 --id-start 0 --n 5 --k 1
 ```
 
 **Các tham số:**
@@ -57,5 +60,5 @@ data/
 src/
   ocr/  ← File Notebook chạy OCR
   sentence_alignment/
-    run_ai_studio_alignment.py  ← Script chính chạy dóng hàng bằng Google AI Studio
+    run.py  ← Script chính chạy dóng hàng bằng Google AI Studio
 ```
