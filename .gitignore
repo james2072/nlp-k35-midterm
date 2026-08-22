@@ -84,3 +84,5 @@ weights/
 
 data/corpus/old/
 debug/
+
+cache/

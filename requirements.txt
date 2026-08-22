@@ -1,12 +1,6 @@
-# --- Core PDF & Image Processing ---
-pymupdf
-
-# --- NLP & Sentence Alignment ---
-sentence-transformers
-
-# --- Utilities & API ---
-python-dotenv
-requests
-tqdm
 pandas
 openpyxl
+python-dotenv
+google-genai
+typing_extensions
+pydantic
